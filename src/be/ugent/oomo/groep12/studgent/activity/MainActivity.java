@@ -1,4 +1,8 @@
-package be.ugent.oomo.groep12.studgent;
+package be.ugent.oomo.groep12.studgent.activity;
+
+import be.ugent.oomo.groep12.studgent.R;
+import be.ugent.oomo.groep12.studgent.R.layout;
+import be.ugent.oomo.groep12.studgent.R.menu;
 
 import com.crashlytics.android.Crashlytics;
 import android.os.Bundle;
