@@ -1,7 +1,7 @@
 language: java
 jdk: oraclejdk7
 env:
-- TERM=dumb
+  - TERM=dumb
   matrix:
   - ANDROID_TARGET=android-19  ANDROID_ABI=armeabi-v7a
   global:
