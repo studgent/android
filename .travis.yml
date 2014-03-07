@@ -31,7 +31,7 @@ before_script:
 script:
 - ./gradlew connectedInstrumentTest
 after_success:
-- echo "tests successful"
+- gradle cobertura coveralls
 after_failure:
 - echo "failed tests"
 notifications:
