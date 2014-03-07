@@ -29,11 +29,11 @@ before_script:
 - adb wait-for-device
 - adb shell input keyevent 82 &
 script:
-- ./gradlew connectedInstrumentTest
+- ./gradlew cobertura coveralls
 after_success:
-- gradle cobertura coveralls
+- echo "Tests successful"
 after_failure:
-- echo "failed tests"
+- echo "Tests failed"
 notifications:
   email:
   - studgent@ahlun.be

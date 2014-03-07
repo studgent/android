@@ -1,3 +1,16 @@
+//apply plugin: 'android'
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'eclipse'
+apply plugin: 'cobertura'
+apply plugin: 'coveralls'
+
+
+repositories {
+  mavenCentral()
+  maven { url 'http://download.crashlytics.com/maven' }
+}
+
 buildscript {
   repositories {
     mavenCentral()
@@ -5,24 +18,15 @@ buildscript {
   }
 
   dependencies {
-    classpath 'com.android.tools.build:gradle:0.8+'
+    //classpath 'com.android.tools.build:gradle:0.8+'
     classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.+'
+    classpath 'net.saliman:gradle-cobertura-plugin:2.0.0' // cobertura plugin
+    classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:0.2.5' // coveralls plugin
   }
 }
 
-apply plugin: 'android'
-
-
-tasks.withType(Compile) {
-    options.encoding = "UTF-8"
-}
-
-repositories {
-    mavenCentral()
-    maven { url 'http://download.crashlytics.com/maven' }
-}
-
 dependencies {
+    compile 'com.google.android:android:4.1.1.4'
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.jakewharton:notificationcompat2:1.1.2'
     //compile 'com.android.support:support-v4:13.0.+'
@@ -30,14 +34,22 @@ dependencies {
     //compile 'com.google.android.gms:play-services:3.1.+'
     compile 'com.crashlytics.android:crashlytics:1.+'
     //compile project(':mixare')
-    classpath 'net.saliman:gradle-cobertura-plugin:2.0.0' // cobertura plugin
-    classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:0.2.5' // coveralls plugin
 
+    testCompile 'junit:junit:4.11'
+    testCompile 'org.mockito:mockito-all:1.9.5'
 }
+
+
+
+tasks.withType(Compile) {
+    options.encoding = "UTF-8"
+}
+
+
 
 cobertura.coverageFormats = ['html', 'xml']
 
-android {
+/*android {
   compileSdkVersion 19
   buildToolsVersion '19.0.0'
   
@@ -63,4 +75,4 @@ android {
   dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')    
   }
-}
+}*/
