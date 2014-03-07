@@ -3,7 +3,6 @@ jdk: oraclejdk7
 env:
   matrix:
   - ANDROID_TARGET=android-19  ANDROID_ABI=armeabi-v7a
-  - TERM=dumb
   global:
     secure: cCvkZFIwORfT339OO6D1XwEN9YrLrS2RdaNagPiHcLRTf5SDSh8kWLS6V39N4Qf9FssVKoPFIwb5k/Hs8aowMMWgntuyJlAlhK2fYSGSmW0xxLkCW13s5t3xtAs9Z3aoLHR9f9wDtPxhj7NZtFDN+nkXYz3mhDtfqUgOwzOPVBE=
 before_install:
