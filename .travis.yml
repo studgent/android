@@ -23,11 +23,8 @@ before_install:
   > /dev/null
 - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
 - emulator -avd test -no-skin -no-audio -no-window &
+- ./before_install.sh &> /dev/null
 
-- echo '<?xml version="1.0" encoding="utf-8"?>' | tee ./res/values/apikeys.xml
-- echo '<resources>' | tee -a ./res/values/apikeys.xml
-- echo "    <string name=\"CRASHLYTICS_KEY\">${CRASHLYTICS_KEY}</string>" | tee -a ./res/values/apikeys.xml
-- echo '</resources> | tee -a ./res/values/apikeys.xml
 before_script:
 - adb wait-for-device
 - adb shell input keyevent 82 &
