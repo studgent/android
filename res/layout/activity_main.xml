@@ -1,6 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/RelativeLayout1"
+    android:id="@+id/main_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_alignParentBottom="true"
@@ -8,6 +8,7 @@
     android:layout_alignParentRight="true"
     android:layout_alignParentTop="true"
     android:background="@color/studgent_lightgreen"
+    android:textColor="@color/studgent_grey"
     android:orientation="vertical"
     android:paddingBottom="10dp"
     android:paddingLeft="10dp"
@@ -15,44 +16,34 @@
 
     <Button
         android:id="@+id/button_neighbourhood"
-        style="@style/AppBaseTheme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="134dp"
-        android:background="@drawable/ab_background_textured_studgentstyle"
-        android:text="@string/in_the_neighbourhood"
-        android:textColor="@color/studgent_grey" />
+        android:text="@string/in_the_neighbourhood" />
 
     <Button
         android:id="@+id/button_events"
         android:layout_below="@+id/button_neighbourhood"
-        style="@style/AppBaseTheme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
         android:layout_marginTop="20dp"
-        android:background="@drawable/ab_background_textured_studgentstyle"
         android:text="@string/events"
         android:textColor="@color/studgent_grey" />
     <Button
         android:id="@+id/button_challenges"
         android:layout_below="@+id/button_events"
-        style="@style/AppBaseTheme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="@drawable/ab_background_textured_studgentstyle"
         android:text="@string/challenges"
         android:textColor="@color/studgent_grey" />
 
     <Button
         android:id="@+id/button_friends"
         android:layout_below="@+id/button_challenges"
-        style="@style/AppBaseTheme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="@drawable/ab_background_textured_studgentstyle"
         android:text="@string/friends"
         android:textColor="@color/studgent_grey" />
 

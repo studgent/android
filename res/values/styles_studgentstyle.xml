@@ -17,7 +17,7 @@
      limitations under the License.
 -->
 
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="Theme.Studgentstyle" parent="@android:style/Theme.Holo.Light">
         <item name="android:actionBarItemBackground">@drawable/selectable_background_studgentstyle</item>
@@ -29,8 +29,8 @@
         <item name="android:actionModeBackground">@drawable/cab_background_top_studgentstyle</item>
         <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_studgentstyle</item>
         <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Studgentstyle</item>
-        
-        
+        <item name="android:buttonStyle">@style/Button.Studgentstyle</item>
+        <item name="android:actionBarTabTextStyle">@style/ActionBar.TabText.Studgentstyle</item>
     </style>
 
     <style name="ActionBar.Solid.Studgentstyle" parent="@android:style/Widget.Holo.Light.ActionBar.Solid">
@@ -38,11 +38,17 @@
         <item name="android:backgroundStacked">@drawable/ab_stacked_solid_studgentstyle</item>
         <item name="android:backgroundSplit">@drawable/ab_background_textured_studgentstyle</item>
         <item name="android:progressBarStyle">@style/ProgressBar.Studgentstyle</item>
+        <item name="android:titleTextStyle">@style/ActionBar.TabText.Studgentstyle</item>
+    </style>
+    <style name="ActionBar.TabText.Studgentstyle" parent="@style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/studgent_grey</item>
+    
     </style>
 
     <style name="ActionBar.Transparent.Studgentstyle" parent="@android:style/Widget.Holo.Light.ActionBar">
         <item name="android:background">@drawable/ab_transparent_studgentstyle</item>
         <item name="android:progressBarStyle">@style/ProgressBar.Studgentstyle</item>
+        <item name="android:textColor">@color/studgent_grey</item>
     </style>
 
     <style name="PopupMenu.Studgentstyle" parent="@android:style/Widget.Holo.Light.ListPopupWindow">
@@ -69,6 +75,11 @@
     
     <style name="ActionButton.CloseMode.Studgentstyle" parent="@android:style/Widget.Holo.Light.ActionButton.CloseMode">
         <item name="android:background">@drawable/btn_cab_done_studgentstyle</item>
+    </style>
+    <style name="Button.Studgentstyle" parent="@android:style/Widget.Button">
+        <item name="android:background">@drawable/ab_background_textured_studgentstyle</item>
+        <item name="android:textColor">@color/studgent_grey</item>
+        <item name="android:padding">10dp</item>
     </style>
 
     <!-- this style is only referenced in a Light.DarkActionBar based theme -->
