@@ -40,7 +40,7 @@
         <item name="android:progressBarStyle">@style/ProgressBar.Studgentstyle</item>
         <item name="android:titleTextStyle">@style/ActionBar.TabText.Studgentstyle</item>
     </style>
-    <style name="ActionBar.TabText.Studgentstyle" parent="@style/TextAppearance.Holo.Widget.ActionBar.Title">
+    <style name="ActionBar.TabText.Studgentstyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
         <item name="android:textColor">@color/studgent_grey</item>
     
     </style>
