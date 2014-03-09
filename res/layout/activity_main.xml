@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/events"
-        android:textColor="@color/studgent_grey" />
+        android:onClick="openEventsActivity" />
     <Button
         android:id="@+id/button_challenges"
         android:layout_below="@+id/button_events"

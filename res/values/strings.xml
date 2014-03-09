@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">StudGent</string>
     <string name="action_settings">Settings</string>
     <string name="in_the_neighbourhood">In de buurt</string>
     <string name="events">Evenementen</string>
     <string name="challenges">Uitdagingen</string>
     <string name="friends">Vrienden</string>
+    <string name="title_activity_events">EventsActivity</string>
+    <string name="hello_world">Hello world!</string>
+
 </resources>

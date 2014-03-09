@@ -1,6 +1,7 @@
 package be.ugent.oomo.groep12.studgent.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -60,6 +61,11 @@ public class MainActivity extends Activity {
 	public void onConfigurationChanged(Configuration newConfig) {
 	    super.onConfigurationChanged(newConfig);
 	    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+	}
+	
+	public void openEventsActivity(View view) {
+		Intent intent = new Intent(this, EventsActivity.class);
+		startActivity(intent);
 	}
 	
 }
