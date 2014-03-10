@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.view.Menu;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import be.ugent.oomo.groep12.studgent.adapter.CalenderAdapter;
 import be.ugent.oomo.groep12.studgent.common.ICalendarEvent;
 import be.ugent.oomo.groep12.studgent.common.CalendarEvent;
 import be.ugent.oomo.groep12.studgent.common.IData;
@@ -31,11 +32,23 @@ public class EventsActivity extends Activity {
 		ListView event_list_view = (ListView) findViewById(R.id.events_list);
 		
 		List<ICalendarEvent> events = CalendarEventDataSource.getInstance().getLastItems();
+		ICalendarEvent[] event_data = (ICalendarEvent[]) events.toArray(new ICalendarEvent[events.size()]);
 
 		// add to list view using an adapter
-		ArrayAdapter<ICalendarEvent> adapter = new ArrayAdapter<ICalendarEvent>(this,
+		/*ArrayAdapter<ICalendarEvent> adapter = new ArrayAdapter<ICalendarEvent>(this,
 				android.R.layout.simple_list_item_1, events);
-		event_list_view.setAdapter(adapter);
+		event_list_view.setAdapter(adapter);*/
+		
+		
+	       
+        CalenderAdapter adapter = new CalenderAdapter(this, 
+                R.layout.calendar_list_item, event_data);
+        
+         
+        /*View header = (View)getLayoutInflater().inflate(R.layout.listview_header_row, null);
+        listView1.addHeaderView(header);*/
+        
+        event_list_view.setAdapter(adapter);
 	}
 
 

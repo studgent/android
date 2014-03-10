@@ -41,7 +41,7 @@ public class CalendarEventDataSource implements IDataSource {
 			Location loc = new Location("passive");
 			loc.setLatitude(0.0);
 			loc.setLongitude(0.0);
-			PointOfInterest poi = new PointOfInterest( loc );
+			PointOfInterest poi = new PointOfInterest("Gent", loc );
 			
 			CalendarEvent cal_event = new CalendarEvent( "Gentse Feesten", new Date(), poi);
 			for (int i= 0; i< 20; i++) {
