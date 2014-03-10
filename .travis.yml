@@ -14,16 +14,15 @@ before_install:
 - export ANDROID_HOME=$PWD/android-sdk-linux
 - export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
 - echo yes | android update sdk --filter platform-tools --no-ui --force > /dev/null
-- echo yes | android update sdk --all --filter build-tools-19.0.0 --no-ui --force
-  > /dev/null
+- echo yes | android update sdk --all --filter build-tools-19.0.0 --no-ui --force > /dev/null
 - echo yes | android update sdk --filter android-19 --no-ui --force > /dev/null
 - echo yes | android update sdk --filter sysimg-19 --no-ui --force > /dev/null
 - echo yes | android update sdk --filter extra-android-support --no-ui --force > /dev/null
-- echo yes | android update sdk --filter extra-android-m2repository --no-ui --force
-  > /dev/null
+- echo yes | android update sdk --filter extra-android-m2repository --no-ui --force > /dev/null
 - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
 - emulator -avd test -no-skin -no-audio -no-window &
 - ./before_install.sh &> /dev/null
+- export TERM=dumb
 
 before_script:
 - adb wait-for-device
@@ -31,7 +30,8 @@ before_script:
 script:
 - ./gradlew build
 after_success:
-- ./gradlew cobertura coveralls
+- ./gradlew cobertura
+- ./gradlew coveralls --stacktrace
 after_failure:
 - echo "Tests failed"
 notifications:
