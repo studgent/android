@@ -31,8 +31,7 @@ before_script:
 script:
 - ./gradlew build
 after_success:
-- ./gradlew cobertura
-- ./gradlew coveralls
+- ./gradlew cobertura coveralls
 after_failure:
 - echo "Tests failed"
 notifications:
