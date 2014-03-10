@@ -11,6 +11,32 @@ repositories {
   maven { url 'http://download.crashlytics.com/maven' }
 }
 
+sourceSets {
+    unitTest {
+        java.srcDir file('tests')
+    }
+}
+
+dependencies {
+    compile group: 'com.google.android', name: 'android', version: '4.1.1.4'
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.2.4'
+    compile 'com.crashlytics.android:crashlytics:1.+'
+    //compile project(':mixare')
+
+    unitTestCompile files("$project.buildDir/classes/debug")
+    unitTestCompile 'junit:junit:4.11'
+}
+configurations {
+        unitTestCompile.extendsFrom runtime
+        unitTestRuntime.extendsFrom unitTestCompile
+}
+
+task unitTest(type:Test, dependsOn: assemble) {
+        description = "run unit tests"
+        testClassesDir = project.sourceSets.unitTest.output.classesDir
+        classpath = project.sourceSets.unitTest.runtimeClasspath
+}
+
 buildscript {
   repositories {
     mavenCentral()
@@ -21,26 +47,9 @@ buildscript {
     //classpath 'com.android.tools.build:gradle:0.8+'
     classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.+'
     classpath 'net.saliman:gradle-cobertura-plugin:2.0.0' // cobertura plugin
-    classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:0.1.6' // coveralls plugin
+    classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:0.2.5' // coveralls plugin
   }
 }
-
-dependencies {
-    compile 'com.google.android:android:4.1.1.4'
-    compile 'com.google.code.gson:gson:2.2.4'
-    compile 'com.jakewharton:notificationcompat2:1.1.2'
-    //compile 'com.android.support:support-v4:13.0.+'
-    //compile 'com.android.support:appcompat-v7:18.0.+'
-    //compile 'com.google.android.gms:play-services:3.1.+'
-    compile 'com.crashlytics.android:crashlytics:1.+'
-    //compile project(':mixare')
-
-    testCompile 'junit:junit:4.11'
-    testCompile 'org.mockito:mockito-all:1.9.5'
-}
-
-tasks.withType(Compile) {
-    options.encoding = "UTF-8"
-}
+build.dependsOn unitTest
 
 cobertura.coverageFormats = ['html', 'xml']
