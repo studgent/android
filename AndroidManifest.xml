@@ -17,7 +17,8 @@
         android:theme="@style/Theme.Studgentstyle" >
         <activity
             android:name="be.ugent.oomo.groep12.studgent.activity.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:icon="@drawable/studgent_logo" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,7 +32,8 @@
 
         <activity
             android:name="be.ugent.oomo.groep12.studgent.activity.EventsActivity"
-            android:label="@string/title_activity_events" >
+            android:label="@string/title_activity_events"
+            android:icon="@drawable/calendar_logo" >
         </activity>
     </application>
    
