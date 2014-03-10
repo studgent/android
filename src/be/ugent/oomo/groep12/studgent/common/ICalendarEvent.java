@@ -9,7 +9,7 @@ import java.util.Date;
  * Interface for the Event.
  *
  */
-public interface IEvent {
+public interface ICalendarEvent {
 	
 	/**
 	 * Returns the Date for the Event
@@ -46,6 +46,20 @@ public interface IEvent {
 	 * @param details the details for the Event
 	 */
 	public void setDetails(String details);
+	
+	
+	/**
+	 * Returns the detailed information for the Event
+	 * @return Detailed information for the Event as String
+	 */
+	public IPointOfInterest getLocation();
+	
+	/**
+	 * Sets the detailed information for the Event
+	 * @param details the details for the Event
+	 */
+	public void setLocation(IPointOfInterest location);
+	
 	
 	/**
 	 * Returns summary of the Event

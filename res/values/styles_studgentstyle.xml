@@ -20,6 +20,8 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="Theme.Studgentstyle" parent="@android:style/Theme.Holo.Light">
+    	<item name="android:textColor">@color/studgent_grey</item>
+      	<item name="android:windowBackground">@color/studgent_lightgreen</item>
         <item name="android:actionBarItemBackground">@drawable/selectable_background_studgentstyle</item>
         <item name="android:popupMenuStyle">@style/PopupMenu.Studgentstyle</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Studgentstyle</item>
@@ -32,6 +34,8 @@
         <item name="android:buttonStyle">@style/Button.Studgentstyle</item>
         <item name="android:actionBarTabTextStyle">@style/ActionBar.TabText.Studgentstyle</item>
     </style>
+    
+   
 
     <style name="ActionBar.Solid.Studgentstyle" parent="@android:style/Widget.Holo.Light.ActionBar.Solid">
         <item name="android:background">@drawable/ab_background_textured_studgentstyle</item>

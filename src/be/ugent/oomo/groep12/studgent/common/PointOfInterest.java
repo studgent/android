@@ -7,41 +7,54 @@ import android.location.Location;
  *
  */
 public class PointOfInterest implements IPointOfInterest {
+	
+	protected String name;
+	protected String details;
+	protected Location location;
+
+	public PointOfInterest(String name, String details, Location location){
+		this.name = name;
+		this.details = details;
+		this.location = location;
+	}
+
+	public PointOfInterest(String name, Location location){
+		this.name = name;
+		this.location = location;
+	}
+
+	public PointOfInterest(Location location){
+		this.location = location;
+	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return name;
 	}
 
 	@Override
 	public void setName(String name) {
-		// TODO Auto-generated method stub
-
+		this.name = name;
 	}
 
 	@Override
 	public String getDetails() {
-		// TODO Auto-generated method stub
-		return null;
+		return details;
 	}
 
 	@Override
 	public void setDetails(String details) {
-		// TODO Auto-generated method stub
-
+		this.details = details;
 	}
 
 	@Override
 	public Location getLocation() {
-		// TODO Auto-generated method stub
-		return null;
+		return location;
 	}
 
 	@Override
 	public void setLocation(Location location) {
-		// TODO Auto-generated method stub
-
+		this.location = location;
 	}
 
 }

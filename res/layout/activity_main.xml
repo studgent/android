@@ -7,55 +7,68 @@
     android:layout_alignParentLeft="true"
     android:layout_alignParentRight="true"
     android:layout_alignParentTop="true"
-    android:background="@color/studgent_lightgreen"
-    android:textColor="@color/studgent_grey"
     android:orientation="vertical"
     android:paddingBottom="10dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp" >
-    
-    <ImageView
-        android:id="@+id/home_header"
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:layout_marginTop="10dp"
-        android:scaleType="fitStart"
-        android:src="@drawable/skyline" />
 
-    <Button
-        android:id="@+id/button_neighbourhood"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/home_header"
-        android:layout_marginTop="20dp"
-        android:enabled="true"
-        android:text="@string/in_the_neighbourhood" />
 
-    <Button
-        android:id="@+id/button_events"
-        android:layout_below="@+id/button_neighbourhood"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/events"
-        android:onClick="openEventsActivity" />
-    <Button
-        android:id="@+id/button_challenges"
-        android:layout_below="@+id/button_events"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/challenges"
-        android:textColor="@color/studgent_grey" />
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_centerHorizontal="true"
+        android:fillViewport="true" >
 
-    <Button
-        android:id="@+id/button_friends"
-        android:layout_below="@+id/button_challenges"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/friends"
-        android:textColor="@color/studgent_grey" />
 
+        <RelativeLayout
+            android:id="@+id/RelativeLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+	        <ImageView
+	            android:id="@+id/home_header"
+	            android:layout_width="fill_parent"
+	            android:layout_height="100dp"
+	            android:layout_marginTop="10dp"
+	            android:scaleType="fitXY"
+	            android:src="@drawable/skyline" />
+
+		    <Button
+		        android:id="@+id/button_neighbourhood"
+		        android:layout_below="@+id/home_header"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="20dp"
+		        android:enabled="true"
+		        android:text="@string/in_the_neighbourhood" />
+		
+		    <Button
+		        android:id="@+id/button_events"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@+id/button_neighbourhood"
+		        android:layout_marginTop="20dp"
+		        android:onClick="openEventsActivity"
+		        android:text="@string/events" />
+		
+		    <Button
+		        android:id="@+id/button_challenges"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@+id/button_events"
+		        android:layout_marginTop="20dp"
+		        android:text="@string/challenges" />
+		
+		    <Button
+		        android:id="@+id/button_friends"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@+id/button_challenges"
+		        android:layout_marginTop="20dp"
+		        android:text="@string/friends" />
+        </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>

@@ -57,11 +57,6 @@ public class MainActivity extends Activity {
 		return true;
 	}
 	
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-	    super.onConfigurationChanged(newConfig);
-	    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-	}
 	
 	public void openEventsActivity(View view) {
 		Intent intent = new Intent(this, EventsActivity.class);
