@@ -8,23 +8,31 @@ import android.location.Location;
  */
 public class PointOfInterest implements IPointOfInterest {
 	
+	protected int id;
 	protected String name;
 	protected String details;
 	protected Location location;
 
-	public PointOfInterest(String name, String details, Location location){
+	public PointOfInterest(int id, String name, String details, Location location){
+		this.id = id;
 		this.name = name;
 		this.details = details;
 		this.location = location;
 	}
 
-	public PointOfInterest(String name, Location location){
+	public PointOfInterest(int id, String name, Location location){
+		this.id = id;
 		this.name = name;
 		this.location = location;
 	}
 
 	public PointOfInterest(Location location){
 		this.location = location;
+	}
+
+	@Override
+	public int getId() {
+		return id;
 	}
 
 	@Override

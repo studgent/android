@@ -9,20 +9,27 @@ import android.location.Location;
  *
  */
 public class CalendarEvent implements ICalendarEvent {
-	
+	protected int id;
 	protected String name;
 	protected Date date;
 	protected String details;
 	protected IPointOfInterest poi;
 
-	public CalendarEvent(String name, Date date){
+	public CalendarEvent(int id, String name, Date date){
+		this.id = id;
 		this.name = name;
 		this.date = date;
 	}
-	public CalendarEvent(String name, Date date, IPointOfInterest poi){
+	public CalendarEvent(int id, String name, Date date, IPointOfInterest poi){
+		this.id = id;
 		this.name = name;
 		this.date = date;
 		this.poi = poi;
+	}
+	
+	@Override
+	public int getId(){
+		return id;
 	}
 
 	@Override
