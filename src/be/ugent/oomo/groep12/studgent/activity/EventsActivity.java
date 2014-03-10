@@ -15,7 +15,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import be.ugent.oomo.groep12.studgent.common.ICalendarEvent;
 import be.ugent.oomo.groep12.studgent.common.CalendarEvent;
+import be.ugent.oomo.groep12.studgent.common.IData;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
+import be.ugent.oomo.groep12.studgent.data.CalendarEventDataSource;
 
 public class EventsActivity extends Activity {
 
@@ -28,16 +30,8 @@ public class EventsActivity extends Activity {
 		
 		ListView event_list_view = (ListView) findViewById(R.id.events_list);
 		
-		//TODO get List<IEvent> from datasource
-		List<ICalendarEvent> events = new ArrayList<ICalendarEvent>();
-		
-		Location loc = new Location("passive");
-		loc.setLatitude(0.0);
-		loc.setLongitude(0.0);
-		PointOfInterest poi = new PointOfInterest( loc );
-		CalendarEvent cal_event = new CalendarEvent( "Gentse Feesten", new Date(), poi);
-		events.add( cal_event );
-		
+		List<ICalendarEvent> events = CalendarEventDataSource.getInstance().getLastItems();
+
 		// add to list view using an adapter
 		ArrayAdapter<ICalendarEvent> adapter = new ArrayAdapter<ICalendarEvent>(this,
 				android.R.layout.simple_list_item_1, events);

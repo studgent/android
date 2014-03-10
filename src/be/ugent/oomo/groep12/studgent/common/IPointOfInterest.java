@@ -6,19 +6,7 @@ import android.location.Location;
  * Interface for the Poiny of Interest.
  *
  */
-public interface IPointOfInterest {
-	
-	/**
-	 * Returns the name for the Point of Interest
-	 * @return Name for the Point of Interest as String
-	 */
-	public String getName();
-	
-	/**
-	 * Sets the name for the Point of Interest
-	 * @param name the name for the Point of Interest
-	 */
-	public void setName(String name);
+public interface IPointOfInterest extends IData {
 	
 	/**
 	 * Returns the detailed information for the Point of Interest

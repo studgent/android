@@ -9,7 +9,7 @@ import java.util.Date;
  * Interface for the Event.
  *
  */
-public interface ICalendarEvent {
+public interface ICalendarEvent extends IData {
 	
 	/**
 	 * Returns the Date for the Event
@@ -22,18 +22,6 @@ public interface ICalendarEvent {
 	 * @param date the date as java.util.date for the Event
 	 */
 	public void setDate(Date date);
-	
-	/**
-	 * Returns the Name for the Event
-	 * @return Name for the Event as String
-	 */
-	public String getName();
-	
-	/**
-	 * Sets the name for the Event
-	 * @param name the name for the Event
-	 */
-	public void setName(String name);
 	
 	/**
 	 * Returns the detailed information for the Event

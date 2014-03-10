@@ -7,8 +7,7 @@
     <string name="events">Evenementen</string>
     <string name="challenges">Uitdagingen</string>
     <string name="friends">Vrienden</string>
-    <string name="title_activity_events">EventsActivity</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_events">Evenementen</string>
     <string name="info">Over deze app</string>
 
 </resources>
