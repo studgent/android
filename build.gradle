@@ -52,4 +52,8 @@ buildscript {
 }
 build.dependsOn unitTest
 
-cobertura.coverageFormats = ['html', 'xml']
+
+cobertura {
+  coverageFormats = ['html', 'xml']
+  coverageDirs = [ project.sourceSets.unitTest.output.classesDir ]
+}
