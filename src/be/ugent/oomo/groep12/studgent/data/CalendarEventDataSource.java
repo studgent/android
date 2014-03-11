@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import android.annotation.SuppressLint;
 import android.location.Location;
 import be.ugent.oomo.groep12.studgent.common.CalendarEvent;
@@ -50,12 +52,10 @@ public class CalendarEventDataSource implements IDataSource {
 		items = new HashMap<Integer,ICalendarEvent>();
 		
 		//TODO: retrieve the actual data
-		Location loc = new Location("passive");
-		loc.setLatitude(0.0);
-		loc.setLongitude(0.0);
-		PointOfInterest poi = new PointOfInterest(1,"Gent", loc );
+		LatLng loc = new LatLng(51.0500, 3.7333);
 		for (int i= 0; i< 20; i++) {
-			CalendarEvent cal_event = new CalendarEvent(i, "Gentse Feesten", new Date(), poi);
+			PointOfInterest poi = new PointOfInterest(i,"Gent", loc );
+			CalendarEvent cal_event = new CalendarEvent(i, "Gentse "+ i +" Feesten", new Date(), poi);
 			items.put(cal_event.getId(), cal_event);
 		}
 	}

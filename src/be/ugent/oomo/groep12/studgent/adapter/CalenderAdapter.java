@@ -1,11 +1,13 @@
 package be.ugent.oomo.groep12.studgent.adapter;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +17,24 @@ import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.common.ICalendarEvent;
 
 public class CalenderAdapter extends ArrayAdapter<ICalendarEvent> {
+    static class CalendarItemHolder
+    {
+        TextView name;
+        TextView day_of_month;
+        TextView month;
+        TextView location;
+    }
 	
     Context context; 
     int layoutResourceId;    
-    ICalendarEvent data[] = null;
+    List<ICalendarEvent> data = new ArrayList<ICalendarEvent>();
 
-	public CalenderAdapter(Context context, int layoutResourceId,
-			ICalendarEvent[] objects) {
+	public CalenderAdapter(Context context, int layoutResourceId) {
+		super(context, layoutResourceId);
+        this.layoutResourceId = layoutResourceId;
+        this.context = context;
+	}
+	public CalenderAdapter(Context context, int layoutResourceId, List<ICalendarEvent> objects) {
 		super(context, layoutResourceId, objects);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
@@ -34,9 +47,8 @@ public class CalenderAdapter extends ArrayAdapter<ICalendarEvent> {
         View row = convertView;
         CalendarItemHolder holder = null;
         
-        if(row == null)
-        {
-            LayoutInflater inflater= ((Activity) context).getLayoutInflater();
+        if (row == null) {
+        	LayoutInflater inflater = (LayoutInflater)context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             row = inflater.inflate(layoutResourceId, parent, false);
             
             holder = new CalendarItemHolder();
@@ -46,13 +58,11 @@ public class CalenderAdapter extends ArrayAdapter<ICalendarEvent> {
             holder.location = (TextView)row.findViewById(R.id.calendar_item_location);
             
             row.setTag(holder);
-        }
-        else
-        {
+        } else {
             holder = (CalendarItemHolder)row.getTag();
         }
         
-        ICalendarEvent calendar_item = data[position];
+        ICalendarEvent calendar_item = data.get(position);
         SimpleDateFormat month = new SimpleDateFormat("MMM");
         SimpleDateFormat day = new SimpleDateFormat("dd");
         
@@ -64,12 +74,22 @@ public class CalenderAdapter extends ArrayAdapter<ICalendarEvent> {
         return row;
     }
     
-    static class CalendarItemHolder
-    {
-        TextView name;
-        TextView day_of_month;
-        TextView month;
-        TextView location;
+
+
+    public List<ICalendarEvent> getItemList() {
+        return data;
     }
+ 
+    public void setItemList(List<ICalendarEvent>  itemList) {
+        this.data = itemList;
+    }
+	@Override
+	public void clear() {
+		super.clear();
+	}
+
+	
+	
+
 
 }

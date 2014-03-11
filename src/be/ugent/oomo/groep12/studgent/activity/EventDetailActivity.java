@@ -3,7 +3,10 @@ package be.ugent.oomo.groep12.studgent.activity;
 import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.R.layout;
 import be.ugent.oomo.groep12.studgent.R.menu;
+import be.ugent.oomo.groep12.studgent.common.CalendarEvent;
 import be.ugent.oomo.groep12.studgent.common.ICalendarEvent;
+import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
+import be.ugent.oomo.groep12.studgent.data.CalendarEventDataSource;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.FragmentManager;
@@ -28,7 +31,12 @@ public class EventDetailActivity extends Activity {
 		setContentView(R.layout.activity_event_detail);
 		Bundle b = getIntent().getExtras();
         Integer id = (Integer) b.get("id");
+        CalendarEvent item = (CalendarEvent) CalendarEventDataSource.getInstance().getDetails(id);
+        setMap(item.getLocation());
 
+	}
+	
+	private void setMap(IPointOfInterest poi){
         // Get a handle to the Map Fragment
         ViewGroup vg = (ViewGroup) findViewById(R.id.event_detail_layout);
         View map_view = (View)getLayoutInflater().inflate(R.layout.fragment_map, vg);
@@ -36,15 +44,14 @@ public class EventDetailActivity extends Activity {
         MapFragment map_fragment = (MapFragment) ((Activity)map_view.getContext()).getFragmentManager().findFragmentById(R.id.map);
         
         GoogleMap map = map_fragment.getMap();
-        LatLng ghent = new LatLng(51.0500, 3.7333);
 
         //map.setMyLocationEnabled(true);
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(ghent, 13));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(poi.getLocation(), 16));
 
         map.addMarker(new MarkerOptions()
-                .title("Ghent (" + id +")")
-                .snippet("Gentse feesten.")
-                .position(ghent));
+                .title("Ghent (" + poi.getId() +")")
+                .snippet(poi.getName())
+                .position(poi.getLocation()));
 	}
 
 	@Override

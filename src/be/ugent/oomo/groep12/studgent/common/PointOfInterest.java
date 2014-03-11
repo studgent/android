@@ -1,6 +1,8 @@
 package be.ugent.oomo.groep12.studgent.common;
 
-import android.location.Location;
+import com.google.android.gms.maps.model.LatLng;
+
+
 
 /**
  * Generic PointOfInterest class implementing IPointOfInterest
@@ -11,22 +13,22 @@ public class PointOfInterest implements IPointOfInterest {
 	protected int id;
 	protected String name;
 	protected String details;
-	protected Location location;
+	protected LatLng location;
 
-	public PointOfInterest(int id, String name, String details, Location location){
+	public PointOfInterest(int id, String name, String details, LatLng location){
 		this.id = id;
 		this.name = name;
 		this.details = details;
 		this.location = location;
 	}
 
-	public PointOfInterest(int id, String name, Location location){
+	public PointOfInterest(int id, String name, LatLng location){
 		this.id = id;
 		this.name = name;
 		this.location = location;
 	}
 
-	public PointOfInterest(Location location){
+	public PointOfInterest(LatLng location){
 		this.location = location;
 	}
 
@@ -56,12 +58,12 @@ public class PointOfInterest implements IPointOfInterest {
 	}
 
 	@Override
-	public Location getLocation() {
+	public LatLng getLocation() {
 		return location;
 	}
 
 	@Override
-	public void setLocation(Location location) {
+	public void setLocation(LatLng location) {
 		this.location = location;
 	}
 

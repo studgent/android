@@ -1,6 +1,7 @@
 package be.ugent.oomo.groep12.studgent.common;
 
-import android.location.Location;
+import com.google.android.gms.maps.model.LatLng;
+
 
 /**
  * Interface for the Poiny of Interest.
@@ -24,13 +25,13 @@ public interface IPointOfInterest extends IData {
 	 * Returns the location for the Point of Interest
 	 * @return Location for the Point of Interest as android.location.Location
 	 */
-	public Location getLocation();
+	public LatLng getLocation();
 	
 	/**
 	 * Sets location for the Point of Interest
 	 * @param location the locations as android.location.Location for the Point of Interest
 	 */
-	public void setLocation(Location location);
+	public void setLocation(LatLng location);
 	
 	/**
 	 * Returns summary of the Point of Interest

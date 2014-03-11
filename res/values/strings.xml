@@ -11,5 +11,6 @@
     <string name="info">Over deze app</string>
     <string name="title_activity_event_detail">EventDetailActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="load_eventlist">Evenementen worden opgehaald.</string>
 
 </resources>
