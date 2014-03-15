@@ -1,7 +1,9 @@
 # StudGent (Groep 12)
 
+[![MIT License](http://f.cl.ly/items/3l42230F0I0s183x2j0v/mit.png)](http://ahluntang.mit-license.org/)
 [![Build Status](https://travis-ci.org/studgent/android.png?branch=master)](https://travis-ci.org/studgent/android) 
 [![Coverage Status](https://coveralls.io/repos/studgent/android/badge.png)](https://coveralls.io/r/studgent/android) 
+[![Analytics](https://ga-beacon.appspot.com/UA-8128205-6/studgent/android/README.md)](https://github.com/studgent/backend)
 
 [![Ideas](https://badge.waffle.io/studgent/android.png?label=Idea&title=Idea)](https://github.com/studgent/android/issues?labels=Idea) 
 [![Feature](https://badge.waffle.io/studgent/android.png?label=Feature&title=Feature)](https://github.com/studgent/android/issues?labels=Feature)
@@ -19,8 +21,9 @@ Interactive Cityguide mainly aimed for students in Ghent.
 * Android Developer Tools (Eclipse, Android SDK)
 * Gradle (included in repository)
 * Crashlytics
+* Google Play Services (import from Android SDK in your workspace)
 
-#### Android libraries
+### Android libraries
 
 Most of the libraries are managed through Gradle.
 
@@ -29,6 +32,7 @@ Most of the libraries are managed through Gradle.
 * Crashlytics (Crash reporter to web service)
 
 Execute `./gradlew` to assemble and retrieve the libraries. (Windows users can execute `gradlew.bat`)
+
 
 ### Crashlytics
 
@@ -41,4 +45,6 @@ Used to manage crashlogs, uploads crashes to crashlytics.com.
 
 **Crashlytics API key** must be stored in a string with name `CRASHLYTICS_KEY` in *res/values/apikeys.xml*
 
+### Google Maps
 
+Google Maps API v2 requires an API key, this key can be stored as string `GOOGLE_MAPS_KEY` in *res/values/apikeys.xml*
