@@ -10,10 +10,13 @@ import com.google.android.gms.maps.model.LatLng;
 
 import android.annotation.SuppressLint;
 import android.location.Location;
+import android.util.Log;
 import be.ugent.oomo.groep12.studgent.common.CalendarEvent;
 import be.ugent.oomo.groep12.studgent.common.ICalendarEvent;
 import be.ugent.oomo.groep12.studgent.common.IData;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
+import be.ugent.oomo.groep12.studgent.exception.CurlException;
+import be.ugent.oomo.groep12.studgent.utilities.CurlUtil;
 
 /**
  * DataSource provider for calendar items.
@@ -51,7 +54,16 @@ public class CalendarEventDataSource implements IDataSource {
 		// populate the list
 		items = new HashMap<Integer,ICalendarEvent>();
 		
-		//TODO: retrieve the actual data
+		// example code for retrieving data from api
+		try {
+			String apidata =  CurlUtil.get("poi");
+			
+			Log.i("retrieving api data",apidata);
+		} catch (CurlException e) {
+			Log.e("error retrieving api data", e.getLocalizedMessage());
+		}
+		// end example
+		
 		LatLng loc = new LatLng(51.0500, 3.7333);
 		for (int i= 0; i< 20; i++) {
 			PointOfInterest poi = new PointOfInterest(i,"Gent", loc );
