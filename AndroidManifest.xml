@@ -56,6 +56,11 @@
             android:icon="@drawable/calendar_logo"
             android:label="@string/title_activity_event_detail" >
         </activity>
+                <activity
+            android:name="be.ugent.oomo.groep12.studgent.activity.POIMapviewActivity"
+            android:icon="@drawable/calendar_logo"
+            android:label="@string/title_activity_poi_mapview" >
+        </activity>
     </application>
 
 </manifest>

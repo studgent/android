@@ -63,4 +63,13 @@ public class MainActivity extends Activity {
 		startActivity(intent);
 	}
 	
+	public void openPOIMapviewActivity(View view) {
+		Intent intent = new Intent(this, POIMapviewActivity.class);
+		startActivity(intent);
+	}
+	
+	
+	
+	
+	
 }

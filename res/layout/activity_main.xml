@@ -42,7 +42,8 @@
 		        android:layout_height="wrap_content"
 		        android:layout_marginTop="20dp"
 		        android:enabled="true"
-		        android:text="@string/in_the_neighbourhood" />
+		        android:text="@string/in_the_neighbourhood"
+		        android:onClick="openPOIMapviewActivity" />
 		
 		    <Button
 		        android:id="@+id/button_events"
