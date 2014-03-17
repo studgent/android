@@ -56,13 +56,13 @@ public class CalendarEventDataSource implements IDataSource {
 		
 		// example code for retrieving data from api
 		try {
-			String apidata =  CurlUtil.get("poi");
+			String apidata =  CurlUtil.get("cal");
 			
-			Log.i("retrieving api data",apidata);
+			Log.i("retrieving calendar",apidata);
 		} catch (CurlException e) {
-			Log.e("error retrieving api data", e.getLocalizedMessage());
+			Log.e("error retrieving calendar", e.getLocalizedMessage());
 		}
-		// end example
+		// end example*/
 		
 		LatLng loc = new LatLng(51.0500, 3.7333);
 		for (int i= 0; i< 20; i++) {

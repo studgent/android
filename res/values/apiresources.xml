@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="studgent_api">http://studgent.ahlun.be/</string>
+    <integer name="api_cache_time">86400000</integer>
 </resources>
