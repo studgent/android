@@ -20,6 +20,30 @@ public interface IPointOfInterest extends IData {
 	 * @param details the detailed information for the Point of Interest
 	 */
 	public void setDetails(String details);
+	
+	/**
+	 * Returns street of Point of Interest
+	 * @return street as string
+	 */
+	public String getStreet();
+	
+	/**
+	 * Sets street for Point of Interest
+	 * @param street
+	 */
+	public void setStreet(String street);
+	
+	/**
+	 * Return street number 
+	 * @return number as string
+	 */
+	public String getNumber();
+	
+	/**
+	 * Sets street number
+	 * @param number as string
+	 */
+	public void setNumber(String number);
 
 	/**
 	 * Returns the location for the Point of Interest

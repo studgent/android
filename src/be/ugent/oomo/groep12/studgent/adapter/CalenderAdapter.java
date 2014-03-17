@@ -67,8 +67,8 @@ public class CalenderAdapter extends ArrayAdapter<ICalendarEvent> {
         SimpleDateFormat day = new SimpleDateFormat("dd");
         
         holder.name.setText(calendar_item.getName());
-        holder.month.setText( month.format(calendar_item.getDate()) );
-        holder.day_of_month.setText( day.format(calendar_item.getDate()) );
+        holder.month.setText( month.format(calendar_item.getFromDate()) );
+        holder.day_of_month.setText( day.format(calendar_item.getFromDate()) );
         holder.location.setText( calendar_item.getLocation().getName() );
         
         return row;
