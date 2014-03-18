@@ -22,6 +22,7 @@ public class CalenderAdapter extends ArrayAdapter<ICalendarEvent> {
         TextView name;
         TextView day_of_month;
         TextView month;
+        TextView year;
         TextView location;
     }
 	
@@ -55,6 +56,7 @@ public class CalenderAdapter extends ArrayAdapter<ICalendarEvent> {
             holder.name = (TextView)row.findViewById(R.id.calendar_item_name);
             holder.month = (TextView)row.findViewById(R.id.calendar_item_month);
             holder.day_of_month = (TextView)row.findViewById(R.id.calendar_item_date);
+            holder.year = (TextView)row.findViewById(R.id.calendar_item_year);
             holder.location = (TextView)row.findViewById(R.id.calendar_item_location);
             
             row.setTag(holder);
@@ -65,10 +67,12 @@ public class CalenderAdapter extends ArrayAdapter<ICalendarEvent> {
         ICalendarEvent calendar_item = data.get(position);
         SimpleDateFormat month = new SimpleDateFormat("MMM");
         SimpleDateFormat day = new SimpleDateFormat("dd");
+        SimpleDateFormat year = new SimpleDateFormat("yyyy");
         
         holder.name.setText(calendar_item.getName());
         holder.month.setText( month.format(calendar_item.getFromDate()) );
         holder.day_of_month.setText( day.format(calendar_item.getFromDate()) );
+        holder.year.setText( year.format(calendar_item.getFromDate()) );
         holder.location.setText( calendar_item.getLocation().getName() );
         
         return row;

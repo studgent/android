@@ -12,7 +12,7 @@ import android.location.Location;
  *
  */
 
-public class CalendarEvent implements ICalendarEvent {
+public class CalendarEvent implements ICalendarEvent, Comparable {
 	protected int id;
 	protected String name;
 	protected String type;
@@ -200,6 +200,14 @@ public class CalendarEvent implements ICalendarEvent {
 	@Override
 	public void setPrices(String prices) {
 		this.prices = prices;
+	}
+
+	@Override
+	public int compareTo(Object other) {
+		if (!(other instanceof CalendarEvent))
+		      throw new ClassCastException("A CalendarEvent object expected.");
+		    Date anotherDate = ((CalendarEvent) other).getFromDate();  
+		    return this.from_date.compareTo(anotherDate); 
 	}
 	
 	

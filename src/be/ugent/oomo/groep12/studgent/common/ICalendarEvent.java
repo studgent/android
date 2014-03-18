@@ -9,7 +9,7 @@ import java.util.Date;
  * Interface for the Event.
  *
  */
-public interface ICalendarEvent extends IData {
+public interface ICalendarEvent extends IData, Comparable {
 
 	public String getType();
 	public void setType(String type);

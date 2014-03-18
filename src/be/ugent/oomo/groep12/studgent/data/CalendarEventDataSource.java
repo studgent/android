@@ -67,12 +67,13 @@ public class CalendarEventDataSource implements IDataSource {
 				CalendarEvent cal_event = parseEvent(item);
 				items.put(cal_event.getId(), cal_event);
 			}
+			Log.i("items", ""+items.size());
 		} catch (CurlException e) {
 			Log.e("error retrieving calendar", e.getLocalizedMessage());
 		} catch (JSONException e){
-			Log.e("parsing json", e.getLocalizedMessage());
+			Log.e("error parsing json", e.getLocalizedMessage());
 		} catch (ParseException e){
-			Log.e("parsing json", e.getLocalizedMessage());
+			Log.e("error parsing date", e.getLocalizedMessage());
 		}
 
 	}
@@ -94,8 +95,12 @@ public class CalendarEventDataSource implements IDataSource {
 			   prices = item.optString("prices", "");
 		
 		//todo fix default date value
-		Date date_from = new SimpleDateFormat("yyyy-mm-dd").parse(item.optString("date_from","2032-12-31")),
-			 date_to = new SimpleDateFormat("yyyy-mm-dd").parse(item.optString("date_to","2032-12-31"));
+		Date date_from = item.optString("date_from").equals("null") ? 
+				new Date():
+				new SimpleDateFormat("yyyy-MM-dd").parse(item.optString("date_from"));
+		Date date_to = item.optString("date_from").equals("null") ? 
+				new Date():
+				new SimpleDateFormat("yyyy-MM-dd").parse(item.optString("date_to"));
 		
 		Double latitude = item.optDouble("latitude", 0.0),
 			   longitude = item.optDouble("longitude", 0.0);
