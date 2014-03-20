@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:padding="6dip" >
+
+    <TextView
+        android:id="@+id/calendar_item_month"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/calendar_item_date"
+        android:layout_alignRight="@+id/calendar_item_date"
+        android:layout_below="@+id/calendar_item_date"
+        android:text="jan"
+        android:textAlignment="center"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/calendar_item_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="00"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/calendar_item_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/calendar_item_month"
+        android:layout_alignTop="@+id/calendar_item_date"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/calendar_item_month"
+        android:text="Item name"
+        android:textAlignment="textStart"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/calendar_item_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/calendar_item_month"
+        android:layout_alignBottom="@+id/calendar_item_month"
+        android:layout_alignLeft="@+id/calendar_item_name"
+        android:layout_marginLeft="16dp"
+        android:text="Location"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <ImageView
+        android:id="@+id/calendar_item_location_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/calendar_item_location"
+        android:layout_alignTop="@+id/calendar_item_month"
+        android:layout_toRightOf="@+id/calendar_item_month"
+        android:src="@drawable/studgent_logo" />
+
+</RelativeLayout>
