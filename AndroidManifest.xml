@@ -62,6 +62,7 @@
             android:icon="@drawable/calendar_logo"
             android:label="@string/title_activity_poi_mapview" >
         </activity>
+        <meta-data android:name="com.crashlytics.ApiKey" android:value="@string/CRASHLYTICS_KEY"/>
     </application>
 
 </manifest>
