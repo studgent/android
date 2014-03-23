@@ -2,6 +2,8 @@ package be.ugent.oomo.groep12.studgent.activity;
 
 import java.util.ArrayList;
 import android.widget.AdapterView;
+
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -80,12 +82,15 @@ public class EventsActivity extends Activity implements AdapterView.OnItemClickL
 	    @Override
 	    protected void onPostExecute(ArrayList<ICalendarEvent> result) {            
 	        super.onPostExecute(result);
+	        
 	        dialog.dismiss();
 	        //adapter.setItemList(result);
+	        Collections.sort(result);
 	        adapter.clear();
 	        for(ICalendarEvent event: result){
 	        	adapter.add(event);
 	        }
+	        event_list_view.setAdapter(adapter);
 	        adapter.notifyDataSetChanged();
 	    }
 

@@ -13,7 +13,16 @@ public class PointOfInterest implements IPointOfInterest {
 	protected int id;
 	protected String name;
 	protected String details;
+	protected String street;
+	protected String number;
 	protected LatLng location;
+
+	public PointOfInterest(int id, String name, String details, String street, String number, LatLng location){
+		this(id, name, details, location);
+		this.street = street;
+		this.number = number;
+	}
+	
 
 	public PointOfInterest(int id, String name, String details, LatLng location){
 		this.id = id;
@@ -22,15 +31,6 @@ public class PointOfInterest implements IPointOfInterest {
 		this.location = location;
 	}
 
-	public PointOfInterest(int id, String name, LatLng location){
-		this.id = id;
-		this.name = name;
-		this.location = location;
-	}
-
-	public PointOfInterest(LatLng location){
-		this.location = location;
-	}
 
 	@Override
 	public int getId() {
@@ -55,6 +55,26 @@ public class PointOfInterest implements IPointOfInterest {
 	@Override
 	public void setDetails(String details) {
 		this.details = details;
+	}
+
+	@Override
+	public String getStreet() {
+		return this.street;
+	}
+
+	@Override
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	@Override
+	public String getNumber() {
+		return this.number;
+	}
+
+	@Override
+	public void setNumber(String number) {
+		this.number = number;
 	}
 
 	@Override

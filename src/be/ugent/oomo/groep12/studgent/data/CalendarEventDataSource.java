@@ -1,13 +1,18 @@
 package be.ugent.oomo.groep12.studgent.data;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.android.gms.maps.model.LatLng;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import com.google.android.gms.maps.model.LatLng;
 import android.annotation.SuppressLint;
 import android.location.Location;
 import android.util.Log;
@@ -43,10 +48,9 @@ public class CalendarEventDataSource implements IDataSource {
 	}
 
 	public Map<Integer, ICalendarEvent> getLastItems() {
-		if (items == null /* || last updated < now - 1 day ago */ ) { // check if information missing or outdated
+		if (items == null ) {
 			populateList();
 		}
-		// return the list
 		return items;
 	}
 	
@@ -54,22 +58,59 @@ public class CalendarEventDataSource implements IDataSource {
 		// populate the list
 		items = new HashMap<Integer,ICalendarEvent>();
 		
-		// example code for retrieving data from api
 		try {
-			String apidata =  CurlUtil.get("poi");
-			
-			Log.i("retrieving api data",apidata);
+			Log.i("retrieving resource", "cal");
+			// populate with 'cal' resource
+			// 'cal/all' returns all items
+			// 'cal' returns a filtered list
+			String apidata =  CurlUtil.get("cal");
+			JSONArray calendar_items = new JSONArray(apidata);
+			for (int i = 0; i < calendar_items.length(); i++) {
+				JSONObject item = calendar_items.getJSONObject(i);
+				CalendarEvent cal_event = parseEvent(item);
+				items.put(cal_event.getId(), cal_event);
+			}
+			Log.i("items", ""+items.size());
 		} catch (CurlException e) {
-			Log.e("error retrieving api data", e.getLocalizedMessage());
+			Log.e("error retrieving calendar", e.getLocalizedMessage());
+		} catch (JSONException e){
+			Log.e("error parsing json", e.getLocalizedMessage());
+		} catch (ParseException e){
+			Log.e("error parsing date", e.getLocalizedMessage());
 		}
-		// end example
+
+	}
+	
+	protected CalendarEvent parseEvent(JSONObject item) throws JSONException, ParseException{
+		CalendarEvent cal_event;
+		int id = item.optInt("id",0);
+		String type = item.optString("type",""),
+			   name = item.optString("name", ""),
+			   details = item.optString("details", ""),
+			   description = item.optString("description", ""),
+			   contact = item.optString("contact", ""),
+			   street = item.optString("street", ""),
+			   number = item.optString("number", ""),
+			   phone = item.optString("phone", ""),
+			   email = item.optString("email", ""),
+			   uri = item.optString("uri", ""),
+			   image = item.optString("image", ""),
+			   prices = item.optString("prices", "");
 		
-		LatLng loc = new LatLng(51.0500, 3.7333);
-		for (int i= 0; i< 20; i++) {
-			PointOfInterest poi = new PointOfInterest(i,"Gent", loc );
-			CalendarEvent cal_event = new CalendarEvent(i, "Gentse "+ i +" Feesten", new Date(), poi);
-			items.put(cal_event.getId(), cal_event);
-		}
+		//todo fix default date value
+		Date date_from = item.optString("date_from").equals("null") ? 
+				new Date():
+				new SimpleDateFormat("yyyy-MM-dd").parse(item.optString("date_from"));
+		Date date_to = item.optString("date_from").equals("null") ? 
+				new Date():
+				new SimpleDateFormat("yyyy-MM-dd").parse(item.optString("date_to"));
+		
+		Double latitude = item.optDouble("latitude", 0.0),
+			   longitude = item.optDouble("longitude", 0.0);
+		LatLng location = new LatLng(latitude,longitude);
+		
+		cal_event = new CalendarEvent(id, type, name, date_from, date_to, details, description, contact, phone, email, uri, image, prices, street, number, location);
+		return cal_event;
 	}
 	
 	@Override
