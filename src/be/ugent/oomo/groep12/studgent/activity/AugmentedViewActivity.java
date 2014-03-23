@@ -1,52 +1,74 @@
 package be.ugent.oomo.groep12.studgent.activity;
 
-import java.io.IOException;
-
 import be.ugent.oomo.groep12.studgent.R;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.Canvas;
-import android.graphics.Rect;
 import android.hardware.Camera;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 public class AugmentedViewActivity extends Activity implements
-		SurfaceHolder.Callback {
-
+SurfaceHolder.Callback,
+SensorEventListener {
+	// Camera
 	private Camera camera;
 	private boolean inPreview;
-	private SurfaceView surfaceView;
 	private SurfaceHolder holder;
 	private boolean cameraConfigured;
+
+	// Compass
+	private SensorManager sensorManager;
+	private Sensor magnetometer;
+	private Sensor accelerometer;
+
+	// Layout elements
+	private SurfaceView surfaceView;
+	private TextView textView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		// Set landscape orientation
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-
 		setContentView(R.layout.activity_augmented);
 
+		// Layout binding
 		surfaceView = (SurfaceView) findViewById(R.id.arview);
+		textView = (TextView) findViewById(R.id.artext);
+
+		// Compass
+		sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+		accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		magnetometer = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+
+		// Video
 		holder = surfaceView.getHolder();
 		holder.addCallback(this);
-
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		// Restart camera preview
+
+		// Camera preview
 		camera = Camera.open();
 		startPreview();
+
+		// Compass
+		sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME);
+		sensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_GAME);
 	}
 
 	@Override
@@ -58,6 +80,9 @@ public class AugmentedViewActivity extends Activity implements
 		camera.release();
 		camera = null;
 		inPreview = false;
+
+		// Compass
+		sensorManager.unregisterListener(this);
 
 		super.onPause();
 	}
@@ -144,5 +169,45 @@ public class AugmentedViewActivity extends Activity implements
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+		// TODO Auto-generated method stub
+
+	}
+	
+	float[] mGravity;
+	float[] mGeomagnetic;
+
+	@Override
+	public void onSensorChanged(SensorEvent event) {
+
+		if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
+			mGravity = event.values;
+		if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD)
+			mGeomagnetic = event.values;
+		if (mGravity != null && mGeomagnetic != null) {
+			float R[] = new float[9];
+			float I[] = new float[9];
+			boolean success = SensorManager.getRotationMatrix(R, I, mGravity, mGeomagnetic);
+			if (success) {
+				
+				float orientation[] = new float[3];
+				SensorManager.getOrientation(R, orientation);
+				
+				float azimuthInRadians = orientation[0];
+				float azimuthInDegrees = (float)Math.toDegrees(azimuthInRadians);
+				azimuthInDegrees += 90f;
+				if (azimuthInDegrees < 0.0f) {
+				    azimuthInDegrees += 360.0f;
+				}
+				
+				azimuthInDegrees = Math.round(azimuthInDegrees);
+				
+				textView.setText("Heading: " + Float.toString(azimuthInDegrees) + " degrees");
+			}
+		}
+				
 	}
 }
