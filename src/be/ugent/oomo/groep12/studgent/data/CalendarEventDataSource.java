@@ -60,6 +60,9 @@ public class CalendarEventDataSource implements IDataSource {
 		
 		try {
 			Log.i("retrieving resource", "cal");
+			// populate with 'cal' resource
+			// 'cal/all' returns all items
+			// 'cal' returns a filtered list
 			String apidata =  CurlUtil.get("cal");
 			JSONArray calendar_items = new JSONArray(apidata);
 			for (int i = 0; i < calendar_items.length(); i++) {
