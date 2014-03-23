@@ -6,8 +6,6 @@ import be.ugent.oomo.groep12.studgent.R.menu;
 import be.ugent.oomo.groep12.studgent.common.CalendarEvent;
 import be.ugent.oomo.groep12.studgent.common.ICalendarEvent;
 import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
-import be.ugent.oomo.groep12.studgent.data.CalendarEventDataSource;
-import be.ugent.oomo.groep12.studgent.utilities.CurlUtil;
 import be.ugent.oomo.groep12.studgent.utilities.PlayServicesUtil;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -37,7 +35,8 @@ public class EventDetailActivity extends Activity {
 		setContentView(R.layout.activity_event_detail);
 		Bundle b = getIntent().getExtras();
         Integer id = (Integer) b.get("id");
-        CalendarEvent item = (CalendarEvent) CalendarEventDataSource.getInstance().getDetails(id);
+        //CalendarEvent item = (CalendarEvent) CalendarEventDataSource.getInstance().getDetails(id);
+        CalendarEvent item = (CalendarEvent) getIntent().getParcelableExtra("calendarItem");
         String noPlayServices = "Google Play Services not found, map will not be shown.";
         if (PlayServicesUtil.hasPlayServices(this, noPlayServices)){
         	setMap(item.getLocation());
