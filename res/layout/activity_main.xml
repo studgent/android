@@ -43,7 +43,7 @@
 		        android:layout_marginTop="20dp"
 		        android:enabled="true"
 		        android:text="@string/in_the_neighbourhood"
-		        android:onClick="openPOIMapviewActivity" />
+		        android:onClick="openAugmentedViewActivity" />
 		
 		    <Button
 		        android:id="@+id/button_events"
