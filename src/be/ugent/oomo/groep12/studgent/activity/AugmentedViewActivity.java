@@ -1,6 +1,7 @@
 package be.ugent.oomo.groep12.studgent.activity;
 
 import be.ugent.oomo.groep12.studgent.R;
+import be.ugent.oomo.groep12.studgent.view.OverlayView;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -35,6 +36,7 @@ SensorEventListener {
 	// Layout elements
 	private SurfaceView surfaceView;
 	private TextView textView;
+	private OverlayView overlayView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,7 @@ SensorEventListener {
 		// Layout binding
 		surfaceView = (SurfaceView) findViewById(R.id.arview);
 		textView = (TextView) findViewById(R.id.artext);
+		overlayView = (OverlayView) findViewById(R.id.aroverlay);
 
 		// Compass
 		sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -197,15 +200,18 @@ SensorEventListener {
 				SensorManager.getOrientation(R, orientation);
 				
 				float azimuthInRadians = orientation[0];
-				float azimuthInDegrees = (float)Math.toDegrees(azimuthInRadians);
+				float azimuthInDegrees = (float) Math.toDegrees(azimuthInRadians);
+				// Compensate for landscape orientation
 				azimuthInDegrees += 90f;
+				
 				if (azimuthInDegrees < 0.0f) {
 				    azimuthInDegrees += 360.0f;
 				}
 				
-				azimuthInDegrees = Math.round(azimuthInDegrees);
+				int azimuth = Math.round(azimuthInDegrees);
 				
-				textView.setText("Heading: " + Float.toString(azimuthInDegrees) + " degrees");
+				textView.setText("Az: " + Float.toString(azimuth) + " degrees");
+				overlayView.updateOverlay(azimuth);
 			}
 		}
 				
