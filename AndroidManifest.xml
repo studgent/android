@@ -17,6 +17,8 @@
 	     Google Maps Android API v2, but are recommended. -->
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+	// Camera related permission
+	<uses-permission android:name="android.permission.CAMERA"/>
 	
 	<uses-feature
         android:glEsVersion="0x00020000"
@@ -69,7 +71,16 @@
             android:icon="@drawable/calendar_logo"
             android:label="@string/title_activity_poi_mapview" >
         </activity>
+<<<<<<< HEAD
 >>>>>>> 02c7e109d16678a204dcfc447f96974adb18b2a2
+=======
+        <activity
+            android:name="be.ugent.oomo.groep12.studgent.activity.AugmentedViewActivity"
+            android:icon="@drawable/studgent_logo"
+            android:label="@string/title_activity_augmented"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+>>>>>>> e19d460332e0360e4564e795f8fadfda517f9e6d
     </application>
 
 </manifest>

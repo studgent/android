@@ -68,8 +68,8 @@ public class MainActivity extends Activity {
 		startActivity(intent);
 	}
 	
-	
-	
-	
-	
+	public void openAugmentedViewActivity(View view) {
+		Intent intent = new Intent(this, AugmentedViewActivity.class);
+		startActivity(intent);
+	}
 }

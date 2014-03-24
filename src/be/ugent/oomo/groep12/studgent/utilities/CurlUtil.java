@@ -69,13 +69,23 @@ public class CurlUtil {
 	 * @param ignore_cache true to force refresh, false to use cache if possible
 	 * @throws CurlException
 	 */
-	public static String get(String resource, boolean ignore_cache) throws CurlException {
+	public static String get(String resource, boolean ignore_cache) throws CurlException{
 		String api = App.getContext().getResources().getString(R.string.studgent_api);
 		String target = api + '/' + resource;
-		
+		return getRaw(target, ignore_cache);
+	}
+	
+	
+	public static String getRaw(String resource, boolean ignore_cache) throws CurlException {
+		Log.i("retrieving", resource);
 		// get cache.
 		File dir = App.getContext().getCacheDir();
-		String cache_file = resource.replace('/', '-');
+		String cache_file = resource.replace('/', '-')
+									.replace(':', '-')
+									.replace('?', '-')
+									.replace('&', '-')
+									.replace('=', '-')
+									.replace('+', '-');
 		File file = new File(dir, cache_file);
 
 		Date file_mod_date = new Date(file.lastModified());
@@ -91,7 +101,7 @@ public class CurlUtil {
 			Log.i("no cache available", file.getAbsolutePath());
 			try {
 			    HttpClient httpclient = new DefaultHttpClient();
-			    HttpResponse response = httpclient.execute(new HttpGet(target));
+			    HttpResponse response = httpclient.execute(new HttpGet(resource));
 			    StatusLine statusLine = response.getStatusLine();
 			    
 			    if(statusLine.getStatusCode() == HttpStatus.SC_OK){
@@ -113,13 +123,13 @@ public class CurlUtil {
 			        throw new CurlException(statusLine.getReasonPhrase());
 			    }
 			} catch (FileNotFoundException e) {
-				Log.e("FileNotFound",e.getLocalizedMessage());
+				Log.e("FileNotFound",e.getMessage());
 				throw new CurlException(e);
 			} catch (IOException e) {
-				Log.e("IOException",e.getLocalizedMessage());
+				Log.e("IOException",e.getMessage());
 				throw new CurlException(e);
 			} catch (Exception e) {
-				Log.e("Exception",e.getLocalizedMessage());
+				Log.e("Exception",""+e.getMessage());
 				throw new CurlException(e);
 			}
 		}

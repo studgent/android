@@ -1,5 +1,6 @@
 package be.ugent.oomo.groep12.studgent.data;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ import org.json.JSONObject;
 
 import com.google.android.gms.maps.model.LatLng;
 import android.annotation.SuppressLint;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.util.Log;
 import be.ugent.oomo.groep12.studgent.common.CalendarEvent;
@@ -21,6 +24,7 @@ import be.ugent.oomo.groep12.studgent.common.ICalendarEvent;
 import be.ugent.oomo.groep12.studgent.common.IData;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import be.ugent.oomo.groep12.studgent.exception.CurlException;
+import be.ugent.oomo.groep12.studgent.utilities.App;
 import be.ugent.oomo.groep12.studgent.utilities.CurlUtil;
 
 /**
