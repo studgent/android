@@ -2,10 +2,12 @@ package be.ugent.oomo.groep12.studgent.activity;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -17,6 +19,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -30,9 +33,10 @@ import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import be.ugent.oomo.groep12.studgent.data.CalendarEventDataSource;
 import be.ugent.oomo.groep12.studgent.data.POIDataSource;
+import be.ugent.oomo.groep12.studgent.utilities.PlayServicesUtil;
 
 
-public class POIMapviewActivity extends Activity {
+public class POIMapviewActivity extends Activity implements OnInfoWindowClickListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,14 +45,14 @@ public class POIMapviewActivity extends Activity {
                 R.anim.animation_leave);
 		setContentView(R.layout.activity_poi_mapview);
 		
-		
-		
 		FragmentManager fmanager = getFragmentManager();
 		MapFragment map = (MapFragment)(fmanager.findFragmentById(R.id.mapFullscreen));
 	
-		loadPOIs(map.getMap());
+		String noPlayServices = "Google Play Services not found, map will not be shown."; 
+		if (PlayServicesUtil.hasPlayServices(this, noPlayServices)){
+			loadPOIs(map.getMap());
+		}		
 	}
-	
 
 
 	@Override
@@ -72,7 +76,9 @@ public class POIMapviewActivity extends Activity {
 	
 	private void loadPOIs(GoogleMap map){
 		map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.05389,3.705), 16));
-		new UpdatePOIs().execute(map);
+		new AsyncPOILoader().execute(map);
+		
+		map.setOnInfoWindowClickListener( this);
 	}
 
 
@@ -83,33 +89,45 @@ public class POIMapviewActivity extends Activity {
 	public void openAugmentedViewActivity() {
 		Intent intent = new Intent(this, AugmentedViewActivity.class);
 		startActivity(intent);
+	}
+
+
+
+	@Override
+	public void onInfoWindowClick(Marker marker) {
+		// TODO Auto-generated method stub
 	}	
 }
 
 
-class UpdatePOIs extends AsyncTask<GoogleMap, Integer, GoogleMap> {
+class AsyncPOILoader  extends AsyncTask<GoogleMap, Integer, GoogleMap> {
+	Map<Integer, IPointOfInterest> data;
+	
   	@Override
 	protected GoogleMap doInBackground(GoogleMap... params) {
   		GoogleMap map = params[0];		
-  		Map<Integer, IPointOfInterest> data= POIDataSource.getInstance().getLastItems();
+  		data= POIDataSource.getInstance().getLastItems();
   		return map;
 	}
   	
   	 protected void onPostExecute(GoogleMap map) {
   		//this function is already called by the doInBackground thread so the POI points are in the memory
-  		Map<Integer, IPointOfInterest> data= POIDataSource.getInstance().getLastItems();
- 		for (Map.Entry<Integer, IPointOfInterest> poi : data.entrySet())
+  		for (Map.Entry<Integer, IPointOfInterest> poi : data.entrySet())
  		{
+ 			
  		 	map.addMarker(new MarkerOptions()
  	                .title(poi.getValue().getName())
  	                .snippet(poi.getValue().getDetails() + "\n" + poi.getValue().getUrl())
  	                .position(poi.getValue().getLocation())
  	                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
- 		 			);
- 		} 
- 		
+ 	                .flat(true));
  		 	
-  	 }
-
-  	
+ 		}
+  		
+   }
 }
+
+
+
+
+
