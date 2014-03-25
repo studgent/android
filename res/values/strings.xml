@@ -9,6 +9,7 @@
     <string name="friends">Vrienden</string>
     <string name="title_activity_events">Evenementen</string>
     <string name="title_activity_poi_mapview">in de buurt</string>
+    <string name="title_activity_augmented">In de buurt</string>
     <string name="info">Over deze app</string>
     <string name="title_activity_event_detail">EventDetailActivity</string>
     <string name="hello_world">Hello world!</string>

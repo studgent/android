@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal" >
+    
+    <SurfaceView
+        android:id="@+id/arview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"/>
+    <TextView 
+        android:id="@+id/artext"
+        android:background="#0000"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"/>
+    <be.ugent.oomo.groep12.studgent.view.OverlayView 
+        android:id="@+id/aroverlay"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
+</FrameLayout>

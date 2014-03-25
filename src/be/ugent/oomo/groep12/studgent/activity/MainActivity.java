@@ -14,7 +14,7 @@ import android.widget.Button;
 import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.utilities.LayoutUtil;
 
-import com.crashlytics.android.Crashlytics;
+//import com.crashlytics.android.Crashlytics;
 
 public class MainActivity extends Activity {
 	
@@ -30,7 +30,7 @@ public class MainActivity extends Activity {
 		/**
 		 * Enable crash logs
 		 */
-		Crashlytics.start(this);
+		//Crashlytics.start(this);
 		setContentView(R.layout.activity_main);
 		setButtons();
 		
@@ -68,8 +68,8 @@ public class MainActivity extends Activity {
 		startActivity(intent);
 	}
 	
-	
-	
-	
-	
+	public void openAugmentedViewActivity(View view) {
+		Intent intent = new Intent(this, AugmentedViewActivity.class);
+		startActivity(intent);
+	}
 }

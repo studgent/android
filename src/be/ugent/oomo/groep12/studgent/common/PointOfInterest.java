@@ -1,5 +1,10 @@
 package be.ugent.oomo.groep12.studgent.common;
 
+import java.util.Date;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.android.gms.maps.model.LatLng;
 
 
@@ -86,5 +91,50 @@ public class PointOfInterest implements IPointOfInterest {
 	public void setLocation(LatLng location) {
 		this.location = location;
 	}
+
+
+	// Parcelable
+	
+	/**
+	 * Constructor for parcelable
+	 * Constructs CalendarEvent from Parcel object
+	 * @param in
+	 */
+	public PointOfInterest(Parcel in){
+		this.id = in.readInt();
+		this.name = in.readString();
+		this.details = in.readString();
+		this.street = in.readString();
+		this.number = in.readString();
+		this.location = new LatLng(in.readDouble(),in.readDouble());
+	}
+	
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeInt(this.id);
+		dest.writeString(this.name);
+		dest.writeString(this.details);
+		dest.writeString(this.street);
+		dest.writeString(this.number);
+		dest.writeDouble(this.location.latitude);
+		dest.writeDouble(this.location.longitude);
+	}
+	
+
+	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+	    public PointOfInterest createFromParcel(Parcel in) {
+	        return new PointOfInterest(in);
+	    }
+	
+	    public PointOfInterest[] newArray(int size) {
+	        return new PointOfInterest[size];
+	    }
+	};
 
 }

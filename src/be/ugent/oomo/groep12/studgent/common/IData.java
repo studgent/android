@@ -1,6 +1,8 @@
 package be.ugent.oomo.groep12.studgent.common;
 
-public interface IData {
+import android.os.Parcelable;
+
+public interface IData extends Parcelable {
 	public int getId();
 	
 	/**

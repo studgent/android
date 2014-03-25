@@ -71,6 +71,7 @@ public class EventsActivity extends Activity implements AdapterView.OnItemClickL
 	public void onItemClick(AdapterView<?> parent, View item, int position, long rowID) {
 		Intent intent = new Intent(this, EventDetailActivity.class);
 		intent.putExtra("id", adapter.getItem(position).getId());
+		intent.putExtra("calendarItem", adapter.getItem(position));
 		startActivity(intent);
 		
 	}
