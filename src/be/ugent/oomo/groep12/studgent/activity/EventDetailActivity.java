@@ -1,37 +1,22 @@
 package be.ugent.oomo.groep12.studgent.activity;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
 import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.R.layout;
 import be.ugent.oomo.groep12.studgent.R.menu;
-import be.ugent.oomo.groep12.studgent.adapter.CalenderAdapter;
 import be.ugent.oomo.groep12.studgent.common.CalendarEvent;
 import be.ugent.oomo.groep12.studgent.common.ICalendarEvent;
 import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
-import be.ugent.oomo.groep12.studgent.data.CalendarEventDataSource;
 import be.ugent.oomo.groep12.studgent.exception.CurlException;
-import be.ugent.oomo.groep12.studgent.utilities.App;
 import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
 import be.ugent.oomo.groep12.studgent.utilities.PlayServicesUtil;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
@@ -42,9 +27,6 @@ import android.widget.Toast;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.text.TextUtils;
 
 public class EventDetailActivity extends Activity {
 	
@@ -164,10 +146,12 @@ public class EventDetailActivity extends Activity {
 	        String snippet = selected_event.getLocation().getStreet() != null ? 
 	        		selected_event.getLocation().getStreet() + " " + selected_event.getLocation().getNumber()
 	        		: "";
-	        Marker marker = map.addMarker(new MarkerOptions().title(selected_event.getName())
-	        												 .snippet(snippet)
-	        												 .position(selected_event.getLocation().getLocation()));
-
+	        Marker marker = map.addMarker(new MarkerOptions()
+	        								.title(selected_event.getName())
+	        								.snippet(snippet)
+	        								.position(selected_event.getLocation().getLocation())
+	        								.icon( BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN) )
+	        							 );
 	        marker.showInfoWindow();
 	    }
 
