@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,6 +38,8 @@ import be.ugent.oomo.groep12.studgent.utilities.PlayServicesUtil;
 
 
 public class POIMapviewActivity extends Activity implements OnInfoWindowClickListener {
+	
+	protected Map<String, IPointOfInterest> marker_data;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,8 @@ public class POIMapviewActivity extends Activity implements OnInfoWindowClickLis
 		this.overridePendingTransition(R.anim.animation_enter,
                 R.anim.animation_leave);
 		setContentView(R.layout.activity_poi_mapview);
+		marker_data = new HashMap<String, IPointOfInterest>();
+		
 		
 		FragmentManager fmanager = getFragmentManager();
 		MapFragment map = (MapFragment)(fmanager.findFragmentById(R.id.mapFullscreen));
@@ -95,37 +100,40 @@ public class POIMapviewActivity extends Activity implements OnInfoWindowClickLis
 
 	@Override
 	public void onInfoWindowClick(Marker marker) {
-		// TODO Auto-generated method stub
-	}	
-}
-
-
-class AsyncPOILoader  extends AsyncTask<GoogleMap, Integer, GoogleMap> {
-	Map<Integer, IPointOfInterest> data;
-	
-  	@Override
-	protected GoogleMap doInBackground(GoogleMap... params) {
-  		GoogleMap map = params[0];		
-  		data= POIDataSource.getInstance().getLastItems();
-  		return map;
+		IPointOfInterest poi = marker_data.get(marker.getId());
+		Log.i("clicked on marker", marker.getId() + '-' + poi.getName());
 	}
-  	
-  	 protected void onPostExecute(GoogleMap map) {
-  		//this function is already called by the doInBackground thread so the POI points are in the memory
-  		for (Map.Entry<Integer, IPointOfInterest> poi : data.entrySet())
- 		{
- 			
- 		 	map.addMarker(new MarkerOptions()
- 	                .title(poi.getValue().getName())
- 	                .snippet(poi.getValue().getDetails() + "\n" + poi.getValue().getUrl())
- 	                .position(poi.getValue().getLocation())
- 	                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
- 	                .flat(true));
- 		 	
- 		}
-  		
-   }
+	
+
+	private class AsyncPOILoader  extends AsyncTask<GoogleMap, Integer, GoogleMap> {
+		protected Map<Integer, IPointOfInterest> data;
+		
+	  	@Override
+		protected GoogleMap doInBackground(GoogleMap... params) {
+	  		GoogleMap map = params[0];		
+	  		data = POIDataSource.getInstance().getLastItems();
+	  		return map;
+		}
+	  	
+	  	 protected void onPostExecute(GoogleMap map) {
+	  		//this function is already called by the doInBackground thread so the POI points are in the memory
+	  		for (Map.Entry<Integer, IPointOfInterest> poi : data.entrySet())
+	 		{
+	 			
+	 		 	Marker marker = map.addMarker(new MarkerOptions()
+							 	                .title(poi.getValue().getName())
+							 	                .snippet(poi.getValue().getDetails() + "\n" + poi.getValue().getUrl())
+							 	                .position(poi.getValue().getLocation())
+							 	                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+							 	                .flat(true));
+	 		 	marker_data.put(marker.getId(), poi.getValue());
+	 		}
+	  		
+	   }
+	}
+
 }
+
 
 
 

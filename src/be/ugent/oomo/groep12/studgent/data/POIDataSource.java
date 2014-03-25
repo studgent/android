@@ -95,7 +95,6 @@ public class POIDataSource implements IDataSource {
 
 	@Override
 	public IData getDetails(int id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
