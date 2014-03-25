@@ -50,6 +50,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+<<<<<<< HEAD
+        </activity>       
+        <meta-data android:name="com.crashlytics.ApiKey" android:value="@string/CRASHLYTICS_KEY"/>
+       
+=======
         </activity>
         <activity
             android:name="be.ugent.oomo.groep12.studgent.activity.EventsActivity"
@@ -66,12 +71,16 @@
             android:icon="@drawable/calendar_logo"
             android:label="@string/title_activity_poi_mapview" >
         </activity>
+<<<<<<< HEAD
+>>>>>>> 02c7e109d16678a204dcfc447f96974adb18b2a2
+=======
         <activity
             android:name="be.ugent.oomo.groep12.studgent.activity.AugmentedViewActivity"
             android:icon="@drawable/studgent_logo"
             android:label="@string/title_activity_augmented"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
+>>>>>>> e19d460332e0360e4564e795f8fadfda517f9e6d
     </application>
 
 </manifest>
