@@ -53,7 +53,7 @@ public class CurlUtil {
 	}
 
 	/**
-	 * Executes a GET request to the resource specified in the parameter.
+	 * Executes a GET request to the resource in the backend API specified in the parameter.
 	 * @param resource from the backend api
 	 * @return String with list of json items
 	 * @throws CurlException
@@ -63,7 +63,7 @@ public class CurlUtil {
 	}
 	
 	/**
-	 * Executes a GET request to the resource specified in the parameter.
+	 * Executes a GET request to the resource in the backend API specified in the parameter.
 	 * @param resource from the backend api
 	 * @return String with list of json items
 	 * @param ignore_cache true to force refresh, false to use cache if possible
@@ -75,7 +75,13 @@ public class CurlUtil {
 		return getRaw(target, ignore_cache);
 	}
 	
-	
+	/**
+	 * Base GET request to a resource, resource must be a full and valid URI and should return a string.
+	 * @param resource
+	 * @param ignore_cache
+	 * @return
+	 * @throws CurlException
+	 */
 	public static String getRaw(String resource, boolean ignore_cache) throws CurlException {
 		Log.i("retrieving", resource);
 		// get cache.
