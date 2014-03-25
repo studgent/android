@@ -1,6 +1,7 @@
 package be.ugent.oomo.groep12.studgent.activity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -14,14 +15,19 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import be.ugent.oomo.groep12.studgent.R;
+import be.ugent.oomo.groep12.studgent.adapter.CalenderAdapter;
+import be.ugent.oomo.groep12.studgent.common.ICalendarEvent;
 import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
+import be.ugent.oomo.groep12.studgent.data.CalendarEventDataSource;
 import be.ugent.oomo.groep12.studgent.data.POIDataSource;
 
 
@@ -64,23 +70,8 @@ public class POIMapviewActivity extends Activity {
 	
 	
 	private void loadPOIs(GoogleMap map){
-		
-		Map<Integer, PointOfInterest> data= POIDataSource.getInstance().getLastItems();
-		
-		for (Map.Entry<Integer, PointOfInterest> poi : data.entrySet())
-		{
-			
-			//PointOfInterest poi = new PointOfInterest(new LatLng(51.05389,3.705));
-			//poi.setName("test marker");
-			
-		    //map.setMyLocationEnabled(true);
-	        map.moveCamera(CameraUpdateFactory.newLatLngZoom(poi.getValue().getLocation(), 16));
-
-	        map.addMarker(new MarkerOptions()
-	                .title("Ghent (" + poi.getValue().getId() +")")
-	                .snippet(poi.getValue().getName())
-	                .position(poi.getValue().getLocation()));
-		} 
+		map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.05389,3.705), 16));
+		new UpdatePOIs().execute(map);
 	}
 
 
@@ -91,6 +82,31 @@ public class POIMapviewActivity extends Activity {
 	public void openAugmentedViewActivity() {
 		Intent intent = new Intent(this, AugmentedViewActivity.class);
 		startActivity(intent);
+	}	
+}
+
+
+class UpdatePOIs extends AsyncTask<GoogleMap, Integer, GoogleMap> {
+  	@Override
+	protected GoogleMap doInBackground(GoogleMap... params) {
+  		GoogleMap map = params[0];		
+  		Map<Integer, IPointOfInterest> data= POIDataSource.getInstance().getLastItems();
+  		return map;
 	}
-	
+  	
+  	 protected void onPostExecute(GoogleMap map) {
+  		//this function is already called by the doInBackground thread so the POI points are in the memory
+  		Map<Integer, IPointOfInterest> data= POIDataSource.getInstance().getLastItems();
+ 		for (Map.Entry<Integer, IPointOfInterest> poi : data.entrySet())
+ 		{
+ 		 	map.addMarker(new MarkerOptions()
+ 	                .title(poi.getValue().getName())
+ 	                .snippet(poi.getValue().getDetails() + "\n" + poi.getValue().getUrl())
+ 	                .position(poi.getValue().getLocation()));
+ 		} 
+ 		
+ 		 	
+  	 }
+
+  	
 }

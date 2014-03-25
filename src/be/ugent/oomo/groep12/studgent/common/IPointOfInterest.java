@@ -52,6 +52,18 @@ public interface IPointOfInterest extends IData {
 	public LatLng getLocation();
 	
 	/**
+	 * Sets url for the Point of Interest
+	 * @param string url of the website
+	 */
+	public void setUrl(String url);
+	
+	/**
+	 * Returns the website of the Point of Interest
+	 * @return Url for the Point of Interest as String
+	 */
+	public String getUrl();
+	
+	/**
 	 * Sets location for the Point of Interest
 	 * @param location the locations as android.location.Location for the Point of Interest
 	 */

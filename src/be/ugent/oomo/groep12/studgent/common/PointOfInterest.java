@@ -21,6 +21,7 @@ public class PointOfInterest implements IPointOfInterest {
 	protected String street;
 	protected String number;
 	protected LatLng location;
+	protected String url;
 
 	public PointOfInterest(int id, String name, String details, String street, String number, LatLng location){
 		this(id, name, details, location);
@@ -93,6 +94,7 @@ public class PointOfInterest implements IPointOfInterest {
 	}
 
 
+
 	// Parcelable
 	
 	/**
@@ -136,5 +138,21 @@ public class PointOfInterest implements IPointOfInterest {
 	        return new PointOfInterest[size];
 	    }
 	};
+
+	
+	@Override
+	public void setUrl(String url) {
+		// TODO Auto-generated method stub
+		this.url=url;
+	}
+
+
+	@Override
+	public String getUrl() {
+		// TODO Auto-generated method stub
+		return url;
+	}
+	
+	
 
 }
