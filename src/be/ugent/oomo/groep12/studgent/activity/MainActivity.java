@@ -1,5 +1,7 @@
 package be.ugent.oomo.groep12.studgent.activity;
 
+import com.crashlytics.android.Crashlytics;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,7 +27,7 @@ public class MainActivity extends Activity {
 		/**
 		 * Enable crash logs
 		 */
-		//Crashlytics.start(this);
+		Crashlytics.start(this);
 		setContentView(R.layout.activity_main);
 		setButtons();
 		
