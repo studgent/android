@@ -8,6 +8,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -102,7 +103,9 @@ class UpdatePOIs extends AsyncTask<GoogleMap, Integer, GoogleMap> {
  		 	map.addMarker(new MarkerOptions()
  	                .title(poi.getValue().getName())
  	                .snippet(poi.getValue().getDetails() + "\n" + poi.getValue().getUrl())
- 	                .position(poi.getValue().getLocation()));
+ 	                .position(poi.getValue().getLocation())
+ 	                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+ 		 			);
  		} 
  		
  		 	
