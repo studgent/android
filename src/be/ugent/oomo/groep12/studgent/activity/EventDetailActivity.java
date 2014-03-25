@@ -35,6 +35,7 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
+
 import android.app.Activity;
 import android.os.Bundle;
 
@@ -90,7 +91,9 @@ public class EventDetailActivity extends Activity {
 	        GoogleMap map = map_fragment.getMap();
 	
 	        //map.setMyLocationEnabled(true);
-	        map.moveCamera(CameraUpdateFactory.newLatLngZoom(selected_event.getLocation().getLocation(), 18));
+	        LatLng maplocation = new LatLng(selected_event.getLocation().getLocation().latitude + 0.00024, 
+	        								selected_event.getLocation().getLocation().longitude);
+	        map.moveCamera(CameraUpdateFactory.newLatLngZoom(maplocation, 18));
 	        Log.i("LatLng:", selected_event.getLocation().getLocation().latitude + "." + selected_event.getLocation().getLocation().longitude);
 	        Marker marker = map.addMarker(new MarkerOptions().title(selected_event.getName())
 	        												 .snippet(selected_event.getLocation().getStreet() + " " + selected_event.getLocation().getNumber())
