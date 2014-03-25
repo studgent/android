@@ -10,10 +10,13 @@ import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import be.ugent.oomo.groep12.studgent.exception.CurlException;
 import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
 import be.ugent.oomo.groep12.studgent.utilities.PlayServicesUtil;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -25,10 +28,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.*;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.model.*;
 
 
-public class EventDetailActivity extends Activity {
+public class EventDetailActivity extends Activity implements OnInfoWindowClickListener {
 	
 	protected ICalendarEvent[] event_data;
 	protected ICalendarEvent selected_event;
@@ -91,6 +95,24 @@ public class EventDetailActivity extends Activity {
 		return true;
 	}
 	
+
+
+	@Override
+	public void onInfoWindowClick(Marker marker) {
+		Log.i("clicked on marker", marker.getId() );
+		String uri = "geo:" + selected_event.getLocation().getLocation().latitude + "," 
+							+ selected_event.getLocation().getLocation().longitude 
+							+ "?q=" + selected_event.getLocation().getStreet().replace(" ", "+")
+							+ "+" + selected_event.getLocation().getNumber();
+		try {
+			startActivity(new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri)));
+		} catch(ActivityNotFoundException e){
+			String message = "Maps-applicatie kan niet geopend worden.";
+        	Toast.makeText(EventDetailActivity.this, message, Toast.LENGTH_LONG).show();
+			Log.e("Could not open Maps", marker.getId() );
+		}
+	}
+	
 	
 	private class AsyncMapLoader extends AsyncTask<IPointOfInterest, Void, LatLng> {
 	    private final ProgressDialog dialog = new ProgressDialog(EventDetailActivity.this);
@@ -132,7 +154,7 @@ public class EventDetailActivity extends Activity {
 	        // offset on location latitude (to show infowindow from marker)
 	        LatLng maplocation = new LatLng(selected_event.getLocation().getLocation().latitude + 0.00024, 
 	        								selected_event.getLocation().getLocation().longitude);
-	        
+	        map.setOnInfoWindowClickListener(EventDetailActivity.this);
 	        map.moveCamera(CameraUpdateFactory.newLatLngZoom(maplocation, 18));
 
 	        Log.i("LatLng (w/o offset):", 
@@ -186,5 +208,6 @@ public class EventDetailActivity extends Activity {
 	        return null;
 	    }
 	}
+
 
 }

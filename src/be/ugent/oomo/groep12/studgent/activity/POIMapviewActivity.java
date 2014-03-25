@@ -70,11 +70,11 @@ public class POIMapviewActivity extends Activity implements OnInfoWindowClickLis
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
-	    case R.id.poi_open_augmented:
-	    	openAugmentedViewActivity();
-	        return true;
-	    default:
-	        return super.onOptionsItemSelected(item);
+		    case R.id.poi_open_augmented:
+		    	openAugmentedViewActivity();
+		        return true;
+		    default:
+		        return super.onOptionsItemSelected(item);
 	    }
 	}
 	
