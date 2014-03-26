@@ -1,19 +1,11 @@
 package be.ugent.oomo.groep12.studgent.view;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
-import android.view.animation.TranslateAnimation;
-import android.widget.FrameLayout;
-import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
-
-import com.google.android.gms.maps.model.LatLng;
 
 public class OverlayView extends View {
 
@@ -57,13 +49,15 @@ public class OverlayView extends View {
 	public void updateOverlay(int az) {
 		// TODO: Do some calculations to determine bearing to device
 
-		// For now, we only display north, so bearing = azimuth
+		// For now, we only display north, so bearing = difference with azimuth
 		float offset = calcOffset(az);
-		if (offset > screenWidth / 2) {
+		if (offset > (screenWidth / 2)) {
 			// Do not draw on this pass
-			//this.setVisibility(View.INVISIBLE);
+			this.setVisibility(View.INVISIBLE);
 		} else {
-			//this.setVisibility(View.VISIBLE);
+			this.setVisibility(View.VISIBLE);
+			// Hackish way to force visibility with a SurfaceView beneath this view
+			this.requestLayout();
 			this.setX(-offset);
 		}
 	}
