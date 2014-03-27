@@ -6,14 +6,24 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+import org.apache.http.NameValuePair;
 import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 
 import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.exception.CurlException;
@@ -26,6 +36,10 @@ import android.util.Log;
  * 
  */
 public class CurlUtil {
+	
+	protected static String create_target(String resource){
+		return App.getContext().getResources().getString(R.string.studgent_api) + '/' + resource;
+	}
 	
 	
 	/**
@@ -70,8 +84,7 @@ public class CurlUtil {
 	 * @throws CurlException
 	 */
 	public static String get(String resource, boolean ignore_cache) throws CurlException{
-		String api = App.getContext().getResources().getString(R.string.studgent_api);
-		String target = api + '/' + resource;
+		String target = create_target(resource);
 		return getRaw(target, ignore_cache);
 	}
 	
@@ -105,41 +118,52 @@ public class CurlUtil {
 			return cache_buffer.toString();
 		} else {
 			Log.i("no cache available", file.getAbsolutePath());
+			
+			// execute
+			String out = execute(new HttpGet(resource));
+			
+	        // cache the file
 			try {
-			    HttpClient httpclient = new DefaultHttpClient();
-			    HttpResponse response = httpclient.execute(new HttpGet(resource));
-			    StatusLine statusLine = response.getStatusLine();
-			    
-			    if(statusLine.getStatusCode() == HttpStatus.SC_OK){
-			    	// get content
-			        ByteArrayOutputStream out_buffer = new ByteArrayOutputStream();
-			        response.getEntity().writeTo(out_buffer);
-			        out_buffer.close();
-			        String out = out_buffer.toString();
-			        
-			        // cache the file
-			        FileOutputStream output = new FileOutputStream(file, false); //overwrite
-			        output.write(out.getBytes());
-			        output.close();
-					
-			        return out;
-			    } else{
-			        //Closes the connection.
-			        response.getEntity().getContent().close();
-			        throw new CurlException(statusLine.getReasonPhrase());
-			    }
-			} catch (FileNotFoundException e) {
+		        FileOutputStream output = new FileOutputStream(file, false); //overwrite
+		        output.write(out.getBytes());
+		        output.close(); 
+	        } catch (FileNotFoundException e) {
 				Log.e("FileNotFound",e.getMessage());
 				throw new CurlException(e);
 			} catch (IOException e) {
 				Log.e("IOException",e.getMessage());
 				throw new CurlException(e);
-			} catch (Exception e) {
-				Log.e("Exception",""+e.getMessage());
-				throw new CurlException(e);
-			}
+			} 
+			// return output
+			return out;
 		}
 
+	}
+	
+	protected static String execute(HttpUriRequest client) throws CurlException {
+		try {
+		    HttpClient httpclient = new DefaultHttpClient();
+		    HttpResponse response = httpclient.execute(client);
+		    StatusLine statusLine = response.getStatusLine();
+		    
+		    if(statusLine.getStatusCode() == HttpStatus.SC_OK){
+		    	// get content
+		        ByteArrayOutputStream out_buffer = new ByteArrayOutputStream();
+		        response.getEntity().writeTo(out_buffer);
+		        out_buffer.close();
+		        String out = out_buffer.toString();
+		        
+				
+		        return out;
+		    } else{
+		        //Closes the connection.
+		        response.getEntity().getContent().close();
+		        throw new CurlException(statusLine.getReasonPhrase());
+		    }
+		} catch (Exception e) {
+			Log.e("Exception",""+e.getMessage());
+			throw new CurlException(e);
+		}
 	}
 
 	
@@ -212,5 +236,45 @@ public class CurlUtil {
 	 */
 	public static String get_paged(String resource, int perpage, int page, boolean ignore_cache) throws CurlException{
 		return get(resource + "/page/" + perpage + '/' + page, ignore_cache);
+	}
+	
+	public static String post(String resource, Map<String, String> params) throws CurlException{
+		return post(resource, params, true); // with post request, automatically ignore cache
+	}
+	
+	
+	public static String post(String resource, Map<String, String> params, boolean ignore_cache) throws CurlException {
+		String target = create_target(resource);
+		HttpPost httppost = new HttpPost(target);
+		
+		// formatting parameters in NameValuePair.
+		Iterator it = params.entrySet().iterator();
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();  
+	    while ( it.hasNext() ) {
+	        Map.Entry pair = (Map.Entry) it.next();
+	        nameValuePairs.add(
+	        		new BasicNameValuePair( pair.getKey().toString(), 
+	        							    pair.getValue().toString() )
+	        );  
+	        it.remove(); // avoids a ConcurrentModificationException
+	    }
+
+	    try {
+	    	
+	    	// add NameValu pairs to the httppost object.
+			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+			
+			// execute the httpclient with the httppost object
+			String response = execute(httppost);
+			return response;
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			Log.e("Exception",""+e.getMessage());
+			throw new CurlException(e);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Log.e("Exception",""+e.getMessage());
+			throw new CurlException(e);
+		}
 	}
 }

@@ -84,6 +84,12 @@
             android:label="@string/title_activity_poi_detail" >
         </activity>
         
+        <activity
+            android:name="be.ugent.oomo.groep12.studgent.activity.LoginActivity"
+            android:icon="@drawable/studgent_logo"
+            android:label="@string/title_activity_login" >
+        </activity>
+        
     </application>
 
 </manifest>
