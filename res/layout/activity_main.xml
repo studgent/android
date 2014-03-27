@@ -68,6 +68,7 @@
 		        android:layout_height="wrap_content"
 		        android:layout_below="@+id/button_challenges"
 		        android:layout_marginTop="20dp"
+		        android:onClick="openFriendListActivity"
 		        android:text="@string/friends" />
         </RelativeLayout>
     </ScrollView>

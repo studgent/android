@@ -25,36 +25,39 @@ import android.view.View.OnTouchListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import be.ugent.oomo.groep12.studgent.adapter.CalenderAdapter;
+import be.ugent.oomo.groep12.studgent.adapter.FriendAdapter;
+import be.ugent.oomo.groep12.studgent.common.Friend;
 import be.ugent.oomo.groep12.studgent.common.ICalendarEvent;
 import be.ugent.oomo.groep12.studgent.common.CalendarEvent;
 import be.ugent.oomo.groep12.studgent.common.IData;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import be.ugent.oomo.groep12.studgent.data.CalendarEventDataSource;
+import be.ugent.oomo.groep12.studgent.data.FriendListDataSource;
 
-public class EventsActivity extends Activity implements AdapterView.OnItemClickListener {
+public class FriendListActivity extends Activity implements AdapterView.OnItemClickListener {
 	
 	protected ICalendarEvent[] event_data;
-	protected CalenderAdapter adapter;
-	protected ListView event_list_view;
+	protected FriendAdapter adapter;
+	protected ListView friend_list_view;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.overridePendingTransition(R.anim.animation_enter,
 				R.anim.animation_leave);
-		setContentView(R.layout.activity_events);
+		setContentView(R.layout.activity_friendlist);
 		
-		event_list_view = (ListView) findViewById(R.id.events_list);
-		event_list_view.setOnItemClickListener(this);
+		friend_list_view = (ListView) findViewById(R.id.friends_list);
+		friend_list_view.setOnItemClickListener(this);
 		
         /*View header = (View)getLayoutInflater().inflate(R.layout.listview_header_row, null);
         event_list_view.addHeaderView(header);*/
 		
 		// create adapter with empty list and attach custom item view
-        adapter = new CalenderAdapter(this, R.layout.calendar_list_item, new ArrayList<ICalendarEvent>());
+        adapter = new FriendAdapter(this, R.layout.calendar_list_item, new ArrayList<Friend>());
         
-        event_list_view.setAdapter(adapter);
-        new AsyncListViewLoader().execute(adapter);
+        friend_list_view.setAdapter(adapter);
+        new AsyncFriendListViewLoader().execute(adapter);
         
 	}
 
@@ -69,29 +72,30 @@ public class EventsActivity extends Activity implements AdapterView.OnItemClickL
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View item, int position, long rowID) {
+		System.out.println("geklikt op vriend");
+		/*
 		Intent intent = new Intent(this, EventDetailActivity.class);
 		intent.putExtra("id", adapter.getItem(position).getId());
 		intent.putExtra("calendarItem", adapter.getItem(position));
 		startActivity(intent);
-		
+		*/
 	}
 
 	
-	private class AsyncListViewLoader extends AsyncTask<CalenderAdapter, Void, ArrayList<ICalendarEvent>> {
-	    private final ProgressDialog dialog = new ProgressDialog(EventsActivity.this);
+	private class AsyncFriendListViewLoader extends AsyncTask<FriendAdapter, Void, ArrayList<Friend>> {
+	    private final ProgressDialog dialog = new ProgressDialog(FriendListActivity.this);
 
 	    @Override
-	    protected void onPostExecute(ArrayList<ICalendarEvent> result) {            
+	    protected void onPostExecute(ArrayList<Friend> result) {            
 	        super.onPostExecute(result);
 	        
 	        dialog.dismiss();
 	        //adapter.setItemList(result);
-	        Collections.sort(result);
 	        adapter.clear();
-	        for(ICalendarEvent event: result){
-	        	adapter.add(event);
+	        for(Friend friend: result){
+	        	adapter.add(friend);
 	        }
-	        event_list_view.setAdapter(adapter);
+	        friend_list_view.setAdapter(adapter);
 	        adapter.notifyDataSetChanged();
 	    }
 
@@ -102,18 +106,18 @@ public class EventsActivity extends Activity implements AdapterView.OnItemClickL
 	        dialog.show();            
 	    }
 
-	    @Override
-	    protected ArrayList<ICalendarEvent> doInBackground(CalenderAdapter... params) {
-	    	//adp = params[0];
+		@Override
+		protected ArrayList<Friend> doInBackground(FriendAdapter... params) {
+			//adp = params[0];
 	        try {
-	        	Map<Integer, ICalendarEvent> events = CalendarEventDataSource.getInstance().getLastItems();
-	        	return new ArrayList<ICalendarEvent>(events.values());
+	        	Map<Integer, Friend> events = FriendListDataSource.getInstance().getLastItems();
+	        	return new ArrayList<Friend>(events.values());
 	        }
 	        catch(Throwable t) {
 	            t.printStackTrace();
 	        }
 	        return null;
-	    }
+		}
 	}
 
 }

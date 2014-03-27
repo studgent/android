@@ -44,8 +44,7 @@ public class POIMapviewActivity extends Activity implements OnInfoWindowClickLis
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.overridePendingTransition(R.anim.animation_enter,
-                R.anim.animation_leave);
+		this.overridePendingTransition(R.anim.animation_enter,R.anim.animation_leave);
 		setContentView(R.layout.activity_poi_mapview);
 		marker_data = new HashMap<String, IPointOfInterest>();
 		

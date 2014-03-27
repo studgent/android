@@ -11,7 +11,6 @@ import android.widget.Button;
 import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.utilities.LayoutUtil;
 
-//import com.crashlytics.android.Crashlytics;
 
 public class MainActivity extends Activity {
 	
@@ -67,6 +66,11 @@ public class MainActivity extends Activity {
 	
 	public void openAugmentedViewActivity(View view) {
 		Intent intent = new Intent(this, AugmentedViewActivity.class);
+		startActivity(intent);
+	}
+	public void openFriendListActivity(View view){
+		System.out.println("openFriendListActivity");
+		Intent intent = new Intent(this, FriendListActivity.class);
 		startActivity(intent);
 	}
 }

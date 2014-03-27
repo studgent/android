@@ -72,6 +72,12 @@
             android:label="@string/title_activity_augmented"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
+        <activity
+            android:name="be.ugent.oomo.groep12.studgent.activity.FriendListActivity"
+            android:icon="@drawable/studgent_logo"
+            android:label="@string/title_friendlist_events" >
+        </activity>
+        
     </application>
 
 </manifest>
