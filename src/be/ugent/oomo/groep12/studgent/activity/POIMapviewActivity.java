@@ -101,6 +101,9 @@ public class POIMapviewActivity extends Activity implements OnInfoWindowClickLis
 	public void onInfoWindowClick(Marker marker) {
 		IPointOfInterest poi = marker_data.get(marker.getId());
 		Log.i("clicked on marker", marker.getId() + '-' + poi.getName());
+		Intent intent = new Intent(this, POIDetailActivity.class);
+		intent.putExtra("poi", poi);
+		startActivity(intent);
 	}
 	
 
@@ -115,7 +118,6 @@ public class POIMapviewActivity extends Activity implements OnInfoWindowClickLis
 		}
 	  	
 	  	 protected void onPostExecute(GoogleMap map) {
-	  		//this function is already called by the doInBackground thread so the POI points are in the memory
 	  		for (Map.Entry<Integer, IPointOfInterest> poi : data.entrySet())
 	 		{
 	 			
