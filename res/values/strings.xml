@@ -16,5 +16,6 @@
     <string name="load_eventlist">Evenementen worden opgehaald.</string>
     <string name="load_map">Map wordt geladen.</string>
     <string name="title_friendlist_events">Vriendenlijst</string>
+    <string name="title_activity_poi_detail">Details</string>
 
 </resources>

@@ -78,6 +78,12 @@
             android:label="@string/title_friendlist_events" >
         </activity>
         
+        <activity
+            android:name="be.ugent.oomo.groep12.studgent.activity.POIDetailActivity"
+            android:icon="@drawable/studgent_logo"
+            android:label="@string/title_activity_poi_detail" >
+        </activity>
+        
     </application>
 
 </manifest>
