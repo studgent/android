@@ -50,16 +50,17 @@ public class FriendAdapter extends ArrayAdapter<Friend> {
             row = inflater.inflate(layoutResourceId, parent, false);
             
             holder = new FriendItemHolder();
-            /*
+            
             holder.name = (TextView)row.findViewById(R.id.friend_item_name); //holder.name wordt niet aangemaakt
             System.out.println("holder.name.getBaseline(): "+holder.name.getBaseline());
             holder.location = (TextView)row.findViewById(R.id.friend_item_location);
             holder.image = (ImageView)row.findViewById(R.id.friend_item_image);
-            */
+            
+            /*
             //hieronder tijdelijk een calendarlist item gebruiken 
             holder.name = (TextView)row.findViewById(R.id.calendar_item_name);
             holder.location = (TextView)row.findViewById(R.id.calendar_item_location);
-            
+            */
             row.setTag(holder);
         } else {
             holder = (FriendItemHolder)row.getTag();
