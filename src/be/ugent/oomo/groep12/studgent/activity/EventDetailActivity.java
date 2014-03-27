@@ -73,17 +73,9 @@ public class EventDetailActivity extends Activity implements OnInfoWindowClickLi
 		location.setText( selected_event.getLocation().getStreet() 
 						+ " " 
 						+ selected_event.getLocation().getNumber() );
-
-		
-		TableRow tr = new TableRow(this);
-		tr.setLayoutParams(row_layout);
-		TextView info = new TextView(this);
-		info.setSingleLine(false); 
-		info.setEllipsize(null);
-		info.setText(selected_event.getDescription());
-		info.setLayoutParams(row_layout);
-		tr.addView(info);
-		table_view.addView(tr, table_layout);
+		addTextRow("Beschrijving", selected_event.getDescription());
+		addTextRow("Contact", selected_event.getContact());
+		addTextRow("Email", selected_event.getEmail());
 
 	}
 
@@ -111,6 +103,25 @@ public class EventDetailActivity extends Activity implements OnInfoWindowClickLi
         	Toast.makeText(EventDetailActivity.this, message, Toast.LENGTH_LONG).show();
 			Log.e("Could not open Maps", marker.getId() );
 		}
+	}
+	
+	private void addTextRow(String title, String text){
+		boolean isEmpty = (text == null);
+		if ( !isEmpty ) {
+			String value = title + ":\n" + text + '\n';
+			// create new row
+	        TableRow tr = new TableRow(this);
+			tr.setLayoutParams(row_layout);
+			
+			TextView tv = new TextView(this);
+			tv.setSingleLine(false);
+			tv.setEllipsize(null);
+			tv.setLayoutParams(row_layout);
+			tv.setText(value);
+			tr.addView(tv);
+			// add row to table_view
+	        table_view.addView(tr, table_layout);
+        }
 	}
 	
 	
