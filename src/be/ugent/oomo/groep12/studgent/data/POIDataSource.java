@@ -20,6 +20,7 @@ import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import be.ugent.oomo.groep12.studgent.exception.CurlException;
 import be.ugent.oomo.groep12.studgent.utilities.CurlUtil;
+import be.ugent.oomo.groep12.studgent.utilities.JSONUtil;
 
 public class POIDataSource implements IDataSource {
 
@@ -70,11 +71,12 @@ public class POIDataSource implements IDataSource {
 	protected PointOfInterest parse(JSONObject item) throws JSONException, ParseException{
 		PointOfInterest poi;
 		int id = item.optInt("id",0);
-		String type = item.optString("type",""),
-			   name = item.optString("name", ""),
-			   details = item.optString("details", ""),
-			   uri = item.optString("uri", ""),
-			   cafeplan_uri = item.optString("cafeplan_uri", "");
+		
+		String type = JSONUtil.optString(item,"type"),
+			   name = JSONUtil.optString(item,"name"),
+			   details = JSONUtil.optString(item,"details"),
+			   uri = JSONUtil.optString(item,"uri"),
+			   cafeplan_uri = JSONUtil.optString(item,"cafeplan_uri");
 			  
 		Double latitude = item.optDouble("latitude", 0.0),
 			   longitude = item.optDouble("longitude", 0.0);
@@ -88,7 +90,7 @@ public class POIDataSource implements IDataSource {
 		if (uri != null){
 			poi.setUrl(uri);	
 		}else{
-			poi.setUrl(cafeplan_uri);
+			poi.setUrl("http://www.cafeplan.be" + cafeplan_uri);
 		}
 		return poi;
 	}

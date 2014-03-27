@@ -26,6 +26,7 @@ import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import be.ugent.oomo.groep12.studgent.exception.CurlException;
 import be.ugent.oomo.groep12.studgent.utilities.App;
 import be.ugent.oomo.groep12.studgent.utilities.CurlUtil;
+import be.ugent.oomo.groep12.studgent.utilities.JSONUtil;
 
 /**
  * DataSource provider for calendar items.
@@ -88,18 +89,18 @@ public class CalendarEventDataSource implements IDataSource {
 	protected CalendarEvent parseEvent(JSONObject item) throws JSONException, ParseException{
 		CalendarEvent cal_event;
 		int id = item.optInt("id",0);
-		String type = item.optString("type",""),
-			   name = item.optString("name", ""),
-			   details = item.optString("details", ""),
-			   description = item.optString("description", ""),
-			   contact = item.optString("contact", ""),
-			   street = item.optString("street", ""),
-			   number = item.optString("number", ""),
-			   phone = item.optString("phone", ""),
-			   email = item.optString("email", ""),
-			   uri = item.optString("uri", ""),
-			   image = item.optString("image", ""),
-			   prices = item.optString("prices", "");
+		String type = JSONUtil.optString(item, "type"),
+			   name = JSONUtil.optString(item, "name"),
+			   details = JSONUtil.optString(item, "details"),
+			   description = JSONUtil.optString(item, "description"),
+			   contact = JSONUtil.optString(item, "contact"),
+			   street = JSONUtil.optString(item, "street"),
+			   number = JSONUtil.optString(item, "number"),
+			   phone = JSONUtil.optString(item, "phone"),
+			   email = JSONUtil.optString(item, "email"),
+			   uri = JSONUtil.optString(item, "uri"),
+			   image = JSONUtil.optString(item, "image"),
+			   prices = JSONUtil.optString(item, "prices");
 		
 		//todo fix default date value
 		Date date_from = item.optString("date_from").equals("null") ? 

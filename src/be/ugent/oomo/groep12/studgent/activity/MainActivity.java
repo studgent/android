@@ -1,15 +1,31 @@
 package be.ugent.oomo.groep12.studgent.activity;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 import com.crashlytics.android.Crashlytics;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 import be.ugent.oomo.groep12.studgent.R;
+import be.ugent.oomo.groep12.studgent.adapter.CalenderAdapter;
+import be.ugent.oomo.groep12.studgent.common.ICalendarEvent;
+import be.ugent.oomo.groep12.studgent.data.CalendarEventDataSource;
+import be.ugent.oomo.groep12.studgent.exception.CurlException;
+import be.ugent.oomo.groep12.studgent.utilities.CurlUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LayoutUtil;
+import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 
 
 public class MainActivity extends Activity {
@@ -29,8 +45,8 @@ public class MainActivity extends Activity {
 		Crashlytics.start(this);
 		setContentView(R.layout.activity_main);
 		setButtons();
-		
 	}
+	
 	
 	protected void setButtons(){
 		// get the buttons and set them to protected members
@@ -51,7 +67,22 @@ public class MainActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}	
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+		    case R.id.login:
+		    	openLoginActivity();
+		        return true;
+		    case R.id.info:
+		    	Toast.makeText(MainActivity.this, LoginUtility.getInstance().getToken(), Toast.LENGTH_LONG).show();
+		        return true;
+		    default:
+		        return super.onOptionsItemSelected(item);
+	    }
 	}
+	
 	
 	
 	public void openEventsActivity(View view) {
@@ -73,4 +104,10 @@ public class MainActivity extends Activity {
 		Intent intent = new Intent(this, FriendListActivity.class);
 		startActivity(intent);
 	}
+	
+	public void openLoginActivity(){
+		Intent intent = new Intent(this, LoginActivity.class);
+		startActivity(intent);
+	}
+	
 }
