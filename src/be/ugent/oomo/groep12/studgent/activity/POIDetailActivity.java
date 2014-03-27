@@ -35,7 +35,7 @@ public class POIDetailActivity extends Activity {
 		}
 		
 		if (poi.getDetails() != null){
-			txtDetail.setText(poi.getDetails());
+			txtDetail.setText(poi.getDetails().replace(';', '\n') );
 			txtDetail.setVisibility(View.VISIBLE);
 		}
 		
