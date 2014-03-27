@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.widget.TextView;
 
 public class AugmentedViewActivity extends Activity implements
@@ -72,6 +73,9 @@ SensorEventListener {
 		// Compass
 		sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME);
 		sensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_GAME);
+		
+		// Overlay
+		overlayView.setVisibility(View.INVISIBLE);
 	}
 
 	@Override
@@ -211,6 +215,7 @@ SensorEventListener {
 				int azimuth = Math.round(azimuthInDegrees);
 				
 				textView.setText("Az: " + Float.toString(azimuth) + " degrees");
+				
 				overlayView.updateOverlay(azimuth);
 			}
 		}
