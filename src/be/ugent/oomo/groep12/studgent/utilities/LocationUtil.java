@@ -35,4 +35,23 @@ public class LocationUtil {
 	    }
 	    throw new CurlException("No location found");
 	}
+	public static String getAddressFromLatLng(LatLng location) throws CurlException {
+	    String uri = "http://maps.google.com/maps/api/geocode/json?latlng=" +
+	                  location.latitude + ',' + location.longitude + "&sensor=false";
+	    String response = CurlUtil.getRaw(uri, false);
+
+	    JSONObject jsonObject = new JSONObject();
+	    try {
+	        jsonObject = new JSONObject(response);
+
+	        jsonObject = ((JSONArray)jsonObject.get("results")).getJSONObject(0);
+	        String address = JSONUtil.optString(jsonObject, "formatted_address");
+	        return address;
+	    } catch (JSONException e) {
+	        e.printStackTrace();
+	    }
+	    throw new CurlException("No address found");
+	}
+	
+	
 }
