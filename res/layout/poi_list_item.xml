@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="6dip" >
+    
+    <ImageView
+            android:id="@+id/poi_list_item_category_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+
+            android:src="@drawable/ic_launcher" />
+
+    <TextView
+        android:id="@+id/poi_item_city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/poi_list_item_category_image"
+        android:layout_alignRight="@+id/poi_item_steet"
+        android:layout_below="@+id/poi_item_steet"
+        android:layout_toRightOf="@+id/poi_list_item_category_image"
+        android:text="Gent"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/poi_item_steet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/poi_item_name"
+        android:layout_below="@+id/poi_item_name"
+        android:layout_toRightOf="@+id/poi_list_item_category_image"
+        android:text="straat en huisnummer"
+        android:textAlignment="center"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="11sp" /> 
+
+    <TextView
+        android:id="@+id/poi_item_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/poi_list_item_category_image"
+        android:layout_toLeftOf="@+id/poi_item_distance"
+        android:layout_toRightOf="@+id/poi_list_item_category_image"
+        android:lines="1"
+        android:text="Item name"
+        android:textAlignment="textStart"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/poi_item_distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/poi_item_steet"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/poi_item_name"
+        android:gravity="center"
+        android:text="2,2"
+        android:textAlignment="center"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="15sp" />
+    
+    <TextView
+        android:id="@+id/poi_item_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/poi_item_location"
+        android:layout_alignRight="@+id/poi_item_distance"
+        android:layout_below="@+id/poi_item_distance"
+        android:layout_toRightOf="@+id/poi_item_location"
+        android:gravity="center"
+        android:text="km"
+        android:textAlignment="center"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="11sp" />
+
+</RelativeLayout>

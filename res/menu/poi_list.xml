@@ -6,7 +6,7 @@
         android:icon="@drawable/studgent_logo">
     </item>
     <item
-        android:id="@+id/poi_open_list"
+        android:id="@+id/poi_open_mapview"
         android:title="List"
         android:icon="@drawable/studgent_logo">
     </item>

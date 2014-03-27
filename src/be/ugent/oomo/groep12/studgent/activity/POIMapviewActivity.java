@@ -72,12 +72,21 @@ public class POIMapviewActivity extends Activity implements OnInfoWindowClickLis
 		    case R.id.poi_open_augmented:
 		    	openAugmentedViewActivity();
 		        return true;
+		    case R.id.poi_open_list:
+		    	openPOIListActivity();
+		    	return true;
 		    default:
 		        return super.onOptionsItemSelected(item);
 	    }
 	}
 	
 	
+	private void openPOIListActivity() {
+		Intent intent = new Intent(this, POIListActivity.class);
+		startActivity(intent);
+	}
+
+
 	private void loadPOIs(GoogleMap map){
 		map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.05389,3.705), 16));
 		new AsyncPOILoader().execute(map);

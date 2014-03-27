@@ -1,0 +1,128 @@
+package be.ugent.oomo.groep12.studgent.adapter;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.android.gms.maps.model.LatLng;
+
+import android.app.Activity;
+import android.content.Context;
+import android.text.format.DateFormat;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+import be.ugent.oomo.groep12.studgent.R;
+import be.ugent.oomo.groep12.studgent.common.Category;
+import be.ugent.oomo.groep12.studgent.common.ICalendarEvent;
+import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
+
+public class POIAdapter extends ArrayAdapter<PointOfInterest> {
+    static class POIItemHolder
+    {
+    	TextView name;
+    	TextView streetAndNumber;
+    	TextView distance;
+    	TextView unit;
+        ImageView category_image;
+    }
+	
+    Context context; 
+    int layoutResourceId;    
+    List<PointOfInterest> data = new ArrayList<PointOfInterest>();
+
+	public POIAdapter(Context context, int layoutResourceId) {
+		super(context, layoutResourceId);
+        this.layoutResourceId = layoutResourceId;
+        this.context = context;
+	}
+	public POIAdapter(Context context, int layoutResourceId, List<PointOfInterest> objects) {
+		super(context, layoutResourceId, objects);
+        this.layoutResourceId = layoutResourceId;
+        this.context = context;
+        this.data = objects;
+	}
+	
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View row = convertView;
+        POIItemHolder holder = null;
+        
+        if (row == null) {
+        	LayoutInflater inflater = (LayoutInflater)context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+            row = inflater.inflate(layoutResourceId, parent, false);
+            
+            holder = new POIItemHolder();
+            holder.category_image = (ImageView)row.findViewById(R.id.poi_list_item_category_image);
+            holder.name = (TextView)row.findViewById(R.id.poi_item_name);
+            holder.streetAndNumber = (TextView)row.findViewById(R.id.poi_item_steet);
+            holder.distance = (TextView)row.findViewById(R.id.poi_item_distance);
+            holder.unit = (TextView)row.findViewById(R.id.poi_item_unit);
+            
+            row.setTag(holder);
+        } else {
+            holder = (POIItemHolder)row.getTag();
+        }
+        
+        PointOfInterest POI_item = data.get(position);
+        //calculate distance. temponary work with hard point.
+        LatLng currentPosotion = new LatLng(51.032052, 3.701968);
+        
+        double distance = distFrom(POI_item.getLocation().latitude, POI_item.getLocation().longitude, currentPosotion.latitude, currentPosotion.longitude);
+        String unit = "m";
+        if(distance>=1000.0){
+        	distance=distance/1000.0;
+        	unit = "km";
+        }
+        //de category_image moet nog gedaan worden
+        holder.name.setText(POI_item.getName());
+        holder.streetAndNumber.setText(POI_item.getStreet()+" "+POI_item.getNumber());
+        holder.distance.setText(String.valueOf(round(distance, 2)));
+        holder.unit.setText(unit);
+        
+        return row;
+    }
+    
+
+
+    public List<PointOfInterest> getItemList() {
+        return data;
+    }
+ 
+    public void setItemList(List<PointOfInterest>  itemList) {
+        this.data = itemList;
+    }
+	@Override
+	public void clear() {
+		super.clear();
+	}
+
+	
+	private double distFrom(double lat1, double lng1, double lat2, double lng2) {
+	    double earthRadius = 3958.75;
+	    double dLat = Math.toRadians(lat2-lat1);
+	    double dLng = Math.toRadians(lng2-lng1);
+	    double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+	               Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+	               Math.sin(dLng/2) * Math.sin(dLng/2);
+	    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+	    double dist = earthRadius * c;
+
+	    int meterConversion = 1609;
+
+	    return (double) (dist * meterConversion);
+	}
+	private double round(double value, int places) {
+	    if (places < 0) throw new IllegalArgumentException();
+
+	    long factor = (long) Math.pow(10, places);
+	    value = value * factor;
+	    long tmp = Math.round(value);
+	    return (double) tmp / factor;
+	}
+}
