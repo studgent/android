@@ -54,7 +54,7 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
         event_list_view.addHeaderView(header);*/
 		
 		// create adapter with empty list and attach custom item view
-        adapter = new FriendAdapter(this, R.layout.calendar_list_item, new ArrayList<Friend>());
+        adapter = new FriendAdapter(this, R.layout.friend_list_item, new ArrayList<Friend>());
         
         friend_list_view.setAdapter(adapter);
         new AsyncFriendListViewLoader().execute(adapter);
