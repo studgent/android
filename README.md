@@ -20,15 +20,14 @@ Interactive Cityguide mainly aimed for students in Ghent.
 
 * Android Developer Tools (Eclipse, Android SDK)
 * Gradle (included in repository)
-* Crashlytics
+* Crashlytics (added library in repository)
 * Google Play Services (import from Android SDK in your workspace)
 
 ### Android libraries
 
 Most of the libraries are managed through Gradle.
 
-* Gson 2.2.4 (parse JSON, stringify to JSON)
-* Mixare (Augmented Reality helper library)
+* Google Play Services
 * Crashlytics (Crash reporter to web service)
 
 Execute `./gradlew` to assemble and retrieve the libraries. (Windows users can execute `gradlew.bat`)
