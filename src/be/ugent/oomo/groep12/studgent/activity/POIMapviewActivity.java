@@ -15,6 +15,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -27,6 +28,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.adapter.CalenderAdapter;
 import be.ugent.oomo.groep12.studgent.common.ICalendarEvent;
@@ -37,7 +39,15 @@ import be.ugent.oomo.groep12.studgent.data.POIDataSource;
 import be.ugent.oomo.groep12.studgent.utilities.PlayServicesUtil;
 
 
-public class POIMapviewActivity extends Activity implements OnInfoWindowClickListener {
+public class POIMapviewActivity extends Activity implements 
+	OnInfoWindowClickListener,
+	ActionBar.OnNavigationListener {
+	
+	/**
+	 * The serialization (saved instance state) Bundle key representing the
+	 * current dropdown position.
+	 */
+	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 	
 	protected Map<String, IPointOfInterest> marker_data;
 
@@ -46,8 +56,11 @@ public class POIMapviewActivity extends Activity implements OnInfoWindowClickLis
 		super.onCreate(savedInstanceState);
 		this.overridePendingTransition(R.anim.animation_enter,R.anim.animation_leave);
 		setContentView(R.layout.activity_poi_mapview);
-		marker_data = new HashMap<String, IPointOfInterest>();
 		
+		setNavigation();
+		
+		
+		marker_data = new HashMap<String, IPointOfInterest>();
 		
 		FragmentManager fmanager = getFragmentManager();
 		MapFragment map = (MapFragment)(fmanager.findFragmentById(R.id.mapFullscreen));
@@ -57,6 +70,64 @@ public class POIMapviewActivity extends Activity implements OnInfoWindowClickLis
 			loadPOIs(map.getMap());
 		}		
 	}
+	
+	// START switchbar
+	
+	protected void setNavigation(){
+		// Set up the action bar to show a dropdown list.
+		final ActionBar actionBar = getActionBar();
+		actionBar.setDisplayShowTitleEnabled(false);
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+	
+		// Set up the dropdown list navigation in the action bar.
+		actionBar.setListNavigationCallbacks(
+		// Specify a SpinnerAdapter to populate the dropdown list.
+				new ArrayAdapter<String>(actionBar.getThemedContext(),
+						android.R.layout.simple_list_item_1,
+						android.R.id.text1, new String[] {
+								"Map",
+								"Lijst",
+								"Augmented", }), this);
+		actionBar.setSelectedNavigationItem(0); 
+	}
+	
+	@Override
+	public void onRestoreInstanceState(Bundle savedInstanceState) {
+		// Restore the previously serialized current dropdown position.
+		if (savedInstanceState.containsKey(STATE_SELECTED_NAVIGATION_ITEM)) {
+			getActionBar().setSelectedNavigationItem(
+					savedInstanceState.getInt(STATE_SELECTED_NAVIGATION_ITEM));
+		}
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		// Serialize the current dropdown position.
+		outState.putInt(STATE_SELECTED_NAVIGATION_ITEM, getActionBar()
+				.getSelectedNavigationIndex());
+	}
+	
+
+
+	@Override
+	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+		Log.i("selected ", "" + itemPosition + '-' + itemId);
+		
+		// keep correct item in this activity
+		getActionBar().setSelectedNavigationItem(0); 
+		switch (itemPosition) {
+		    case 1:
+		    	openPOIListActivity();
+		    	return true;
+		    case 2:
+		    	openAugmentedViewActivity();
+		        return true;
+		    default:
+		        return false;
+	    }
+	}
+	
+	// END switchbar
 
 
 	@Override
@@ -141,6 +212,7 @@ public class POIMapviewActivity extends Activity implements OnInfoWindowClickLis
 	  		
 	   }
 	}
+
 
 }
 

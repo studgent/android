@@ -13,7 +13,6 @@ public class POIDetailActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		poi = getIntent().getParcelableExtra("poi");
 		setContentView(R.layout.activity_poi_detail);
