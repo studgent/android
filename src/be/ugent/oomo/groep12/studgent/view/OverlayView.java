@@ -58,7 +58,8 @@ public class OverlayView extends View {
 			this.setVisibility(View.VISIBLE);
 			// Hackish way to force visibility with a SurfaceView beneath this view
 			this.requestLayout();
-			this.setX(-offset);
+			//this.setX(-offset);
+			this.setTranslationX(-offset);
 		}
 	}
 

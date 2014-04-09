@@ -21,8 +21,7 @@ import android.view.View;
 import android.widget.TextView;
 
 public class AugmentedViewActivity extends Activity implements
-SurfaceHolder.Callback,
-SensorEventListener {
+		SurfaceHolder.Callback, SensorEventListener {
 	// Camera
 	private Camera camera;
 	private boolean inPreview;
@@ -54,8 +53,10 @@ SensorEventListener {
 
 		// Compass
 		sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-		accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-		magnetometer = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+		accelerometer = sensorManager
+				.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		magnetometer = sensorManager
+				.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 
 		// Video
 		holder = surfaceView.getHolder();
@@ -71,9 +72,11 @@ SensorEventListener {
 		startPreview();
 
 		// Compass
-		sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME);
-		sensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_GAME);
-		
+		sensorManager.registerListener(this, accelerometer,
+				SensorManager.SENSOR_DELAY_GAME);
+		sensorManager.registerListener(this, magnetometer,
+				SensorManager.SENSOR_DELAY_GAME);
+
 		// Overlay
 		overlayView.setVisibility(View.INVISIBLE);
 	}
@@ -94,7 +97,8 @@ SensorEventListener {
 		super.onPause();
 	}
 
-	private Camera.Size getBestPreviewSize(int width, int height, Camera.Parameters parameters) {
+	private Camera.Size getBestPreviewSize(int width, int height,
+			Camera.Parameters parameters) {
 		Camera.Size result = null;
 
 		for (Camera.Size size : parameters.getSupportedPreviewSizes()) {
@@ -183,42 +187,67 @@ SensorEventListener {
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	float[] mGravity;
 	float[] mGeomagnetic;
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
 
-		if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
-			mGravity = event.values;
-		if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD)
-			mGeomagnetic = event.values;
+		// Smoothing the sensor data to lessen jitter
+		float gravFilter = 0.33334f;
+		float magFilter = 0.4f;
+
+		if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+			if (mGravity != null) {
+				mGravity[0] = (mGravity[0] * 2 + event.values[0]) * gravFilter;
+				mGravity[1] = (mGravity[1] * 2 + event.values[1]) * gravFilter;
+				mGravity[2] = (mGravity[2] * 2 + event.values[2]) * gravFilter;
+			} else {
+				mGravity = event.values;
+			}
+		}
+		if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
+			if (mGeomagnetic != null) {
+				mGeomagnetic[0] = (mGeomagnetic[0] * 1.5f + event.values[0])
+						* magFilter;
+				mGeomagnetic[1] = (mGeomagnetic[1] * 1.5f + event.values[1])
+						* magFilter;
+				mGeomagnetic[2] = (mGeomagnetic[2] * 1.5f + event.values[2])
+						* magFilter;
+			} else {
+				mGeomagnetic = event.values;
+			}
+		}
+
+		// Process the data
 		if (mGravity != null && mGeomagnetic != null) {
 			float R[] = new float[9];
 			float I[] = new float[9];
-			boolean success = SensorManager.getRotationMatrix(R, I, mGravity, mGeomagnetic);
+			boolean success = SensorManager.getRotationMatrix(R, I, mGravity,
+					mGeomagnetic);
 			if (success) {
-				
+
 				float orientation[] = new float[3];
 				SensorManager.getOrientation(R, orientation);
-				
+
 				float azimuthInRadians = orientation[0];
-				float azimuthInDegrees = (float) Math.toDegrees(azimuthInRadians);
+				float azimuthInDegrees = (float) Math
+						.toDegrees(azimuthInRadians);
 				// Compensate for landscape orientation
 				azimuthInDegrees += 90f;
-				
+
 				if (azimuthInDegrees < 0.0f) {
-				    azimuthInDegrees += 360.0f;
+					azimuthInDegrees += 360.0f;
 				}
-				
+
 				int azimuth = Math.round(azimuthInDegrees);
-				
+
 				textView.setText("Az: " + Float.toString(azimuth) + " degrees");
-				
+
 				overlayView.updateOverlay(azimuth);
 			}
 		}
-				
+
 	}
 }
