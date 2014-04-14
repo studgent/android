@@ -94,6 +94,11 @@
             android:icon="@drawable/studgent_logo"
             android:label="@string/title_activity_login" >
         </activity>
+         <activity
+            android:name="be.ugent.oomo.groep12.studgent.activity.ChallengeActivity"
+            android:icon="@drawable/studgent_logo"
+            android:label="@string/title_activity_challenge" >
+        </activity>
     </application>
 
 </manifest>

@@ -20,4 +20,5 @@
     <string name="title_friendlist_events">Vriendenlijst</string>
 	<string name="title_poi_list_events">In de buurt</string>
     <string name="title_activity_poi_detail">Details</string>
+     <string name="title_activity_challenge">Uitdagingen</string>
 </resources>
