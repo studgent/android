@@ -20,5 +20,11 @@
     <string name="title_friendlist_events">Vriendenlijst</string>
 	<string name="title_poi_list_events">In de buurt</string>
     <string name="title_activity_poi_detail">Details</string>
-     <string name="title_activity_challenge">Uitdagingen</string>
+    <string name="title_activity_challenge">Uitdagingen</string>
+     
+    <string name="checkin">Checkin</string>
+    <string name="amidrunk">Am I drunk</string>
+    <string name="quiz">Quiz</string>
+     
+  
 </resources>

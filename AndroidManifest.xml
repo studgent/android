@@ -99,6 +99,11 @@
             android:icon="@drawable/studgent_logo"
             android:label="@string/title_activity_challenge" >
         </activity>
+         <activity
+            android:name="be.ugent.oomo.groep12.studgent.activity.QuizActivity"
+            android:icon="@drawable/studgent_logo"
+            android:label="@string/quiz" >
+        </activity>
     </application>
 
 </manifest>

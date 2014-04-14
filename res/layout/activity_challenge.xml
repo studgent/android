@@ -3,6 +3,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+
     
+     <Button
+		        android:id="@+id/button_challenges"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@+id/button_events"
+		        android:layout_marginTop="20dp"
+		        android:text="@string/checkin" />
+    
+     <Button
+		        android:id="@+id/button_challenges"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@+id/button_events"
+		        android:layout_marginTop="20dp"
+		        android:text="@string/amidrunk" />
+       <Button
+		        android:id="@+id/button_challenges"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@+id/button_events"
+		        android:layout_marginTop="20dp"
+		        android:onClick="openQuizActivity"
+		        android:text="@string/quiz" />
 
 </LinearLayout>
