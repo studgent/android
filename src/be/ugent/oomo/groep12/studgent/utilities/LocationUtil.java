@@ -1,12 +1,13 @@
 package be.ugent.oomo.groep12.studgent.utilities;
 
+import java.util.Date;
+
 import org.json.*;
 
 import com.google.android.gms.maps.model.LatLng;
 
 import be.ugent.oomo.groep12.studgent.exception.CurlException;
-
-
+import android.location.Location;
 import android.util.Log;
 
 public class LocationUtil {
@@ -52,6 +53,16 @@ public class LocationUtil {
 	    }
 	    throw new CurlException("No address found");
 	}
-	
+	public static Location getLocationFromLatLng(LatLng l) {
+		Location loc = new Location("StudGent");
+		loc.setLatitude(l.latitude);
+		loc.setLongitude(l.longitude);
+		loc.setTime(new Date().getTime());
+		return loc;
+	}
+	public static LatLng getLatLngFromLocation(Location l) {
+		LatLng newLatLng = new LatLng(l.getLatitude(), l.getLongitude());
+		return newLatLng;
+	}
 	
 }
