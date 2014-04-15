@@ -1,6 +1,7 @@
 package be.ugent.oomo.groep12.studgent.activity;
 
 import be.ugent.oomo.groep12.studgent.R;
+import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import android.app.Activity;
 import android.os.Bundle;
 
@@ -12,6 +13,7 @@ public class QuizActivity extends Activity {
 		this.overridePendingTransition(R.anim.animation_enter,
 				R.anim.animation_leave);
 		setContentView(R.layout.activity_quiz);
+		
 	}
 	
 }
