@@ -18,13 +18,22 @@ import be.ugent.oomo.groep12.studgent.data.QuizQuestionsDataSource;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import android.app.Activity;
 import android.content.AsyncTaskLoader;
+import android.opengl.Visibility;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.GridLayout;
+import android.widget.GridView;
 import android.widget.ListView;
 
-public class QuizActivity extends Activity {
+public class QuizActivity extends Activity implements AdapterView.OnItemClickListener  {
 	
 	ListView quiz_list;
+	
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +48,7 @@ public class QuizActivity extends Activity {
 		
 		QuizAdapter adapter = new QuizAdapter(this, R.layout.quiz_question_item, new ArrayList<QuizQuestion>());
 		quiz_list.setAdapter(adapter); 
+		quiz_list.setOnItemClickListener(this);
 		
 		adapter.clear();
 		Collection<QuizQuestion> col = QuizQuestionsDataSource.getInstance().getLastItems().values();
@@ -79,7 +89,18 @@ public class QuizActivity extends Activity {
 			}
 		   
 		});
-        adapter.notifyDataSetChanged();        
+        adapter.notifyDataSetChanged();   
+        
+        
+	}
+
+
+
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		// TODO Auto-generated method stub
+		GridLayout detailview = (GridLayout) findViewById(R.id.detailViewQuestion);
+		detailview.setVisibility(0);
 	}	
 }
 
