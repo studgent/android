@@ -52,9 +52,9 @@ public class QuizQuestionsDataSource implements IDataSource {
 		items.put(0, new QuizQuestion(1, 10, "hoeveel is 10x10", false, null, "100", null, null));
 		ArrayList<String> solutions = new ArrayList<String>();
 		solutions.add("1");solutions.add("2");solutions.add("3");		
-		items.put(0, new QuizQuestion(1, 10, "hoeveel is 1+1", false, solutions, "2", null, new LatLng(51.03431, 3.701)));
-		items.put(0, new QuizQuestion(1, 10, "Dummy opgeloste vraag", true, null, "2", null, new LatLng(51.03431, 3.701)));
-		items.put(0, new QuizQuestion(1, 10, "Dummy vraag mis", false, null, "2", Calendar.getInstance() , new LatLng(51.03431, 3.701)));
+		items.put(1, new QuizQuestion(1, 2, "hoeveel is 1+1", false, solutions, "2", null, new LatLng(51.03431, 3.701)));
+		items.put(2, new QuizQuestion(1, 50, "Dummy opgeloste vraag", true, null, "2", null, new LatLng(51.03431, 3.701)));
+		items.put(3, new QuizQuestion(1, 1, "Dummy vraag mis", false, null, "2", Calendar.getInstance() , new LatLng(51.03431, 3.701)));
 	}
 
 	@Override

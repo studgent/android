@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="6dip"
+    
+    android:id="@+id/quiz_question_form" >
+
+    <TextView
+        android:id="@+id/quiz_question_points"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:width="40dp" />
+
+    <TextView
+        android:id="@+id/quiz_question_question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/quiz_question_points"
+        android:layout_toRightOf="@+id/quiz_question_points"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/quiz_question_distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/quiz_question_question"
+        android:layout_alignBottom="@+id/quiz_question_question"
+        android:layout_alignParentRight="true"
+        android:text="TextView" />
+   
+</RelativeLayout>

@@ -1,7 +1,17 @@
 package be.ugent.oomo.groep12.studgent.activity;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import be.ugent.oomo.groep12.studgent.R;
+import be.ugent.oomo.groep12.studgent.adapter.FriendAdapter;
+import be.ugent.oomo.groep12.studgent.adapter.QuizAdapter;
+import be.ugent.oomo.groep12.studgent.common.Friend;
 import be.ugent.oomo.groep12.studgent.common.ICalendarEvent;
+import be.ugent.oomo.groep12.studgent.common.QuizQuestion;
+import be.ugent.oomo.groep12.studgent.data.QuizQuestionsDataSource;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import android.app.Activity;
 import android.content.AsyncTaskLoader;
@@ -23,6 +33,16 @@ public class QuizActivity extends Activity {
 		
 		quiz_list = (ListView) findViewById(R.id.quiz_list );
 		
+		
+		QuizAdapter adapter = new QuizAdapter(this, R.layout.quiz_question_item, new ArrayList<QuizQuestion>());
+		quiz_list.setAdapter(adapter); 
+		
+		adapter.clear();
+		List<QuizQuestion> data = new ArrayList<QuizQuestion>(QuizQuestionsDataSource.getInstance().getLastItems().values());
+        for (QuizQuestion object : data ) {
+        	adapter.add(object);
+        }
+        adapter.notifyDataSetChanged();        
 	}	
 }
 

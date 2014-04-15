@@ -60,16 +60,16 @@ public class QuizQuestion implements IData {
 	    
 	}
 
-	double getDistance(){
+	public double getDistance(){
 		if (location==null){
 			return 0;
 		}else{
 			//DUMMY, must be replaced if GPS of the device is known!
-			return (new Random()).nextDouble();
+			return (new Random()).nextInt(20);
 		}
 	}
 	
-	boolean checkAnswer(String answer){
+	public boolean checkAnswer(String answer){
 		lastTry = Calendar.getInstance();
 		answer = answer.toLowerCase().trim().replace(" ","");
 		if (answer.equalsIgnoreCase(answer)){
@@ -80,7 +80,7 @@ public class QuizQuestion implements IData {
 		}
 	}
 	
-	boolean maySolve(){
+	public boolean maySolve(){
 		Calendar now = Calendar.getInstance();
 		now.add(Calendar.HOUR, -24);
 		if (lastTry == null || lastTry.compareTo(now) == -1){
