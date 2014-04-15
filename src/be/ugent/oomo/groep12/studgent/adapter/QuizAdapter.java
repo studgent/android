@@ -1,6 +1,7 @@
 package be.ugent.oomo.groep12.studgent.adapter;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import android.app.Activity;
@@ -101,6 +102,7 @@ public class QuizAdapter extends ArrayAdapter<QuizQuestion> {
 		super.clear();
 	}
 
+	
 	
 	
 

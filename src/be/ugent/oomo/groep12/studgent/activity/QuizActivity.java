@@ -1,6 +1,9 @@
 package be.ugent.oomo.groep12.studgent.activity;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,12 +41,52 @@ public class QuizActivity extends Activity {
 		quiz_list.setAdapter(adapter); 
 		
 		adapter.clear();
-		List<QuizQuestion> data = new ArrayList<QuizQuestion>(QuizQuestionsDataSource.getInstance().getLastItems().values());
-        for (QuizQuestion object : data ) {
+		Collection<QuizQuestion> col = QuizQuestionsDataSource.getInstance().getLastItems().values();
+		ArrayList<QuizQuestion> data = new ArrayList<QuizQuestion>(col);
+		//Collections.sort(data, new QuizQuestionComparator());
+		for (QuizQuestion object : data ) {
         	adapter.add(object);
         }
+		adapter.sort(new Comparator<QuizQuestion>() {
+
+			@Override
+			public int compare(QuizQuestion lhs, QuizQuestion rhs) {
+				
+				if (lhs.isSolved() != rhs.isSolved()){
+					if (rhs.isSolved()){
+						return -1;
+					}else{
+						return 1;
+					}
+				}
+				
+				if (lhs.maySolve() != rhs.maySolve()){
+					if (rhs.maySolve()){
+						return 1;
+					}else{
+						return -1;
+					}
+				}
+				
+				if (lhs.getDistance() != rhs.getDistance()){
+					if (rhs.getDistance() > lhs.getDistance()){
+						return -1;
+					}else{
+						return 1;
+					}
+				}
+				return 0;
+			}
+		   
+		});
         adapter.notifyDataSetChanged();        
 	}	
 }
+
+
+
+
+
+
 
 
