@@ -69,10 +69,10 @@ public class QuizQuestion implements IData {
 		}
 	}
 	
-	public boolean checkAnswer(String answer){
+	public boolean checkAnswer(String givenanswer){
 		lastTry = Calendar.getInstance();
-		answer = answer.toLowerCase().trim().replace(" ","");
-		if (answer.equalsIgnoreCase(answer)){
+		givenanswer = givenanswer.toLowerCase().trim().replace(" ","");
+		if (answer.equalsIgnoreCase(givenanswer)){
 			solved=true;
 			return true;
 		}else{

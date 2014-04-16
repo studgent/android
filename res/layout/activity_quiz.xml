@@ -5,48 +5,59 @@
     android:orientation="vertical" >
 
     <GridLayout
+        android:id="@+id/detailViewQuestion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:columnCount="1"
         android:visibility="gone"
-        android:id="@+id/detailViewQuestion" >
+        android:background="#EEEEEE"
+        android:layout_margin="10dp"
+         >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/txtQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_column="0"
             android:layout_gravity="left|top"
             android:layout_row="0"
             android:text="Large Text"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <Button
-            android:id="@+id/button1"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_column="0"
             android:layout_gravity="left|top"
             android:layout_row="1"
-            android:text="Button" />
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:id="@+id/layoutAnswers" >
 
-        <Button
-            android:id="@+id/button2"
+            	
+            
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_column="0"
             android:layout_gravity="left|top"
             android:layout_row="1"
-            android:text="Button" />
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:id="@+id/layoutAnswer" 
+            >"
 
-        <Button
-            android:id="@+id/button3"
-            android:layout_column="0"
-            android:layout_gravity="right|top"
-            android:layout_row="1"
-            android:text="Button" />
-
-        <Button
-            android:id="@+id/button4"
-            android:layout_column="0"
-            android:layout_gravity="center_horizontal|top"
-            android:layout_row="1"
-            android:text="Button" />
-
+            <EditText
+                android:id="@+id/QuizAnswerInputBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:imeOptions="actionGo">
+                <requestFocus />
+            </EditText>
+            
+        </RelativeLayout>
     </GridLayout>
 
 	<ListView

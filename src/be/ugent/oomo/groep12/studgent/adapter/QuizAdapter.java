@@ -76,7 +76,7 @@ public class QuizAdapter extends ArrayAdapter<QuizQuestion> {
         holder.question.setText(quizQuestion.getQuestion() + "");
     
         if (quizQuestion.isSolved() ){
-              holder.item.setBackgroundColor(Color.GRAY);
+              holder.item.setBackgroundColor(Color.GREEN);
         } else if (!quizQuestion.maySolve() ){
             holder.item.setBackgroundColor(Color.RED);
         } else {

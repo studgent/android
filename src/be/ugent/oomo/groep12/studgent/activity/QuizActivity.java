@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.android.gms.drive.internal.OnContentsResponse;
+
 import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.adapter.FriendAdapter;
 import be.ugent.oomo.groep12.studgent.adapter.QuizAdapter;
@@ -20,18 +22,31 @@ import android.app.Activity;
 import android.content.AsyncTaskLoader;
 import android.opengl.Visibility;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
-public class QuizActivity extends Activity implements AdapterView.OnItemClickListener  {
+
+
+public class QuizActivity extends Activity implements AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener  {
 	
 	ListView quiz_list;
+	QuizAdapter adapter;
+	QuizQuestion currentQuestion;
 	
 	
 	
@@ -46,7 +61,7 @@ public class QuizActivity extends Activity implements AdapterView.OnItemClickLis
 		quiz_list = (ListView) findViewById(R.id.quiz_list );
 		
 		
-		QuizAdapter adapter = new QuizAdapter(this, R.layout.quiz_question_item, new ArrayList<QuizQuestion>());
+		adapter = new QuizAdapter(this, R.layout.quiz_question_item, new ArrayList<QuizQuestion>());
 		quiz_list.setAdapter(adapter); 
 		quiz_list.setOnItemClickListener(this);
 		
@@ -57,6 +72,10 @@ public class QuizActivity extends Activity implements AdapterView.OnItemClickLis
 		for (QuizQuestion object : data ) {
         	adapter.add(object);
         }
+		renewListGui();        
+	}
+	
+	private void renewListGui(){
 		adapter.sort(new Comparator<QuizQuestion>() {
 
 			@Override
@@ -90,23 +109,85 @@ public class QuizActivity extends Activity implements AdapterView.OnItemClickLis
 		   
 		});
         adapter.notifyDataSetChanged();   
-        
-        
+
 	}
 
 
 
+	
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		// TODO Auto-generated method stub
-		GridLayout detailview = (GridLayout) findViewById(R.id.detailViewQuestion);
-		detailview.setVisibility(0);
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		currentQuestion = adapter.getItem(position);
+		
+		if (currentQuestion.maySolve() && currentQuestion.isSolved()==false){
+			//detailview visible
+			GridLayout detailview = (GridLayout) findViewById(R.id.detailViewQuestion);
+			detailview.setVisibility(0);
+			
+			//set question
+			TextView txtQuestion = (TextView) findViewById(R.id.txtQuestion);
+			txtQuestion.setText(currentQuestion.getQuestion());
+			
+			//get panels
+			RelativeLayout oneAnswerPanel = (RelativeLayout) findViewById(R.id.layoutAnswer);
+			LinearLayout multipleAnswerPanel = (LinearLayout) findViewById(R.id.layoutAnswers);
+					
+			if (currentQuestion.getPossibleAnswers()==null || currentQuestion.getPossibleAnswers().size()==0){
+				//no multiple answer question, show inputbox
+				oneAnswerPanel.setVisibility(view.VISIBLE);
+				multipleAnswerPanel.setVisibility(View.GONE);
+				EditText answerInputBox = (EditText) findViewById(R.id.QuizAnswerInputBox);
+				answerInputBox.setOnEditorActionListener(this);
+			}else{
+				//Multiple answers
+				oneAnswerPanel.setVisibility(View.GONE);
+				multipleAnswerPanel.setVisibility(view.VISIBLE);
+				multipleAnswerPanel.removeAllViews();
+				
+				LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+				for (String possibleAnswer : currentQuestion.getPossibleAnswers() ){
+					Button btn = new Button(this);
+					btn.setText(possibleAnswer);
+					btn.setOnClickListener(this);
+					multipleAnswerPanel.addView(btn, lp);
+				}
+	
+			}	
+		}
+	}
+
+
+
+	//handle button click when multiple choice
+	@Override
+	public void onClick(View v) {
+		//MultipleChoise, there is clicked on a button!
+		Button target = (Button) v;
+		String answer = target.getText().toString();
+		sendAnswer(answer);
 	}	
+	
+	//handle enter submit when no multiple choice
+	@Override
+	public boolean onEditorAction(TextView v, int actionId,KeyEvent event) {
+		sendAnswer(((EditText) v).getText().toString());		
+		return true;
+	}
+	
+	
+	public void sendAnswer(String answer){
+		//hide answer panel
+		GridLayout detailview = (GridLayout) findViewById(R.id.detailViewQuestion);
+		detailview.setVisibility(View.GONE);
+		currentQuestion.checkAnswer(answer);		
+		renewListGui();
+	}
+
+
+
+
+
 }
-
-
-
-
 
 
 
