@@ -1,7 +1,5 @@
 package be.ugent.oomo.groep12.studgent.activity;
 
-import be.ugent.oomo.groep12.studgent.R;
-import be.ugent.oomo.groep12.studgent.view.OverlayView;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +17,8 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.TextView;
+import be.ugent.oomo.groep12.studgent.R;
+import be.ugent.oomo.groep12.studgent.view.OverlayView;
 
 public class AugmentedViewActivity extends Activity implements
 		SurfaceHolder.Callback, SensorEventListener {
@@ -76,9 +76,6 @@ public class AugmentedViewActivity extends Activity implements
 				SensorManager.SENSOR_DELAY_GAME);
 		sensorManager.registerListener(this, magnetometer,
 				SensorManager.SENSOR_DELAY_GAME);
-
-		// Overlay
-		overlayView.setVisibility(View.INVISIBLE);
 	}
 
 	@Override
