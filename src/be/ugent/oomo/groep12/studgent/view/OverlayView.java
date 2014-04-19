@@ -3,10 +3,8 @@ package be.ugent.oomo.groep12.studgent.view;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.graphics.Canvas;
 import android.location.Location;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
@@ -39,9 +37,6 @@ public class OverlayView extends FrameLayout {
 	}
 
 	private void init(Context context) {
-		// Otherwise no onDraw() call
-		setWillNotDraw(false);
-
 		screenWidth = context.getResources().getDisplayMetrics().widthPixels;
 		screenHeight = context.getResources().getDisplayMetrics().heightPixels;
 
@@ -60,11 +55,6 @@ public class OverlayView extends FrameLayout {
 		for (POIView v : pois) {
 			this.addView(v);
 		}
-	}
-
-	@Override
-	public void onDraw(Canvas canvas) {
-
 	}
 
 	public void updateOverlay(int az) {
@@ -87,7 +77,5 @@ public class OverlayView extends FrameLayout {
 				v.requestLayout();
 			}
 		}
-		// Hackish way to force visibility with a SurfaceView beneath this view
-		//this.requestLayout();
 	}
 }

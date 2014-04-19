@@ -1,15 +1,11 @@
 package be.ugent.oomo.groep12.studgent.view;
 
-import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.FrameLayout;
-import android.widget.Toast;
+import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 
 public class POIView extends View{
 	
@@ -35,9 +31,6 @@ public class POIView extends View{
 		
 		// Otherwise no onDraw() call
 		this.setWillNotDraw(false);
-		
-		//this.setClickable(true);
-		//this.setOnClickListener((OnClickListener) ((FrameLayout)this.getParent()));
 		
 		cpaint = new Paint();
 		cpaint.setAntiAlias(true);
