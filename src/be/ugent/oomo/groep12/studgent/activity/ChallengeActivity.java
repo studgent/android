@@ -10,7 +10,6 @@ public class ChallengeActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		this.overridePendingTransition(R.anim.animation_enter,
 				R.anim.animation_leave);
