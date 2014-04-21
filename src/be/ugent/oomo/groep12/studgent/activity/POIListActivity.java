@@ -3,12 +3,6 @@ package be.ugent.oomo.groep12.studgent.activity;
 import java.util.ArrayList;
 import java.util.Map;
 
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -23,13 +17,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import be.ugent.oomo.groep12.studgent.R;
-import be.ugent.oomo.groep12.studgent.adapter.FriendAdapter;
 import be.ugent.oomo.groep12.studgent.adapter.POIAdapter;
-import be.ugent.oomo.groep12.studgent.common.Friend;
-import be.ugent.oomo.groep12.studgent.common.ICalendarEvent;
 import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
-import be.ugent.oomo.groep12.studgent.data.FriendListDataSource;
 import be.ugent.oomo.groep12.studgent.data.POIDataSource;
 
 public class POIListActivity extends Activity implements 
@@ -65,7 +55,7 @@ public class POIListActivity extends Activity implements
         adapter = new POIAdapter(this, R.layout.poi_list_item, new ArrayList<PointOfInterest>());
         
         poi_list_view.setAdapter(adapter);
-        new AsyncFriendListViewLoader().execute(adapter);
+        new AsyncPOIListViewLoader().execute(adapter);
         
 	}
 	
@@ -178,7 +168,7 @@ public class POIListActivity extends Activity implements
 	}
 
 	
-	private class AsyncFriendListViewLoader extends AsyncTask<POIAdapter, Void, ArrayList<IPointOfInterest>> {
+	private class AsyncPOIListViewLoader extends AsyncTask<POIAdapter, Void, ArrayList<IPointOfInterest>> {
 	    private final ProgressDialog dialog = new ProgressDialog(POIListActivity.this);
 
 	    @Override
@@ -198,7 +188,7 @@ public class POIListActivity extends Activity implements
 	    @Override
 	    protected void onPreExecute() {        
 	        super.onPreExecute();
-	        dialog.setMessage(getString(R.string.load_eventlist));
+	        dialog.setMessage(getString(R.string.load_POIlist));
 	        dialog.show();            
 	    }
 
@@ -206,8 +196,8 @@ public class POIListActivity extends Activity implements
 		protected ArrayList<IPointOfInterest> doInBackground(POIAdapter... params) {
 			//adp = params[0];
 	        try {
-	        	Map<Integer, IPointOfInterest> events = POIDataSource.getInstance().getLastItems();
-	        	return new ArrayList<IPointOfInterest>(events.values());
+	        	Map<Integer, IPointOfInterest> pois = POIDataSource.getInstance().getLastItems();
+	        	return new ArrayList<IPointOfInterest>(pois.values());
 	        }
 	        catch(Throwable t) {
 	            t.printStackTrace();

@@ -25,6 +25,7 @@
     <string name="amidrunk">Am I drunk</string>
     <string name="quiz">Quiz</string>
     <string name="title_activity_am_idrunk">Am I Drunk</string>
-    <string name="title_activity_check_in">Checkin</string>
-
+    <string name="title_activity_check_in">Zaken in de buurt</string>
+	<string name="button_checkin">Check In</string>
+	<string name="load_POIlist">gegevens worden opgehaald.</string>
 </resources>
