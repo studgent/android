@@ -34,6 +34,10 @@ public class POIAdapter extends ArrayAdapter<PointOfInterest> {
     Context context; 
     int layoutResourceId;    
     List<PointOfInterest> data = new ArrayList<PointOfInterest>();
+    
+    public PointOfInterest getItem(int pos){
+    	return this.data.get(pos);
+    }
 
 	public POIAdapter(Context context, int layoutResourceId) {
 		super(context, layoutResourceId);

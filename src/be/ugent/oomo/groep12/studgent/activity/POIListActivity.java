@@ -170,13 +170,11 @@ public class POIListActivity extends Activity implements
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View item, int position, long rowID) {
-		System.out.println("geklikt op vriend");
-		/*
-		Intent intent = new Intent(this, EventDetailActivity.class);
-		intent.putExtra("id", adapter.getItem(position).getId());
-		intent.putExtra("calendarItem", adapter.getItem(position));
+		PointOfInterest poi = this.adapter.getItem(position);
+		System.out.println("geklikt op poi");
+		Intent intent = new Intent(this, POIDetailActivity.class);
+		intent.putExtra("poi", poi);
 		startActivity(intent);
-		*/
 	}
 
 	
