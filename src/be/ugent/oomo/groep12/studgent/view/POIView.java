@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.View;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 
@@ -41,6 +42,7 @@ public class POIView extends View{
 		tpaint = new Paint();
 		tpaint.setAntiAlias(true);
 		tpaint.setColor(Color.GRAY);
+		tpaint.setTextSize(18.0f);
 		
 		screenWidth = context.getResources().getDisplayMetrics().widthPixels;
 		screenHeight = context.getResources().getDisplayMetrics().heightPixels;
@@ -50,7 +52,7 @@ public class POIView extends View{
 	@Override
 	public void onDraw(Canvas canvas) {
 		canvas.drawCircle(screenWidth / 2, screenHeight / 2, 35, cpaint);
-		int xPos = (int) ((screenWidth / 2) - (tpaint.measureText("Noorden") / 2 ));
+		int xPos = (int) ((screenWidth / 2) - (tpaint.measureText(poi.getName()) / 2 ));
 		int yPos = (int) ((screenHeight / 2) - ((tpaint.descent() + tpaint.ascent()) / 2)) + 48 ;
 		canvas.drawText(poi.getName(), xPos, yPos, tpaint);
 	}
