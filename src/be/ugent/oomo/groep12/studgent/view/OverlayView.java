@@ -3,16 +3,20 @@ package be.ugent.oomo.groep12.studgent.view;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
+import be.ugent.oomo.groep12.studgent.activity.POIDetailActivity;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
 
 import com.google.android.gms.maps.model.LatLng;
 
-public class OverlayView extends FrameLayout {
+public class OverlayView extends FrameLayout implements OnClickListener {
 
 	private int screenWidth;
 	private int screenHeight;
@@ -54,6 +58,9 @@ public class OverlayView extends FrameLayout {
 		pois.add(t);
 		for (POIView v : pois) {
 			this.addView(v);
+			// Make view clickable
+			v.setOnClickListener(this);
+			v.setClickable(true);
 		}
 	}
 
@@ -76,6 +83,16 @@ public class OverlayView extends FrameLayout {
 				v.setVisibility(View.VISIBLE);
 				v.requestLayout();
 			}
+		}
+	}
+	
+	@Override
+	public void onClick(View v) {
+		Log.d("Hmm", "Werkt dit?");
+		if (((POIView) v).getPoi() != null) {
+			Intent intent = new Intent(getContext(), POIDetailActivity.class);
+			intent.putExtra("poi", ((POIView) v).getPoi());
+			getContext().startActivity(intent);
 		}
 	}
 }

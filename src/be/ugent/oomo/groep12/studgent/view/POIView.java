@@ -43,6 +43,9 @@ public class POIView extends View {
 
 		screenWidth = context.getResources().getDisplayMetrics().widthPixels;
 		screenHeight = context.getResources().getDisplayMetrics().heightPixels;
+		
+		// Make invisible until we're on screen
+		this.setVisibility(View.INVISIBLE);
 	}
 
 	@Override
