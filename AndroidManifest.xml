@@ -107,6 +107,11 @@
             android:icon="@drawable/studgent_logo"
             android:label="@string/title_activity_am_idrunk" >
         </activity>
+        <activity
+            android:name="be.ugent.oomo.groep12.studgent.CheckInActivity"
+            android:icon="@drawable/studgent_logo"
+            android:label="@string/title_activity_check_in" >
+        </activity>
     </application>
 
 </manifest>
