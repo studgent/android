@@ -1,6 +1,7 @@
 package be.ugent.oomo.groep12.studgent.activity;
 
 import be.ugent.oomo.groep12.studgent.R;
+
 import be.ugent.oomo.groep12.studgent.R.anim;
 import be.ugent.oomo.groep12.studgent.R.id;
 import be.ugent.oomo.groep12.studgent.R.layout;
@@ -23,6 +24,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.os.Build;
+import android.os.CountDownTimer;
 
 public class AmIDrunkActivity extends Activity implements SensorEventListener {
 	
@@ -31,12 +33,15 @@ public class AmIDrunkActivity extends Activity implements SensorEventListener {
 	 * Keep track of X, Y and Z cošrdinates and keep a total for Z.
 	 */
 	private float mLastX, mLastY, mLastZ, mTotalZ;
+	private long mTime;
 	
 	/**
 	 * To check if initialized, if not, set initial values
 	 */
 	private boolean mInitialized; 
 	private boolean mCompleted;
+	
+	private static final float NS2S = 1.0f / 1000000000.0f;
 	
 	/**
 	 * Sensor and sensormanager
@@ -53,12 +58,12 @@ public class AmIDrunkActivity extends Activity implements SensorEventListener {
 	 * DEVIATION: max allowed deviation
 	 * if exceeds: user can be considered drunk
 	 */
-	private final float DEVIATION = (float) 0.9;
+	private final float DEVIATION = (float) 1.9;
 	
 	/**
 	 * Distance to complete in the Z direction
 	 */
-	private final float DISTANCE = (float) 10.0;
+	private final float DISTANCE = (float) 300.0;
 	
 	
 	/**
@@ -81,12 +86,12 @@ public class AmIDrunkActivity extends Activity implements SensorEventListener {
 		mInitialized = false;
 		mSensorManager = (SensorManager) getSystemService(this.SENSOR_SERVICE);
 		mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-		mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_FASTEST);
+		mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 	}
 	
 	protected void onResume() {
 		super.onResume();
-		mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_FASTEST);
+		mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 	}
 	protected void onPause() {
 		super.onPause();
@@ -136,6 +141,7 @@ public class AmIDrunkActivity extends Activity implements SensorEventListener {
 	
 	@Override
 	public void onSensorChanged(SensorEvent event) {
+		final float dT = (event.timestamp - mTime) * NS2S;
 		TextView tvX= (TextView)findViewById(R.id.x_axis);
 		TextView tvY= (TextView)findViewById(R.id.y_axis);
 		TextView tvZ= (TextView)findViewById(R.id.z_axis);
@@ -148,6 +154,7 @@ public class AmIDrunkActivity extends Activity implements SensorEventListener {
 			mLastY = y;
 			mLastZ = z;
 			mTotalZ = 0;
+			mTime = event.timestamp;
 			tvX.setText("0.0");
 			tvY.setText("0.0");
 			tvZ.setText("0.0");
@@ -161,9 +168,10 @@ public class AmIDrunkActivity extends Activity implements SensorEventListener {
 			if (deltaX < DEVIATION) deltaX = (float)0.0;
 			if (deltaY < DEVIATION) deltaY = (float)0.0;
 			if (deltaZ < NOISE) deltaZ = (float)0.0;
-			if(mLastZ - z > 0) { // just for quick debugging
-				mTotalZ += deltaZ;
-			}
+			//mTotalZ += mLastZ - z;
+			//if ( deltaX > NOISE && deltaY > NOISE && deltaZ > NOISE ) {
+			mTotalZ += deltaZ * dT * dT; // distance
+			//}
 			mLastX = x;
 			mLastY = y;
 			mLastZ = z;
