@@ -8,13 +8,20 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".FriendListActivity">
     
+    <EditText
+    android:id="@+id/searchFriends_EditText"
+    android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+    android:enabled="true"
+    android:text=""/>
+    
 	<ScrollView
-        android:id="@+id/friends_view"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:fillViewport="true" >
+	    android:id="@+id/friends_view"
+	    android:layout_width="match_parent"
+	    android:layout_height="fill_parent"
+	    android:layout_below="@+id/searchFriends_EditText"
+	    android:layout_centerHorizontal="true"
+	    android:fillViewport="true" >
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -1,29 +1,26 @@
 package be.ugent.oomo.groep12.studgent.adapter;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.android.gms.maps.model.LatLng;
-
 import android.app.Activity;
 import android.content.Context;
-import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import be.ugent.oomo.groep12.studgent.R;
-import be.ugent.oomo.groep12.studgent.common.Category;
-import be.ugent.oomo.groep12.studgent.common.ICalendarEvent;
+import be.ugent.oomo.groep12.studgent.common.POIFilter;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 
-public class POIAdapter extends ArrayAdapter<PointOfInterest> {
-    static class POIItemHolder
-    {
+import com.google.android.gms.maps.model.LatLng;
+
+public class POIAdapter extends ArrayAdapter<PointOfInterest> implements Filterable{
+    static class POIItemHolder{
     	TextView name;
     	TextView streetAndNumber;
     	TextView distance;
@@ -34,6 +31,14 @@ public class POIAdapter extends ArrayAdapter<PointOfInterest> {
     Context context; 
     int layoutResourceId;    
     List<PointOfInterest> data = new ArrayList<PointOfInterest>();
+    private Filter mFilter;
+    
+    public Filter getFilter() {
+        if (mFilter == null) {
+            mFilter = new POIFilter(this);
+        }
+        return mFilter;
+    }
     
     public PointOfInterest getItem(int pos){
     	return this.data.get(pos);
@@ -49,6 +54,10 @@ public class POIAdapter extends ArrayAdapter<PointOfInterest> {
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.data = objects;
+	}
+	
+	public List<PointOfInterest> getItemList(){
+		return data;
 	}
 	
 
@@ -92,11 +101,6 @@ public class POIAdapter extends ArrayAdapter<PointOfInterest> {
         return row;
     }
     
-
-
-    public List<PointOfInterest> getItemList() {
-        return data;
-    }
  
     public void setItemList(List<PointOfInterest>  itemList) {
         this.data = itemList;
@@ -129,4 +133,6 @@ public class POIAdapter extends ArrayAdapter<PointOfInterest> {
 	    long tmp = Math.round(value);
 	    return (double) tmp / factor;
 	}
+	
+	
 }

@@ -3,31 +3,27 @@ package be.ugent.oomo.groep12.studgent.activity;
 import java.util.ArrayList;
 import java.util.Map;
 
+import be.ugent.oomo.groep12.studgent.R;
+import be.ugent.oomo.groep12.studgent.adapter.POIAdapter;
+import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
+import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
+import be.ugent.oomo.groep12.studgent.data.POIDataSource;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
-import be.ugent.oomo.groep12.studgent.R;
-import be.ugent.oomo.groep12.studgent.adapter.POIAdapter;
-import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
-import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
-import be.ugent.oomo.groep12.studgent.data.POIDataSource;
 
-public class POIListActivity extends Activity implements 
-	AdapterView.OnItemClickListener,
-	ActionBar.OnNavigationListener, TextWatcher{
+public class CheckInActivity extends Activity implements AdapterView.OnItemClickListener {
+
 	
 
 	/**
@@ -39,7 +35,6 @@ public class POIListActivity extends Activity implements
 	protected PointOfInterest[] poi_data;
 	protected POIAdapter adapter;
 	protected ListView poi_list_view;
-	protected EditText inputSearch;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +42,8 @@ public class POIListActivity extends Activity implements
 		this.overridePendingTransition(R.anim.animation_enter,
 				R.anim.animation_leave);
 		setContentView(R.layout.activity_poi_list);
-		setNavigation();
 		
 		poi_list_view = (ListView) findViewById(R.id.poi_list);
-		inputSearch = (EditText) findViewById(R.id.searchPOI_EditText);
-		inputSearch.addTextChangedListener(this);
-		
 		poi_list_view.setOnItemClickListener(this);
 		
         /*View header = (View)getLayoutInflater().inflate(R.layout.listview_header_row, null);
@@ -62,29 +53,8 @@ public class POIListActivity extends Activity implements
         adapter = new POIAdapter(this, R.layout.poi_list_item, new ArrayList<PointOfInterest>());
         
         poi_list_view.setAdapter(adapter);
-        new AsyncPOIListViewLoader().execute(adapter);
+        new AsyncFriendListViewLoader().execute(adapter);
         
-	}
-	
-
-	// START switchbar
-	
-	protected void setNavigation() {
-		// Set up the action bar to show a dropdown list.
-		final ActionBar actionBar = getActionBar();
-		actionBar.setDisplayShowTitleEnabled(false);
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-	
-		// Set up the dropdown list navigation in the action bar.
-		actionBar.setListNavigationCallbacks(
-		// Specify a SpinnerAdapter to populate the dropdown list.
-				new ArrayAdapter<String>(actionBar.getThemedContext(),
-						android.R.layout.simple_list_item_1,
-						android.R.id.text1, new String[] {
-								"Map",
-								"Lijst",
-								"Augmented", }), this);
-		actionBar.setSelectedNavigationItem(1); 
 	}
 	
 	@Override
@@ -104,24 +74,6 @@ public class POIListActivity extends Activity implements
 	}
 	
 
-
-	@Override
-	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-		Log.i("selected ", "" + itemPosition + '-' + itemId);
-		
-		// keep correct item in this activity
-		getActionBar().setSelectedNavigationItem(1); 
-		switch (itemPosition) {
-		    case 0:
-		    	openMapviewActivity();
-		    	return true;
-		    case 2:
-		    	openAugmentedViewActivity();
-		        return true;
-		    default:
-		        return false;
-	    }
-	}
 	
 	// END switchbar
 
@@ -175,8 +127,8 @@ public class POIListActivity extends Activity implements
 	}
 
 	
-	private class AsyncPOIListViewLoader extends AsyncTask<POIAdapter, Void, ArrayList<IPointOfInterest>> {
-	    private final ProgressDialog dialog = new ProgressDialog(POIListActivity.this);
+	private class AsyncFriendListViewLoader extends AsyncTask<POIAdapter, Void, ArrayList<IPointOfInterest>> {
+	    private final ProgressDialog dialog = new ProgressDialog(CheckInActivity.this);
 
 	    @Override
 	    protected void onPostExecute(ArrayList<IPointOfInterest> result) {            
@@ -195,7 +147,7 @@ public class POIListActivity extends Activity implements
 	    @Override
 	    protected void onPreExecute() {        
 	        super.onPreExecute();
-	        dialog.setMessage(getString(R.string.load_POIlist));
+	        dialog.setMessage(getString(R.string.load_eventlist));
 	        dialog.show();            
 	    }
 
@@ -203,8 +155,8 @@ public class POIListActivity extends Activity implements
 		protected ArrayList<IPointOfInterest> doInBackground(POIAdapter... params) {
 			//adp = params[0];
 	        try {
-	        	Map<Integer, IPointOfInterest> pois = POIDataSource.getInstance().getLastItems();
-	        	return new ArrayList<IPointOfInterest>(pois.values());
+	        	Map<Integer, IPointOfInterest> events = POIDataSource.getInstance().getLastItems();
+	        	return new ArrayList<IPointOfInterest>(events.values());
 	        }
 	        catch(Throwable t) {
 	            t.printStackTrace();
@@ -212,28 +164,7 @@ public class POIListActivity extends Activity implements
 	        return null;
 		}
 	}
-
-
-	@Override
-	public void beforeTextChanged(CharSequence s, int start, int count,
-			int after) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void onTextChanged(CharSequence s, int start, int before, int count) {
-		adapter.getFilter().filter(s);
-		
-	}
-
-
-	@Override
-	public void afterTextChanged(Editable s) {
-		// TODO Auto-generated method stub
-		
-	}
 	
+
 
 }
