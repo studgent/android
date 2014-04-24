@@ -1,6 +1,5 @@
 package be.ugent.oomo.groep12.studgent.activity;
 
-import be.ugent.oomo.groep12.studgent.AmIDrunkActivity;
 import be.ugent.oomo.groep12.studgent.R;
 import android.app.Activity;
 import android.content.Intent;
