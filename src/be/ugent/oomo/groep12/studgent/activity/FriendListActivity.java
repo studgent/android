@@ -15,14 +15,19 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import be.ugent.oomo.groep12.studgent.adapter.CalenderAdapter;
 import be.ugent.oomo.groep12.studgent.adapter.FriendAdapter;
@@ -34,11 +39,12 @@ import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import be.ugent.oomo.groep12.studgent.data.CalendarEventDataSource;
 import be.ugent.oomo.groep12.studgent.data.FriendListDataSource;
 
-public class FriendListActivity extends Activity implements AdapterView.OnItemClickListener {
+public class FriendListActivity extends Activity implements AdapterView.OnItemClickListener, TextWatcher {
 	
 	protected ICalendarEvent[] event_data;
 	protected FriendAdapter adapter;
 	protected ListView friend_list_view;
+	protected EditText inputSearch;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +55,8 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
 		
 		friend_list_view = (ListView) findViewById(R.id.friends_list);
 		friend_list_view.setOnItemClickListener(this);
+		inputSearch = (EditText) findViewById(R.id.searchFriends_EditText);
+		inputSearch.addTextChangedListener(this);
 		
         /*View header = (View)getLayoutInflater().inflate(R.layout.listview_header_row, null);
         event_list_view.addHeaderView(header);*/
@@ -118,6 +126,73 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
 	        }
 	        return null;
 		}
+	}
+
+
+	@Override
+	public void beforeTextChanged(CharSequence s, int start, int count,
+			int after) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onTextChanged(CharSequence s, int start, int before, int count) {
+		adapter.getFilter().filter(s);
+		
+	}
+
+
+	@Override
+	public void afterTextChanged(Editable s) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void chang_friend_status(View view){
+		System.out.println("er is geklikt op het icoon in de vriendenlijst");
+		
+		
+		//creating alert dialog frame
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this); //de this slaat op de ouder
+			if(view.getContentDescription().equals(R.string.check_discription)){ // in de adapter moet ik nog bij de niet vrienden die toegevoegd worden de contentDescription veranderen
+				//alert dialog opmaken voor verwijderen van vriend
+				alertDialogBuilder.setTitle(getString(R.string.remove_friend_title));
+				alertDialogBuilder.setMessage(getString(R.string.remove_friend));
+				alertDialogBuilder.setCancelable(false);
+				alertDialogBuilder.setPositiveButton(R.string.yes,new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog,int id) {
+							//vriend verwijderen moet hier nog komen
+							dialog.cancel();
+						}
+					  });
+				alertDialogBuilder.setNegativeButton(R.string.no,new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog,int id) {
+							dialog.cancel();
+						}
+					});
+			}
+			else{
+				//alert dialog opmaken voor toevoegen van vriend
+				alertDialogBuilder.setTitle(getString(R.string.add_friend_title));
+				alertDialogBuilder.setMessage(getString(R.string.add_friend));
+				alertDialogBuilder.setCancelable(false);
+				alertDialogBuilder.setPositiveButton(R.string.yes,new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog,int id) {
+							//vriend toevoegen moet nog hier gebeuren
+							dialog.cancel();
+						}
+					  });
+				alertDialogBuilder.setNegativeButton(R.string.no,new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog,int id) {
+							dialog.cancel();
+						}
+					});
+			}
+ 
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
 	}
 
 }

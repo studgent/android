@@ -21,7 +21,7 @@
             android:layout_marginLeft="23dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/friend_item_image"
-            android:text="CodeLearn Chapter 1"
+            android:text="voornaam naam"
             android:textSize="16sp" />
 
         <TextView
@@ -30,6 +30,19 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/friend_item_image"
             android:layout_alignLeft="@+id/friend_item_name"
-            android:text="Description" />
+            android:text="woonplaats" />
+        
+        <ImageButton
+		    android:src="@drawable/check" 
+		    android:contentDescription="@string/check_discription"
+		    android:layout_width="wrap_content"
+		    android:layout_alignParentRight="true"
+		    android:id="@+id/status_button"
+		    android:clickable="true"
+		    android:onClick="chang_friend_status"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentTop="true"
+		    android:layout_alignParentBottom="true"
+		    android:background="@null" />
 
     </RelativeLayout> 

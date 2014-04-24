@@ -9,10 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.common.Friend;
+import be.ugent.oomo.groep12.studgent.common.FriendFilter;
+import be.ugent.oomo.groep12.studgent.common.POIFilter;
 
 public class FriendAdapter extends ArrayAdapter<Friend> {
     static class FriendItemHolder
@@ -25,6 +28,14 @@ public class FriendAdapter extends ArrayAdapter<Friend> {
     Context context; 
     int layoutResourceId;    
     List<Friend> data = new ArrayList<Friend>();
+    private Filter mFilter;
+    
+    public Filter getFilter() {
+        if (mFilter == null) {
+            mFilter = new FriendFilter(this);
+        }
+        return mFilter;
+    }
 
 	public FriendAdapter(Context context, int layoutResourceId) {
 		super(context, layoutResourceId);

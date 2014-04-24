@@ -28,4 +28,12 @@
     <string name="title_activity_check_in">Zaken in de buurt</string>
 	<string name="button_checkin">Check In</string>
 	<string name="load_POIlist">gegevens worden opgehaald.</string>
+	<string name="remove_friend_title">verwijder vriend?</string>
+	<string name="remove_friend">wilt u deze persoon verwijderen als vriend</string>
+	<string name="check_discription">checkbutton</string>
+	<string name="add_friend_title">persoon toevoegen als vriend</string>
+	<string name="add_friend">wilt u deze persoon toevoegen als vriend</string>
+	<string name="yes">Ja</string>
+	<string name="no">Nee</string>
+	
 </resources>
