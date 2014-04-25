@@ -32,5 +32,13 @@
         android:layout_alignBottom="@+id/quiz_question_question"
         android:layout_alignParentRight="true"
         android:text="TextView" />
+
+    <TextView
+        android:id="@+id/quiz_question_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/quiz_question_distance"
+        android:text="TextView" />
    
 </RelativeLayout>

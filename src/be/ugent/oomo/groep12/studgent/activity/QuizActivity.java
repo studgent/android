@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.content.AsyncTaskLoader;
 import android.opengl.Visibility;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -72,7 +73,12 @@ public class QuizActivity extends Activity implements AdapterView.OnItemClickLis
 		for (QuizQuestion object : data ) {
         	adapter.add(object);
         }
-		renewListGui();        
+		renewListGui();  
+		
+		TextView txtQuestion = (TextView) findViewById(R.id.txtQuestion);
+		txtQuestion.setRawInputType(InputType.TYPE_CLASS_TEXT);
+		txtQuestion.setImeOptions(EditorInfo.IME_ACTION_GO);
+		
 	}
 	
 	private void renewListGui(){

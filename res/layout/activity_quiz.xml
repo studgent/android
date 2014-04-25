@@ -24,8 +24,8 @@
             android:text="Large Text"
             android:textAppearance="?android:attr/textAppearanceLarge" 
             android:imeOptions="actionGo"
-		android:inputType="text"
-/>
+			android:inputType="text"
+		/>
 
         <LinearLayout
             android:layout_width="wrap_content"
