@@ -6,36 +6,32 @@
     android:padding="20dp" >
     
      <Button
-                android:id="@+id/button_challenges"
+                android:id="@+id/button_checkin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/button_events"
                 android:layout_marginTop="20dp"
                 android:onClick="openCheckInActivity"
                 android:text="@string/checkin" />
     
      <Button
-                android:id="@+id/button_challenges"
+                android:id="@+id/button_amidrunk"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/button_events"
                 android:layout_marginTop="20dp"
                 android:onClick="openAmIDrunkActivity"
                 android:text="@string/amidrunk" />
        <Button
-                android:id="@+id/button_challenges"
+                android:id="@+id/button_quiz"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/button_events"
                 android:layout_marginTop="20dp"
                 android:onClick="openQuizActivity"
                 android:text="@string/quiz" />
        
        <Button
-                android:id="@+id/button_trophies""
+                android:id="@+id/button_trophies"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/button_challenges"
                 android:layout_marginTop="20dp"
 		        android:onClick="openTrophiesActivity"
 		        android:text="@string/trophies" />
