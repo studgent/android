@@ -38,10 +38,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:background="@null"
             android:clickable="true"
-            android:contentDescription="@string/check_discription"
+            android:contentDescription="@string/friend_discription"
             android:onClick="change_friend_status"
-            android:src="@drawable/check" />
+            android:background="@drawable/check" />
 
     </RelativeLayout> 

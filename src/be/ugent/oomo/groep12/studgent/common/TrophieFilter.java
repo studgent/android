@@ -9,9 +9,11 @@ import be.ugent.oomo.groep12.studgent.adapter.TrophieAdapter;
 public class TrophieFilter extends Filter{
 
 	private TrophieAdapter trophieAdapter;
+	private ArrayList<Trophie> originalData;
 	
 	public TrophieFilter(TrophieAdapter trophieAdapter){
 		this.trophieAdapter=trophieAdapter;
+		originalData=new ArrayList<Trophie>(trophieAdapter.getItemList());
 	}
 
 	@Override
@@ -20,9 +22,7 @@ public class TrophieFilter extends Filter{
 	    FilterResults result = new FilterResults();
 	    List<Trophie> filterList = new ArrayList<Trophie>();
 	    if (constraint != null && constraint.toString().length() > 0) {
-	    	List<Trophie> orginalList = new ArrayList<Trophie>(trophieAdapter.getItemList());
-
-	        for (Trophie p : orginalList) {
+	        for (Trophie p : originalData) {
 	            if (p.getName().toLowerCase().contains(constraint))
 	                filterList.add(p);
 	        }
@@ -31,8 +31,8 @@ public class TrophieFilter extends Filter{
 
 	    } else {
 
-	        result.values = trophieAdapter.getItemList();
-	        result.count = trophieAdapter.getItemList().size();
+	        result.values = originalData;
+	        result.count = originalData.size();
 
 	    }
 	    return result;
@@ -43,6 +43,10 @@ public class TrophieFilter extends Filter{
 	protected void publishResults(CharSequence constraint, FilterResults results) {
 		ArrayList<Trophie> fitems = (ArrayList<Trophie>) results.values;
 		trophieAdapter.clear();
-		trophieAdapter.setItemList(fitems);
+		for (Trophie p : fitems) {
+			trophieAdapter.add(p);
+		}
+		trophieAdapter.notifyDataSetChanged();
+		trophieAdapter.notifyDataSetInvalidated();
 	}
 }

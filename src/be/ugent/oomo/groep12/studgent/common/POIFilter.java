@@ -9,9 +9,11 @@ import android.widget.Filter;
 public class POIFilter extends Filter{
 
 	private POIAdapter poiAdapter;
+	private ArrayList<PointOfInterest> originalData;
 	
 	public POIFilter(POIAdapter poiAdapter){
 		this.poiAdapter=poiAdapter;
+		originalData=new ArrayList<PointOfInterest>(poiAdapter.getItemList());
 	}
 	
 	@Override
@@ -20,9 +22,7 @@ public class POIFilter extends Filter{
 	    FilterResults result = new FilterResults();
 	    List<PointOfInterest> filterList = new ArrayList<PointOfInterest>();
 	    if (constraint != null && constraint.toString().length() > 0) {
-	    	List<PointOfInterest> orginalList = new ArrayList<PointOfInterest>(poiAdapter.getItemList());
-
-	        for (PointOfInterest p : orginalList) {
+	        for (PointOfInterest p : originalData) {
 	            if (p.getName().toLowerCase().contains(constraint))
 	                filterList.add(p);
 	        }
@@ -31,8 +31,8 @@ public class POIFilter extends Filter{
 
 	    } else {
 
-	        result.values = poiAdapter.getItemList();
-	        result.count = poiAdapter.getItemList().size();
+	        result.values = originalData;
+	        result.count = originalData.size();
 
 	    }
 	    return result;
@@ -43,8 +43,11 @@ public class POIFilter extends Filter{
 	protected void publishResults(CharSequence constraint, FilterResults results) {
 		ArrayList<PointOfInterest> fitems = (ArrayList<PointOfInterest>) results.values;
 		poiAdapter.clear();
-	    poiAdapter.setItemList(fitems);
-		
+		for (PointOfInterest p : fitems) {
+			poiAdapter.add(p);
+		}
+		poiAdapter.notifyDataSetChanged();
+		poiAdapter.notifyDataSetInvalidated();
 	}
 
 }

@@ -15,7 +15,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import be.ugent.oomo.groep12.studgent.R;
-import be.ugent.oomo.groep12.studgent.activity.LoginActivity;
 import be.ugent.oomo.groep12.studgent.common.Trophie;
 import be.ugent.oomo.groep12.studgent.common.TrophieFilter;
 
@@ -25,7 +24,7 @@ public class TrophieAdapter extends ArrayAdapter<Trophie> implements Filterable{
     	ImageView image;
         TextView name;
         TextView points;
-        ImageButton status;
+        ImageView status;
     }
 	
     Context context; 
@@ -67,7 +66,7 @@ public class TrophieAdapter extends ArrayAdapter<Trophie> implements Filterable{
             holder.name = (TextView)row.findViewById(R.id.trophie_item_name); 
             holder.points = (TextView)row.findViewById(R.id.trophie_item_points);
             holder.image = (ImageView)row.findViewById(R.id.trophie_item_image);
-            holder.status = (ImageButton)row.findViewById(R.id.trophie_status);
+            holder.status = (ImageView)row.findViewById(R.id.trophie_status);
             row.setTag(holder);
         } else {
             holder = (TrophieItemHolder)row.getTag();

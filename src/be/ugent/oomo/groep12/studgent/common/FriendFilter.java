@@ -9,9 +9,11 @@ import be.ugent.oomo.groep12.studgent.adapter.FriendAdapter;
 public class FriendFilter extends Filter{
 
 	private FriendAdapter friendAdapter;
+	private ArrayList<Friend> originalData;
 	
 	public FriendFilter(FriendAdapter friendAdapter){
 		this.friendAdapter=friendAdapter;
+		originalData=new ArrayList<Friend>(friendAdapter.getItemList());
 	}
 
 	@Override
@@ -20,9 +22,8 @@ public class FriendFilter extends Filter{
 	    FilterResults result = new FilterResults();
 	    List<Friend> filterList = new ArrayList<Friend>();
 	    if (constraint != null && constraint.toString().length() > 0) {
-	    	List<Friend> orginalList = new ArrayList<Friend>(friendAdapter.getItemList());
 
-	        for (Friend p : orginalList) {
+	        for (Friend p : originalData) {
 	            if (p.getName().toLowerCase().contains(constraint))
 	                filterList.add(p);
 	        }
@@ -31,8 +32,8 @@ public class FriendFilter extends Filter{
 
 	    } else {
 
-	        result.values = friendAdapter.getItemList();
-	        result.count = friendAdapter.getItemList().size();
+	        result.values = originalData;
+	        result.count = originalData.size();
 
 	    }
 	    return result;
@@ -43,6 +44,10 @@ public class FriendFilter extends Filter{
 	protected void publishResults(CharSequence constraint, FilterResults results) {
 		ArrayList<Friend> fitems = (ArrayList<Friend>) results.values;
 		friendAdapter.clear();
-		friendAdapter.setItemList(fitems);
+		for (Friend p : fitems) {
+			friendAdapter.add(p);
+		}
+		friendAdapter.notifyDataSetChanged();
+		friendAdapter.notifyDataSetInvalidated();
 	}
 }
