@@ -1,3 +1,5 @@
+package be.ugent.oomo.groep12.studgent.service;
+
 import android.app.Service;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -74,17 +76,17 @@ public class GpsReadingService extends Service implements LocationListener,
 		 * services activity that can resolve error.
 		 */
 		if (connectionResult.hasResolution()) {
-			try {
+			//try {
 				// Start an Activity that tries to resolve the error
 
 				/*
 				 * Thrown if Google Play services canceled the original
 				 * PendingIntent
 				 */
-			} catch (IntentSender.SendIntentException e) {
+			//} catch (IntentSender.SendIntentException e) {
 				// Log the error
-				e.printStackTrace();
-			}
+			//	e.printStackTrace();
+			//}
 		} else {
 			// If no resolution is available, display a dialog to the user with
 			// the error.
