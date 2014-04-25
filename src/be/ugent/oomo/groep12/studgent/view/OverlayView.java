@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
@@ -88,7 +87,6 @@ public class OverlayView extends FrameLayout implements OnClickListener {
 	
 	@Override
 	public void onClick(View v) {
-		Log.d("Hmm", "Werkt dit?");
 		if (((POIView) v).getPoi() != null) {
 			Intent intent = new Intent(getContext(), POIDetailActivity.class);
 			intent.putExtra("poi", ((POIView) v).getPoi());

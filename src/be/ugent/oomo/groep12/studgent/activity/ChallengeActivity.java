@@ -27,7 +27,7 @@ public class ChallengeActivity extends Activity {
 	}
 	
 	public void openCheckInActivity(View view){
-		Intent intent = new Intent(this, AmIDrunkActivity.class);
+		Intent intent = new Intent(this, CheckInActivity.class);
 		startActivity(intent);
 	}
 	

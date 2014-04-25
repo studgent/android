@@ -86,6 +86,8 @@ public class AmIDrunkActivity extends Activity implements SensorEventListener {
 		mInitialized = false;
 		mSensorManager = (SensorManager) getSystemService(this.SENSOR_SERVICE);
 		mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		// TODO: maybe also use magnetometer to sense the movement (for checking if person walked a distance)
+		// check if magnetometer uses any significant battery (as correct distance is not a very big requirement)
 		mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 	}
 	
@@ -195,7 +197,9 @@ public class AmIDrunkActivity extends Activity implements SensorEventListener {
 	
 	protected void hideSensorTable() {
 		TableLayout sensortable = (TableLayout)findViewById(R.id.am_i_drunk_sensor_table);
-		sensortable.removeAllViews();
+		TableLayout title = (TableLayout) findViewById(R.id.am_i_drunk_sensor_title);
+		title.setVisibility(View.GONE);
+		//sensortable.removeAllViews();
 		sensortable.setVisibility(View.GONE);
 		
 	}
