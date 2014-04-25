@@ -29,7 +29,7 @@ public class TrophiesListActivity  extends Activity implements TextWatcher {
 		super.onCreate(savedInstanceState);
 		this.overridePendingTransition(R.anim.animation_enter,
 				R.anim.animation_leave);
-		setContentView(R.layout.activity_friendlist);
+		setContentView(R.layout.activity_trophies);
 		
 		trophie_list_view = (ListView) findViewById(R.id.trophie_list);
 		inputSearch = (EditText) findViewById(R.id.searchTrophies_EditText);
@@ -39,7 +39,7 @@ public class TrophiesListActivity  extends Activity implements TextWatcher {
         event_list_view.addHeaderView(header);*/
 		
 		// create adapter with empty list and attach custom item view
-        adapter = new TrophieAdapter(this, R.layout.friend_list_item, new ArrayList<Trophie>());
+        adapter = new TrophieAdapter(this, R.layout.trophie_list_item, new ArrayList<Trophie>());
         
         trophie_list_view.setAdapter(adapter);
         new AsyncTrophieListViewLoader().execute(adapter);

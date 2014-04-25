@@ -28,9 +28,9 @@ public class TrophieListDataSource implements IDataSource {
 		// populate the list
 		items = new HashMap<Integer,Trophie>();
 		//nog doen
-		items.put(1, new Trophie(1,"10x checkin",100));
-		items.put(1, new Trophie(2,"nuchter",10));
-		items.put(1, new Trophie(3,"quizzz master",100));
+		items.put(1, new Trophie(1,"10x checkin",190));
+		items.put(2, new Trophie(2,"nuchter",10));
+		items.put(3, new Trophie(3,"quizzz master",99));
 	}
 	
 	public Map<Integer, Trophie> getLastItems() {
