@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import be.ugent.oomo.groep12.studgent.R;
+import be.ugent.oomo.groep12.studgent.activity.LoginActivity;
 import be.ugent.oomo.groep12.studgent.common.Trophie;
 import be.ugent.oomo.groep12.studgent.common.TrophieFilter;
 
@@ -73,10 +74,10 @@ public class TrophieAdapter extends ArrayAdapter<Trophie> implements Filterable{
         }
         
         Trophie trophie_item = data.get(position);
-        //System.out.println("Friend friend_item: "+data.get(position).getFirstName());
+        //System.out.println("Friend friend_item: "+data.get(position).getName());
         
         holder.name.setText(trophie_item.getName());
-        holder.points.setText( trophie_item.getPoints());
+        holder.points.setText( "" + trophie_item.getPoints());
         //holder.image.setImageBitmap(trophie_item.getImage()); //nog geen foto
         
         return row;

@@ -29,7 +29,7 @@ public class TrophiesListActivity  extends Activity implements TextWatcher {
 		super.onCreate(savedInstanceState);
 		this.overridePendingTransition(R.anim.animation_enter,
 				R.anim.animation_leave);
-		setContentView(R.layout.activity_friendlist);
+		setContentView(R.layout.activity_trophies);
 		
 		trophie_list_view = (ListView) findViewById(R.id.trophie_list);
 		inputSearch = (EditText) findViewById(R.id.searchTrophies_EditText);
