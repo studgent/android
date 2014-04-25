@@ -33,16 +33,15 @@
             android:text="woonplaats" />
         
         <ImageButton
-		    android:src="@drawable/check" 
-		    android:contentDescription="@string/check_discription"
-		    android:layout_width="wrap_content"
-		    android:layout_alignParentRight="true"
-		    android:id="@+id/status_button"
-		    android:clickable="true"
-		    android:onClick="chang_friend_status"
-		    android:layout_height="wrap_content"
-		    android:layout_alignParentTop="true"
-		    android:layout_alignParentBottom="true"
-		    android:background="@null" />
+            android:id="@+id/status_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@null"
+            android:clickable="true"
+            android:contentDescription="@string/check_discription"
+            android:onClick="change_friend_status"
+            android:src="@drawable/check" />
 
     </RelativeLayout> 
