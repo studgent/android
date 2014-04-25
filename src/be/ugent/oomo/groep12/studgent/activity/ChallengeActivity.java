@@ -31,5 +31,10 @@ public class ChallengeActivity extends Activity {
 		startActivity(intent);
 	}
 	
+	public void openTrophiesActivity(View view){
+		Intent intent = new Intent(this, TrophiesListActivity.class);
+		startActivity(intent);
+	}
+	
 
 }

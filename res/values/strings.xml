@@ -24,6 +24,7 @@
     <string name="checkin">Checkin</string>
     <string name="amidrunk">Am I drunk</string>
     <string name="quiz">Quiz</string>
+    <string name="trophies">Trofeeën</string>
     <string name="title_activity_am_idrunk">Am I Drunk</string>
     <string name="title_activity_check_in">Zaken in de buurt</string>
 	<string name="button_checkin">Check In</string>
@@ -35,5 +36,7 @@
 	<string name="add_friend">wilt u deze persoon toevoegen als vriend</string>
 	<string name="yes">Ja</string>
 	<string name="no">Nee</string>
+	<string name="load_trophielist">trofeeën ophalen</string>
+	<string name="title_activity_trophies">Trofeeën</string>
 	
 </resources>

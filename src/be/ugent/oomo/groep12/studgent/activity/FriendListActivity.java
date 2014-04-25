@@ -81,12 +81,9 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
 	@Override
 	public void onItemClick(AdapterView<?> parent, View item, int position, long rowID) {
 		System.out.println("geklikt op vriend");
-		/*
-		Intent intent = new Intent(this, EventDetailActivity.class);
-		intent.putExtra("id", adapter.getItem(position).getId());
-		intent.putExtra("calendarItem", adapter.getItem(position));
+		Intent intent = new Intent(this, TrophiesListActivity.class);
+		//intent.putExtra("id", adapter.getItem(position).getId());
 		startActivity(intent);
-		*/
 	}
 
 	
@@ -150,7 +147,7 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
 		
 	}
 	
-	public void chang_friend_status(View view){
+	public void change_friend_status(View view){
 		System.out.println("er is geklikt op het icoon in de vriendenlijst");
 		
 		

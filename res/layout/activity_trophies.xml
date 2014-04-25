@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".TrophiesListActivity" >
+    
+    <EditText
+    android:id="@+id/searchTrophies_EditText"
+    android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+    android:enabled="true"
+    android:text=""/>
+
+    <ScrollView
+        android:id="@+id/trophies_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/searchTrophies_EditText"
+        android:layout_centerHorizontal="true"
+        android:fillViewport="true" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <ListView
+                android:id="@+id/trophie_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+            </ListView>
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

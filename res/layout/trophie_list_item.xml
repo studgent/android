@@ -1,0 +1,47 @@
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+         >
+
+        <ImageView
+            android:id="@+id/trophie_item_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+
+            android:src="@drawable/ic_launcher" />
+
+        <TextView
+            android:id="@+id/trophie_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="23dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/trophie_item_image"
+            android:text="trophie name"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/trophie_item_points"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/trophie_item_image"
+            android:layout_alignLeft="@+id/trophie_item_name"
+            android:text="100" />
+        
+        <ImageButton
+		    android:src="@drawable/check" 
+		    android:contentDescription="@string/check_discription"
+		    android:layout_width="wrap_content"
+		    android:layout_alignParentRight="true"
+		    android:id="@+id/trophie_status"
+		    android:clickable="true"
+		    android:onClick="change_friend_status"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentTop="true"
+		    android:background="@null" />
+
+    </RelativeLayout> 
