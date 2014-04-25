@@ -38,6 +38,7 @@ public class POIFilter extends Filter{
 	    return result;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void publishResults(CharSequence constraint, FilterResults results) {
 		ArrayList<PointOfInterest> fitems = (ArrayList<PointOfInterest>) results.values;

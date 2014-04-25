@@ -39,7 +39,7 @@ public class TrophiesListActivity  extends Activity implements TextWatcher {
         event_list_view.addHeaderView(header);*/
 		
 		// create adapter with empty list and attach custom item view
-        adapter = new TrophieAdapter(this, R.layout.friend_list_item, new ArrayList<Trophie>());
+        adapter = new TrophieAdapter(this, R.layout.trophie_list_item, new ArrayList<Trophie>());
         
         trophie_list_view.setAdapter(adapter);
         new AsyncTrophieListViewLoader().execute(adapter);

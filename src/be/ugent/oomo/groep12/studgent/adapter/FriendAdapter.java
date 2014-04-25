@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import be.ugent.oomo.groep12.studgent.R;
@@ -17,7 +18,7 @@ import be.ugent.oomo.groep12.studgent.common.Friend;
 import be.ugent.oomo.groep12.studgent.common.FriendFilter;
 import be.ugent.oomo.groep12.studgent.common.POIFilter;
 
-public class FriendAdapter extends ArrayAdapter<Friend> {
+public class FriendAdapter extends ArrayAdapter<Friend> implements Filterable{
     static class FriendItemHolder
     {
     	ImageView image;

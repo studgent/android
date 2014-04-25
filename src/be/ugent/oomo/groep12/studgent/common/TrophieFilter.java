@@ -38,6 +38,7 @@ public class TrophieFilter extends Filter{
 	    return result;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void publishResults(CharSequence constraint, FilterResults results) {
 		ArrayList<Trophie> fitems = (ArrayList<Trophie>) results.values;
