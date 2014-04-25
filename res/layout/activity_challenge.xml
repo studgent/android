@@ -30,5 +30,14 @@
                 android:layout_marginTop="20dp"
                 android:onClick="openQuizActivity"
                 android:text="@string/quiz" />
+       
+       <Button
+                android:id="@+id/button_trophies""
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/button_challenges"
+                android:layout_marginTop="20dp"
+		        android:onClick="openTrophiesActivity"
+		        android:text="@string/trophies" />
 
 </LinearLayout>
