@@ -39,6 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/quiz_question_distance"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
    
 </RelativeLayout>

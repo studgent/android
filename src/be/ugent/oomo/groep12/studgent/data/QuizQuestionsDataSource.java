@@ -3,6 +3,7 @@ package be.ugent.oomo.groep12.studgent.data;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,11 +50,11 @@ public class QuizQuestionsDataSource implements IDataSource {
 	
 	private void populateList(){
 		items = new HashMap<Integer,QuizQuestion>();
-		items.put(0, new QuizQuestion(1, 10, "hoeveel is 10x10", false, null, "100", null, null));
+		items.put(0, new QuizQuestion(1, 10, "hoeveel is 10x10", false, null, "100", new GregorianCalendar(2013,1,28,13,24,56), null));
 		ArrayList<String> solutions = new ArrayList<String>();
 		solutions.add("1");solutions.add("2");solutions.add("3");		
-		items.put(1, new QuizQuestion(1, 2, "hoeveel is 1+1", false, solutions, "2", null, new LatLng(51.03431, 3.701)));
-		items.put(2, new QuizQuestion(1, 50, "Dummy opgeloste vraag", true, null, "2", null, new LatLng(51.03431, 3.701)));
+		items.put(1, new QuizQuestion(1, 2, "hoeveel is 1+1", false, solutions, "2", new GregorianCalendar(2013,1,28,13,24,56), new LatLng(51.03431, 3.701)));
+		items.put(2, new QuizQuestion(1, 50, "Dummy opgeloste vraag", true, null, "2", new GregorianCalendar(2013,1,28,13,24,56) , new LatLng(51.03431, 3.701)));
 		items.put(3, new QuizQuestion(1, 1, "Dummy vraag mis", false, null, "2", Calendar.getInstance() , new LatLng(51.03431, 3.701)));
 	}
 

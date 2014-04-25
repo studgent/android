@@ -1,7 +1,11 @@
 package be.ugent.oomo.groep12.studgent.adapter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import android.app.Activity;
@@ -9,6 +13,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.text.Layout;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +33,7 @@ public class QuizAdapter extends ArrayAdapter<QuizQuestion> {
         TextView distance;
         TextView points;
         TextView question;
+        TextView date;
         RelativeLayout item;
         
     }
@@ -64,6 +70,7 @@ public class QuizAdapter extends ArrayAdapter<QuizQuestion> {
             holder.question = (TextView)row.findViewById(R.id.quiz_question_question);
             holder.distance = (TextView)row.findViewById(R.id.quiz_question_distance);
             holder.item = (RelativeLayout)row.findViewById(R.id.quiz_question_form);
+            holder.date = (TextView)row.findViewById(R.id.quiz_question_date);
             row.setTag(holder);
         } else {
             holder = (QuizAdapterItemHolder)row.getTag();
@@ -74,13 +81,29 @@ public class QuizAdapter extends ArrayAdapter<QuizQuestion> {
         holder.distance.setText(quizQuestion.getDistance() + " KM");
         holder.points.setText(quizQuestion.getPoints() + "");
         holder.question.setText(quizQuestion.getQuestion() + "");
+        
     
         if (quizQuestion.isSolved() ){
-              holder.item.setBackgroundColor(Color.GREEN);
+              holder.item.setBackgroundColor(Color.rgb(180, 255, 180));
+              SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy");
+              holder.date.setText("Opgelost op " +  sdf.format( quizQuestion.getLastTry().getTime()));
         } else if (!quizQuestion.maySolve() ){
-            holder.item.setBackgroundColor(Color.RED);
+            holder.item.setBackgroundColor(Color.rgb(255, 180, 180));
+            
+            if (quizQuestion.getLastTry().get(Calendar.DAY_OF_MONTH) == (new GregorianCalendar()).get(Calendar.DAY_OF_MONTH)) {
+            	//today filled in 
+             	SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+                holder.date.setText("Wacht tot morgen (" +  sdf.format( quizQuestion.getLastTry().getTime()) + ")");
+           
+            }else{
+            	//filled in yesterday
+             	SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+                holder.date.setText("Wacht tot " +  sdf.format( quizQuestion.getLastTry().getTime()));
+            }
+          
         } else {
         	holder.item.setBackgroundColor(Color.TRANSPARENT);
+        	holder.date.setText("");
 
         }
             
