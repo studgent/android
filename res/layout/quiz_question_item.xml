@@ -1,45 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/quiz_question_form"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:columnCount="3"
     android:padding="6dip"
-    
-    android:id="@+id/quiz_question_form" >
+    android:rowCount="2" >
 
-    <TextView
+   
+        
+      <TextView
         android:id="@+id/quiz_question_points"
-        android:layout_width="wrap_content"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
+        android:layout_gravity="left|top"
+        android:layout_rowSpan="2"
         android:text="Large Text"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:width="40dp" />
-
-    <TextView
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    
+   <TextView
         android:id="@+id/quiz_question_question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/quiz_question_points"
-        android:layout_toRightOf="@+id/quiz_question_points"
+        android:layout_gravity="left|top"
+        android:ellipsize="start"
+        android:singleLine="false"
         android:text="TextView" />
-
-    <TextView
+   
+       <TextView
         android:id="@+id/quiz_question_distance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/quiz_question_question"
-        android:layout_alignBottom="@+id/quiz_question_question"
-        android:layout_alignParentRight="true"
+        android:layout_gravity="right"
+		
         android:text="TextView" />
 
-    <TextView
+ 
+       
+       <TextView
         android:id="@+id/quiz_question_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/quiz_question_distance"
+        android:layout_column="1"
+        android:layout_columnSpan="2"
+        android:layout_gravity="right"
         android:text="TextView"
         android:textAppearance="?android:attr/textAppearanceSmall" />
-   
-</RelativeLayout>
+    
+       
+</GridLayout>

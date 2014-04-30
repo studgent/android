@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -34,7 +35,7 @@ public class QuizAdapter extends ArrayAdapter<QuizQuestion> {
         TextView points;
         TextView question;
         TextView date;
-        RelativeLayout item;
+        GridLayout item;
         
     }
 	
@@ -69,7 +70,7 @@ public class QuizAdapter extends ArrayAdapter<QuizQuestion> {
             holder.points = (TextView)row.findViewById(R.id.quiz_question_points); 
             holder.question = (TextView)row.findViewById(R.id.quiz_question_question);
             holder.distance = (TextView)row.findViewById(R.id.quiz_question_distance);
-            holder.item = (RelativeLayout)row.findViewById(R.id.quiz_question_form);
+            holder.item = (GridLayout)row.findViewById(R.id.quiz_question_form);
             holder.date = (TextView)row.findViewById(R.id.quiz_question_date);
             row.setTag(holder);
         } else {
