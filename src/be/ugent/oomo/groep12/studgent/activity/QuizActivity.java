@@ -40,6 +40,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
 
 
 
@@ -185,7 +186,12 @@ public class QuizActivity extends Activity implements AdapterView.OnItemClickLis
 		//hide answer panel
 		GridLayout detailview = (GridLayout) findViewById(R.id.detailViewQuestion);
 		detailview.setVisibility(View.GONE);
-		currentQuestion.checkAnswer(answer);		
+		Boolean correct = currentQuestion.checkAnswer(answer);
+		if (correct){
+			Toast.makeText(this, "Volledig correct!", Toast.LENGTH_SHORT).show();
+		}else{
+			Toast.makeText(this, "Woeps, dat is mis. Probeer nog eens binnen 24uur.", Toast.LENGTH_SHORT).show();
+		}
 		renewListGui();
 	}
 
