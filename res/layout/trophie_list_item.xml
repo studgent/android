@@ -34,7 +34,7 @@
         
         <ImageView
 		    android:src="@drawable/check" 
-		    android:contentDescription="@string/achieved_discription"
+		    android:contentDescription="@string/achieved_description"
 		    android:layout_width="wrap_content"
 		    android:layout_alignParentRight="true"
 		    android:id="@+id/trophie_status"

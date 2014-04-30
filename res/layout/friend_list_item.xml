@@ -39,7 +39,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:clickable="true"
-            android:contentDescription="@string/friend_discription"
+            android:contentDescription="@string/friend_description"
             android:onClick="change_friend_status"
             android:background="@drawable/check" />
 

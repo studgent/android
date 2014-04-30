@@ -150,11 +150,11 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
 	
 	public void changeImageButton(boolean addfriend){
 		if(addfriend){
-			view.setContentDescription(getString(R.string.friend_discription));
+			view.setContentDescription(getString(R.string.friend_description));
 			view.setBackgroundResource(R.drawable.check);
 		}
 		else{
-			view.setContentDescription(getString(R.string.no_friend_discription));
+			view.setContentDescription(getString(R.string.no_friend_description));
 			view.setBackgroundResource(R.drawable.add_friend);
 		}
 	}
@@ -163,11 +163,11 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
 		this.view = view;
 		System.out.println("er is geklikt op het icoon in de vriendenlijst");
 		System.out.println("view.getContentDescription() = "+view.getContentDescription());
-		System.out.println("R.string.check_discription = "+getString(R.string.friend_discription));
+		System.out.println("R.string.check_discription = "+getString(R.string.friend_description));
 		
 		//creating alert dialog frame
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this); //de this slaat op de ouder
-			if(view.getContentDescription().equals(getString(R.string.friend_discription))){ // in de adapter moet ik nog bij de niet vrienden die toegevoegd worden de contentDescription veranderen
+			if(view.getContentDescription().equals(getString(R.string.friend_description))){ // in de adapter moet ik nog bij de niet vrienden die toegevoegd worden de contentDescription veranderen
 				//alert dialog opmaken voor verwijderen van vriend
 				alertDialogBuilder.setTitle(getString(R.string.remove_friend_title));
 				alertDialogBuilder.setMessage(getString(R.string.remove_friend));

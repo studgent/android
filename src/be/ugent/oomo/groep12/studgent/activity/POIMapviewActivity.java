@@ -5,6 +5,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
@@ -41,7 +46,8 @@ import be.ugent.oomo.groep12.studgent.utilities.PlayServicesUtil;
 
 public class POIMapviewActivity extends Activity implements 
 	OnInfoWindowClickListener,
-	ActionBar.OnNavigationListener {
+	ActionBar.OnNavigationListener,
+	LocationListener {
 	
 	/**
 	 * The serialization (saved instance state) Bundle key representing the
@@ -50,6 +56,11 @@ public class POIMapviewActivity extends Activity implements
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 	
 	protected Map<String, IPointOfInterest> marker_data;
+	protected MapFragment mapFragment;
+	protected GoogleMap map;
+	private LocationManager locationManager;
+	private static final long MIN_TIME = 400;
+	private static final float MIN_DISTANCE = 1000;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,11 +74,16 @@ public class POIMapviewActivity extends Activity implements
 		marker_data = new HashMap<String, IPointOfInterest>();
 		
 		FragmentManager fmanager = getFragmentManager();
-		MapFragment map = (MapFragment)(fmanager.findFragmentById(R.id.mapFullscreen));
+		mapFragment = (MapFragment)(fmanager.findFragmentById(R.id.mapFullscreen));
+		map = mapFragment.getMap();
+
+	    //locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+	    // LocationManager.NETWORK_PROVIDER, LocationManager.GPS_PROVIDER and LocationManager.PASSIVE_PROVIDER 
+	    //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, MIN_DISTANCE, this); 
 	
 		String noPlayServices = "Google Play Services not found, map will not be shown."; 
 		if (PlayServicesUtil.hasPlayServices(this, noPlayServices)){
-			loadPOIs(map.getMap());
+			loadPOIs();
 		}		
 	}
 	
@@ -158,7 +174,7 @@ public class POIMapviewActivity extends Activity implements
 	}
 
 
-	private void loadPOIs(GoogleMap map){
+	private void loadPOIs(){
 		map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.05389,3.705), 16));
 		new AsyncPOILoader().execute(map);
 		
@@ -211,6 +227,27 @@ public class POIMapviewActivity extends Activity implements
 	 		}
 	  		
 	   }
+	}
+
+	// implementation LocationListener
+	@Override
+	public void onLocationChanged(Location location) {
+	    LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+	    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 10);
+	    map.animateCamera(cameraUpdate);
+	    locationManager.removeUpdates(this);
+	}
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+	}
+
+	@Override
+	public void onProviderEnabled(String provider) {
+	}
+
+	@Override
+	public void onProviderDisabled(String provider) {
 	}
 
 

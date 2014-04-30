@@ -32,11 +32,11 @@
 	<string name="remove_friend_title">verwijder vriend?</string>
 	<string name="remove_friend">wilt u deze persoon verwijderen als vriend</string>
 	
-	<string name="friend_discription">check</string>
-	<string name="no_friend_discription">nothing</string>
+	<string name="friend_description">check</string>
+	<string name="no_friend_description">nothing</string>
 	
-	<string name="achieved_discription">achieved</string>
-	<string name="not_achieved_discription">not achieved</string>
+	<string name="achieved_description">achieved</string>
+	<string name="not_achieved_description">not achieved</string>
 	
 	<string name="add_friend_title">persoon toevoegen als vriend</string>
 	<string name="add_friend">wilt u deze persoon toevoegen als vriend</string>
