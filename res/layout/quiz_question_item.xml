@@ -22,7 +22,8 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/quiz_question_points"
         android:layout_toRightOf="@+id/quiz_question_points"
-        android:text="TextView" />
+        android:text="TextView"
+        android:singleLine="true" />
 
     <TextView
         android:id="@+id/quiz_question_distance"
