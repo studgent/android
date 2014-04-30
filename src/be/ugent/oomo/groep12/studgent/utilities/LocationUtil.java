@@ -13,7 +13,7 @@ import android.util.Log;
 public class LocationUtil {
 	public static LatLng getLatLongFromAddress(String youraddress) throws CurlException {
 	    String uri = "http://maps.google.com/maps/api/geocode/json?address=" +
-	                  youraddress + "&sensor=false";
+	                  youraddress.replace(' ', '+') + "&sensor=false";
 	    String response = CurlUtil.getRaw(uri, false);
 
 	    JSONObject jsonObject = new JSONObject();

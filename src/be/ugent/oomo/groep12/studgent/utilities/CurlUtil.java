@@ -99,7 +99,8 @@ public class CurlUtil {
 		Log.i("retrieving", resource);
 		// get cache.
 		File dir = App.getContext().getCacheDir();
-		String cache_file = resource.replace('/', '-')
+		String cache_file = resource.replace(' ', '-')
+									.replace('/', '-')
 									.replace(':', '-')
 									.replace('?', '-')
 									.replace('&', '-')
