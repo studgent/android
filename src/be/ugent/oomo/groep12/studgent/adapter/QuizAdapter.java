@@ -35,7 +35,7 @@ public class QuizAdapter extends ArrayAdapter<QuizQuestion> {
         TextView points;
         TextView question;
         TextView date;
-        GridLayout item;
+        LinearLayout item;
         
     }
 	
@@ -67,10 +67,10 @@ public class QuizAdapter extends ArrayAdapter<QuizQuestion> {
             row = inflater.inflate(layoutResourceId, parent, false);
             
             holder = new QuizAdapterItemHolder();
-            holder.points = (TextView)row.findViewById(R.id.quiz_question_points); 
+            holder.points = (TextView)row.findViewById(R.id.quiz_question_point); 
             holder.question = (TextView)row.findViewById(R.id.quiz_question_question);
             holder.distance = (TextView)row.findViewById(R.id.quiz_question_distance);
-            holder.item = (GridLayout)row.findViewById(R.id.quiz_question_form);
+            holder.item = (LinearLayout)row.findViewById(R.id.quiz_question_form);
             holder.date = (TextView)row.findViewById(R.id.quiz_question_date);
             row.setTag(holder);
         } else {
@@ -83,7 +83,7 @@ public class QuizAdapter extends ArrayAdapter<QuizQuestion> {
         holder.points.setText(quizQuestion.getPoints() + "");
         holder.question.setText(quizQuestion.getQuestion() + "");
         
-    
+        
         if (quizQuestion.isSolved() ){
               holder.item.setBackgroundColor(Color.rgb(180, 255, 180));
               SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy");

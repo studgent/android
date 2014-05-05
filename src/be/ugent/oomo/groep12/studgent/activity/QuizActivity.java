@@ -76,10 +76,7 @@ public class QuizActivity extends Activity implements AdapterView.OnItemClickLis
         }
 		renewListGui();  
 		
-		TextView txtQuestion = (TextView) findViewById(R.id.txtQuestion);
-		txtQuestion.setRawInputType(InputType.TYPE_CLASS_TEXT);
-	//	txtQuestion.setImeOptions(EditorInfo.IME_ACTION_GO |  );
-		txtQuestion.setSingleLine();
+
 	}
 	
 	private void renewListGui(){
@@ -158,8 +155,6 @@ public class QuizActivity extends Activity implements AdapterView.OnItemClickLis
 					btn.setText(possibleAnswer);
 					btn.setOnClickListener(this);
 				
-					//int columnIndex = idButton % 3 ;
-					//int rowIndex = (int) Math.floor(idButton/3);
 					int columnIndex = 1;
 					int rowIndex=idButton;
 							

@@ -1,51 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/quiz_question_form"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:columnCount="3"
-    android:padding="6dip"
-    android:rowCount="2" >
+    android:columnCount="2"
+    android:rowCount="3" 
+    android:orientation="vertical" >
 
-   
-        
-      <TextView
-        android:id="@+id/quiz_question_points"
-        android:layout_width="40dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left|top"
-        android:layout_rowSpan="2"
-        android:text="Large Text"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-    
-   <TextView
-        android:id="@+id/quiz_question_question"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left|top"
-        android:ellipsize="start"
-        android:singleLine="false"
-        android:text="TextView" />
-   
-       <TextView
-        android:id="@+id/quiz_question_distance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-		
-        android:text="TextView" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
 
- 
-       
-       <TextView
-        android:id="@+id/quiz_question_date"
-        android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/quiz_question_point"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:gravity="bottom|right"
+            android:text="points"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+	        android:id="@+id/quiz_question_question"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:singleLine="true"
+	        android:ellipsize="end"
+	        android:maxLines="1"
+	        android:text="question" />
+            
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_column="1"
-        android:layout_columnSpan="2"
-        android:layout_gravity="right"
-        android:text="TextView"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-    
-       
-</GridLayout>
+        android:orientation="horizontal" >
+	        
+	    <TextView
+	        android:id="@+id/quiz_question_date"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="question data"
+	        android:textAppearance="?android:attr/textAppearanceSmall"
+	        android:layout_marginLeft="40dp" />
+
+	    <TextView
+	        android:id="@+id/quiz_question_distance"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        
+	        android:gravity="right"
+	        android:text="question distane"
+	        android:textAlignment="6" />
+	        
+    </LinearLayout>
+     
+  
+
+  
+
+  
+
+</LinearLayout>
