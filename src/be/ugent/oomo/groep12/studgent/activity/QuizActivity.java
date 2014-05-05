@@ -78,7 +78,7 @@ public class QuizActivity extends Activity implements AdapterView.OnItemClickLis
 		
 		TextView txtQuestion = (TextView) findViewById(R.id.txtQuestion);
 		txtQuestion.setRawInputType(InputType.TYPE_CLASS_TEXT);
-		txtQuestion.setImeOptions(EditorInfo.IME_ACTION_GO);
+	//	txtQuestion.setImeOptions(EditorInfo.IME_ACTION_GO |  );
 		txtQuestion.setSingleLine();
 	}
 	
