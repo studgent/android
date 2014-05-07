@@ -6,7 +6,11 @@ import java.util.Map;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -75,15 +79,24 @@ public class POIListActivity extends Activity implements
 		actionBar.setDisplayShowTitleEnabled(false);
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 	
+		String[] entries;
+
+		// Check whether augmented can be used
+		SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+		Sensor accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		Sensor magnetometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+		if (accelerometerSensor != null && magnetometerSensor != null) {
+		    // Device has Accelerometer and Magnetometer
+			entries = new String[] { "Map", "Lijst", "Augmented" };
+		} else {
+			entries = new String[] { "Map", "Lijst" };
+		}
 		// Set up the dropdown list navigation in the action bar.
 		actionBar.setListNavigationCallbacks(
 		// Specify a SpinnerAdapter to populate the dropdown list.
 				new ArrayAdapter<String>(actionBar.getThemedContext(),
 						android.R.layout.simple_list_item_1,
-						android.R.id.text1, new String[] {
-								"Map",
-								"Lijst",
-								"Augmented", }), this);
+						android.R.id.text1, entries), this);
 		actionBar.setSelectedNavigationItem(1); 
 	}
 	
