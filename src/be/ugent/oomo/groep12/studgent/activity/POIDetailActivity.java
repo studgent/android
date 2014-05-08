@@ -3,9 +3,13 @@ package be.ugent.oomo.groep12.studgent.activity;
 import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class POIDetailActivity extends Activity {
 
@@ -52,6 +56,18 @@ public class POIDetailActivity extends Activity {
 	}
 	
 	
+	 public void navigateTo(View view) {
+			String uri = "geo:" + poi.getLocation().latitude + ","
+				+ poi.getLocation().longitude;
+				
+				try {
+					startActivity(new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri)));
+				} catch(ActivityNotFoundException e){
+				String message = "Navigatie kan niet geopend worden.";
+				         Toast.makeText(POIDetailActivity.this, message, Toast.LENGTH_LONG).show();
+				}
+	 }
+	 
 	
 	
 	
