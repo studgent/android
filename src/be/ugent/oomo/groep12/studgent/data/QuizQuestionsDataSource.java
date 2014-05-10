@@ -112,7 +112,7 @@ public class QuizQuestionsDataSource implements IDataSource {
 		LatLng location = new LatLng(latitude,longitude);
 		Date date_answered = null;
 		GregorianCalendar date = null;
-		boolean correct;
+		boolean correct = false;
 		if ( answered ) {
 			JSONObject last =  item.getJSONObject("last_answer");
 			date_answered = item.optString("date_from").equals("null") ? 

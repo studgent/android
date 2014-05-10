@@ -10,6 +10,7 @@ import com.crashlytics.android.Crashlytics;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,7 +30,8 @@ import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 
 
 public class MainActivity extends Activity {
-	
+
+	public static final String PREFS_NAME = "preferences";
 
 	protected Button button_neighbourhood;
 	protected Button button_events;
@@ -45,6 +47,14 @@ public class MainActivity extends Activity {
 		Crashlytics.start(this);
 		setContentView(R.layout.activity_main);
 		setButtons();
+		
+		// Restore preferences
+		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+		String[] credentials = new String[2];
+		credentials[0] = settings.getString("email", null);
+		credentials[1] = settings.getString("password", null);
+		if ( credentials[0] != null && credentials[1] != null)
+			new AsyncLoginLoader().execute(credentials);
 	}
 	
 	
@@ -115,4 +125,38 @@ public class MainActivity extends Activity {
 		startActivity(intent);
 	}
 	
+	
+	// Login
+
+	private class AsyncLoginLoader extends AsyncTask<String, Void, String> {
+	    private final ProgressDialog dialog = new ProgressDialog(MainActivity.this);
+
+	    @Override
+	    protected void onPostExecute(String result) {            
+	        super.onPostExecute(result);
+	        dialog.dismiss();
+        	Toast.makeText(MainActivity.this, LoginUtility.getInstance().getMessage(), Toast.LENGTH_LONG).show();
+	    }
+
+	    @Override
+	    protected void onPreExecute() {        
+	        super.onPreExecute();
+	        dialog.setMessage("Bezig met inloggen");
+	        dialog.show();            
+	    }
+	    @Override
+	    protected String doInBackground(String... credentials) {
+	        try {
+	        	String email = credentials[0];
+	        	String password = credentials[1];
+	        	boolean success = LoginUtility.getInstance().LogIn(email, password);
+	        	String token = "";
+		        return token;
+	        }
+	        catch(Throwable t) {
+	            t.printStackTrace();
+	        }
+	        return "error";
+	    }
+	}
 }

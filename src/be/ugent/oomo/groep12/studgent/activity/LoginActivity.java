@@ -29,7 +29,7 @@ import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 
 
 public class LoginActivity extends Activity {
-	
+
 
 	protected Button button_login;
 	protected EditText email_box;
