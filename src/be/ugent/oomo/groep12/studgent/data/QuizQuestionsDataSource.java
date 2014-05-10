@@ -17,6 +17,7 @@ import org.json.JSONObject;
 import com.google.android.gms.maps.model.LatLng;
 
 import android.annotation.SuppressLint;
+import android.app.DownloadManager.Query;
 import android.util.Log;
 import be.ugent.oomo.groep12.studgent.activity.LoginActivity;
 import be.ugent.oomo.groep12.studgent.common.CalendarEvent;
@@ -48,6 +49,17 @@ public class QuizQuestionsDataSource implements IDataSource {
 			instance = new QuizQuestionsDataSource();
 		}
 		return instance;
+	}
+	
+	public boolean checkAnswer(QuizQuestion question, String givenanswer ) throws DataSourceException {
+		question.setLastTry(Calendar.getInstance());
+		givenanswer = givenanswer.toLowerCase().trim().replace(" ","");
+		if (question.getAnswer().equalsIgnoreCase(givenanswer)){
+			question.setSolved(true);
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 	

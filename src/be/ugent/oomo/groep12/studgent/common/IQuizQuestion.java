@@ -9,8 +9,6 @@ public interface IQuizQuestion {
 
 	public abstract double getDistance();
 
-	public abstract boolean checkAnswer(String givenanswer);
-
 	public abstract boolean maySolve();
 
 	public abstract int getId();

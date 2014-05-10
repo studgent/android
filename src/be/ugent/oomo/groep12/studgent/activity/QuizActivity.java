@@ -219,7 +219,14 @@ public class QuizActivity extends Activity implements AdapterView.OnItemClickLis
 		//hide answer panel
 		LinearLayout detailview = (LinearLayout) findViewById(R.id.detailViewQuestion);
 		detailview.setVisibility(View.GONE);
-		Boolean correct = currentQuestion.checkAnswer(answer);
+		Boolean correct;
+		try {
+			correct = QuizQuestionsDataSource.getInstance().checkAnswer((QuizQuestion) currentQuestion, answer);
+		} catch (DataSourceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			correct=false;
+		}
 		if (correct){
 			Toast.makeText(this, "Volledig correct!", Toast.LENGTH_SHORT).show();
 		}else{

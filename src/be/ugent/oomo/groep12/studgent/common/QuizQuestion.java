@@ -73,20 +73,6 @@ public class QuizQuestion implements IData, IQuizQuestion {
 		}
 	}
 	
-	/* (non-Javadoc)
-	 * @see be.ugent.oomo.groep12.studgent.common.IQuizQuestion#checkAnswer(java.lang.String)
-	 */
-	@Override
-	public boolean checkAnswer(String givenanswer){
-		lastTry = Calendar.getInstance();
-		givenanswer = givenanswer.toLowerCase().trim().replace(" ","");
-		if (answer.equalsIgnoreCase(givenanswer)){
-			solved=true;
-			return true;
-		}else{
-			return false;
-		}
-	}
 	
 	/* (non-Javadoc)
 	 * @see be.ugent.oomo.groep12.studgent.common.IQuizQuestion#maySolve()
