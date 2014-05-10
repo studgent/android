@@ -9,20 +9,30 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.android.gms.drive.internal.OnContentsResponse;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.adapter.FriendAdapter;
+import be.ugent.oomo.groep12.studgent.adapter.POIAdapter;
 import be.ugent.oomo.groep12.studgent.adapter.QuizAdapter;
 import be.ugent.oomo.groep12.studgent.common.Friend;
 import be.ugent.oomo.groep12.studgent.common.ICalendarEvent;
+import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
 import be.ugent.oomo.groep12.studgent.common.IQuizQuestion;
+import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import be.ugent.oomo.groep12.studgent.common.QuizQuestion;
+import be.ugent.oomo.groep12.studgent.data.POIDataSource;
 import be.ugent.oomo.groep12.studgent.data.QuizQuestionsDataSource;
 import be.ugent.oomo.groep12.studgent.exception.DataSourceException;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.AsyncTaskLoader;
 import android.opengl.Visibility;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.KeyEvent;
@@ -72,7 +82,8 @@ public class QuizActivity extends Activity implements AdapterView.OnItemClickLis
 		adapter.clear();
 		// TODO: in separate thread:
 		
-		Collection<QuizQuestion> col;
+		
+		/* Collection<QuizQuestion> col;
 		try {
 			col = QuizQuestionsDataSource.getInstance().getLastItems().values();
 			ArrayList<QuizQuestion> data = new ArrayList<QuizQuestion>(col);
@@ -86,13 +97,17 @@ public class QuizActivity extends Activity implements AdapterView.OnItemClickLis
 			Toast.makeText(this, "Log in om de quiz te kunnen spelen!", Toast.LENGTH_SHORT).show();
 			onBackPressed();
 		}
-		
-
+		*/
+		if (LoginUtility.getInstance().isLoggedIn()==false){
+			Toast.makeText(this, "Log in om de quiz te kunnen spelen!", Toast.LENGTH_SHORT).show();
+			onBackPressed();
+		}else{
+			new AsyncQuizQuestionListViewLoader().execute(adapter);
+		}
 	}
 	
 	private void renewListGui(){
-		adapter.sort(new Comparator<QuizQuestion>() {
-
+		    adapter.sort(new Comparator<QuizQuestion>() {
 			@Override
 			public int compare(QuizQuestion lhs, QuizQuestion rhs) {
 				
@@ -215,6 +230,43 @@ public class QuizActivity extends Activity implements AdapterView.OnItemClickLis
 
 
 
+	private class AsyncQuizQuestionListViewLoader extends AsyncTask<QuizAdapter, Void, Collection<QuizQuestion>> {
+	    private final ProgressDialog dialog = new ProgressDialog(QuizActivity.this);
+
+	    @Override
+	    protected void onPreExecute() {        
+	        super.onPreExecute();
+	        dialog.setMessage(getString(R.string.load_POIlist));
+	        dialog.show();            
+	    }
+
+		@Override
+		protected Collection<QuizQuestion> doInBackground(QuizAdapter... params) {
+			//adp = params[0];
+	        try {
+	        	return QuizQuestionsDataSource.getInstance().getLastItems().values();
+	        }
+	        catch(Throwable t) {
+	            t.printStackTrace();
+	        }
+	        return null;
+		}
+		
+	    @Override
+	    protected void onPostExecute(Collection<QuizQuestion> result) {            
+	        super.onPostExecute(result);
+	           dialog.dismiss();
+		        //adapter.setItemList(result);
+		        adapter.clear();
+		        for(QuizQuestion question: result){
+		        	adapter.add(question);
+		        }
+		        renewListGui();
+	        
+	    }
+	}
+
+	
 
 
 }

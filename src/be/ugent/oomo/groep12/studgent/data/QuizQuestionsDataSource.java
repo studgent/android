@@ -68,7 +68,7 @@ public class QuizQuestionsDataSource implements IDataSource {
 
 	private void populateList(){
 		items = new HashMap<Integer,QuizQuestion>();
-		items.put(0, new QuizQuestion(1, 10, "Wanneer is de bouw van de boekentoren gestart?", false, null, "1942", new GregorianCalendar(2013,1,28,13,24,56), new LatLng(51.044935, 3.725798)));
+		/*items.put(0, new QuizQuestion(1, 10, "Wanneer is de bouw van de boekentoren gestart?", false, null, "1942", new GregorianCalendar(2013,1,28,13,24,56), new LatLng(51.044935, 3.725798)));
 		
 		ArrayList<String> solutions = new ArrayList<String>();
 		solutions.add("Apen");solutions.add("Bananen");solutions.add("Lichten");solutions.add("Schoolboeken");
@@ -76,10 +76,7 @@ public class QuizQuestionsDataSource implements IDataSource {
 		items.put(1, new QuizQuestion(1, 2, "Wat vind je niet terug aan het plafond van café de pi-nuts? ", false, solutions, "Schoolboeken", new GregorianCalendar(2013,1,28,13,24,56), new LatLng(51.0436016,3.7210573)));
 		items.put(2, new QuizQuestion(1, 50, "Dummy opgeloste vraag.", true, null, "2", new GregorianCalendar(2013,1,28,13,24,56) , new LatLng(51.03431, 3.701)));
 		items.put(3, new QuizQuestion(1, 1, "Dummy vraag mis?", false, null, "2", Calendar.getInstance() , new LatLng(51.03431, 3.701)));
-		
-		/*
-		 * Uncomment this when QuizActivity calls datasource in separate thread (asynctask)
-		 * retrieve from online resource
+		*/
 		
 		try {
 			Log.i("retrieving resource", "user/" + userID + "/questions/all");
@@ -92,14 +89,12 @@ public class QuizQuestionsDataSource implements IDataSource {
 			}
 			Log.i("items", ""+items.size());
 		} catch (CurlException e) {
-			Log.e("error retrieving calendar", e.getLocalizedMessage());
+			Log.e("error retrieving QuizQuestions", e.getLocalizedMessage());
 		} catch (JSONException e){
-			Log.e("error parsing json", e.getLocalizedMessage());
+			Log.e("error parsing Quiz json", e.getLocalizedMessage());
 		} catch (ParseException e){
 			Log.e("error parsing date", e.getLocalizedMessage());
-		} 
-		 *
-		 */
+		}
 	}
 	
 
