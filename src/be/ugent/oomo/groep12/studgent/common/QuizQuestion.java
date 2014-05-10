@@ -15,7 +15,7 @@ import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class QuizQuestion implements IData, IQuizQuestion, IQuizQuestion {
+public class QuizQuestion implements IData, IQuizQuestion {
 	protected int id;
 	protected int points;
 	protected String question;
@@ -238,7 +238,6 @@ public class QuizQuestion implements IData, IQuizQuestion, IQuizQuestion {
 	 * @see be.ugent.oomo.groep12.studgent.common.IQuizQuestion#describeContents()
 	 */
 	@Override
-	@Override
 	public int describeContents() {
 		return 0;
 	}
@@ -271,7 +270,6 @@ public class QuizQuestion implements IData, IQuizQuestion, IQuizQuestion {
 	 * @see be.ugent.oomo.groep12.studgent.common.IQuizQuestion#getName()
 	 */
 	@Override
-	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
 		return question;
@@ -280,7 +278,6 @@ public class QuizQuestion implements IData, IQuizQuestion, IQuizQuestion {
 	/* (non-Javadoc)
 	 * @see be.ugent.oomo.groep12.studgent.common.IQuizQuestion#setName(java.lang.String)
 	 */
-	@Override
 	@Override
 	public void setName(String name) {
 		// TODO Auto-generated method stub
