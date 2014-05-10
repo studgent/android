@@ -32,29 +32,31 @@ public final class LoginUtility {
         return INSTANCE;
     }
 
-    public static String getMessage(){
+    public static String getMessage() {
     	return getInstance().message;
     }
-    public static String getToken(){
+    public static String getToken() {
     	return getInstance().token;
     }
     
-    public static boolean isLoggedIn(){
+    public static boolean isLoggedIn() {
     	return getInstance().logged_in;
     }
     
-    public static int getId(){
+    public static int getId() {
     	return getInstance().id;
     }
     
-    public static boolean LogIn(String email, String password){
+    public static boolean LogIn(String email, String password) {
 
 		try {
 	    	Map<String, String> params = new HashMap<String, String>();
 			params.put("email", email);
 			params.put("password", password);
 			String result = CurlUtil.post("user/login", params);
-			getInstance().token = result;
+			
+			// If response not OK (!= 200), then curlutil will throw exception
+			// assume login successful
 			getInstance().logged_in = true;
 			getInstance().message = "Ingelogd!";
 			
