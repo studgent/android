@@ -18,7 +18,8 @@ public final class LoginUtility {
 	private String email;
 	private String message;
 	private boolean logged_in;
-
+	private int id;
+	
     private static final LoginUtility INSTANCE = new LoginUtility();
 
     private LoginUtility() {
@@ -42,6 +43,9 @@ public final class LoginUtility {
     	return getInstance().logged_in;
     }
     
+    public static int getId(){
+    	return getInstance().id;
+    }
     
     public static boolean LogIn(String email, String password){
 
@@ -57,6 +61,7 @@ public final class LoginUtility {
 			JSONObject item = new JSONObject(result);
 			getInstance().token = item.getString("token");
 			getInstance().email = email;
+			getInstance().id = item.getJSONObject("user").getInt("id");
 			
 		} catch (CurlException e) {
 			getInstance().message = "Kon niet inloggen";

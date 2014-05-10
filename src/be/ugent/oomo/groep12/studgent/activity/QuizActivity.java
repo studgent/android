@@ -76,14 +76,15 @@ public class QuizActivity extends Activity implements AdapterView.OnItemClickLis
 		try {
 			col = QuizQuestionsDataSource.getInstance().getLastItems().values();
 			ArrayList<QuizQuestion> data = new ArrayList<QuizQuestion>(col);
-			//Collections.sort(data, new QuizQuestionComparator());
 			for (QuizQuestion object : data ) {
 	        	adapter.add(object);
 	        }
 			renewListGui();  
 		} catch (DataSourceException e) {
-			// TODO Auto-generated catch block
+			//not logged in or an error occured
 			e.printStackTrace();
+			Toast.makeText(this, "Log in om de quiz te kunnen spelen!", Toast.LENGTH_SHORT).show();
+			onBackPressed();
 		}
 		
 

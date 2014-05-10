@@ -18,6 +18,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import android.annotation.SuppressLint;
 import android.util.Log;
+import be.ugent.oomo.groep12.studgent.activity.LoginActivity;
 import be.ugent.oomo.groep12.studgent.common.CalendarEvent;
 import be.ugent.oomo.groep12.studgent.common.ICalendarEvent;
 import be.ugent.oomo.groep12.studgent.common.IData;
@@ -29,6 +30,7 @@ import be.ugent.oomo.groep12.studgent.exception.CurlException;
 import be.ugent.oomo.groep12.studgent.exception.DataSourceException;
 import be.ugent.oomo.groep12.studgent.utilities.CurlUtil;
 import be.ugent.oomo.groep12.studgent.utilities.JSONUtil;
+import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 
 @SuppressLint("UseSparseArrays")
 public class QuizQuestionsDataSource implements IDataSource {
@@ -51,6 +53,7 @@ public class QuizQuestionsDataSource implements IDataSource {
 	
 	@Override
 	public Map<Integer, QuizQuestion> getLastItems() throws DataSourceException {
+		userID = LoginUtility.getInstance().getId();
 		if (userID == 0)
 		{
 			throw new DataSourceException("USER ID NOT SET");
@@ -62,14 +65,7 @@ public class QuizQuestionsDataSource implements IDataSource {
 	}
 
 	
-	public Map<Integer, QuizQuestion> getLastItems(int userid) {
-		userID = userid;
-		if (items == null ) {
-			populateList();
-		}
-		return items;
-	}
-	
+
 	private void populateList(){
 		items = new HashMap<Integer,QuizQuestion>();
 		items.put(0, new QuizQuestion(1, 10, "Wanneer is de bouw van de boekentoren gestart?", false, null, "1942", new GregorianCalendar(2013,1,28,13,24,56), new LatLng(51.044935, 3.725798)));
