@@ -48,6 +48,13 @@ public final class LoginUtility {
     	return getInstance().id;
     }
     
+    public static void AutoLogin(String email, int id, String token) {
+		getInstance().email = email;
+		getInstance().id = id;
+		getInstance().token = token;
+		getInstance().logged_in = true;
+    }
+    
     public static boolean LogIn(String email, String password) {
 
 		try {
@@ -69,7 +76,8 @@ public final class LoginUtility {
 			SharedPreferences settings = App.getContext().getSharedPreferences(PREFS_NAME, 0);
 			SharedPreferences.Editor editor = settings.edit();
 			editor.putString("email", email);
-			editor.putString("password", password);
+			editor.putInt("userid", getInstance().id);
+			editor.putString("token", getInstance().token);
 			// Commit the edits!
 			editor.commit();
 	    	return getInstance().logged_in;
