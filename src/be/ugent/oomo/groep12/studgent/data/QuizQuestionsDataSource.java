@@ -124,15 +124,13 @@ public class QuizQuestionsDataSource implements IDataSource {
 		LatLng location = new LatLng(latitude,longitude);
 		Date date_answered = null;
 		GregorianCalendar date = null;
-		boolean correct=false;
+		boolean correct = false;
 		if ( answered ) {
 			JSONObject last =  item.getJSONObject("last_answer");
 			date_answered = item.optString("date_from").equals("null") ? 
 								null :
-								new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(last.optString("date"));
-			date = new GregorianCalendar();
-			date.setTime(date_answered);
-			//date = new GregorianCalendar( date_answered.getYear(), date_answered.getMonth(), date_answered.getDay() );
+								new SimpleDateFormat("yyyy-MM-dd").parse(last.optString("date"));
+			date = new GregorianCalendar( date_answered.getYear(), date_answered.getMonth(), date_answered.getDay() );
 			correct = item.optBoolean("correct");
 		}
 		
@@ -142,14 +140,14 @@ public class QuizQuestionsDataSource implements IDataSource {
 		if ( choices_json.length() > 0 ) {
 			choices = new ArrayList<String>();
 			for (int i = 0; i < choices_json.length(); i++) {
-				choices.add(choices_json.getJSONObject(i).getString("choice"));
+				choices.add(choices_json.getString(i));
 			} 
 		}
 
 		quizquestion = new QuizQuestion(id, 
 										points, 
 										question, 
-										correct, 
+										answered, 
 										choices, 
 										answer, 
 										date , 

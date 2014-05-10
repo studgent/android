@@ -8,12 +8,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.widget.Toast;
 import be.ugent.oomo.groep12.studgent.activity.EventDetailActivity;
 import be.ugent.oomo.groep12.studgent.exception.CurlException;
 
 public final class LoginUtility {
-	
+	public static final String PREFS_NAME = "preferences";
 	private String token;
 	private String email;
 	private String message;
@@ -64,7 +65,14 @@ public final class LoginUtility {
 			getInstance().token = item.getString("token");
 			getInstance().email = email;
 			getInstance().id = item.getJSONObject("user").getInt("id");
-			
+			// Set in  preferences
+			SharedPreferences settings = App.getContext().getSharedPreferences(PREFS_NAME, 0);
+			SharedPreferences.Editor editor = settings.edit();
+			editor.putString("email", email);
+			editor.putString("password", password);
+			// Commit the edits!
+			editor.commit();
+	    	return getInstance().logged_in;
 		} catch (CurlException e) {
 			getInstance().message = "Kon niet inloggen";
 			getInstance().logged_in = false;
@@ -72,6 +80,8 @@ public final class LoginUtility {
 			getInstance().message = "Kon niet inloggen";
 			getInstance().logged_in = false;
 		}
+		getInstance().message = "Kon niet inloggen";
+		getInstance().logged_in = false;
     	return getInstance().logged_in;
     }
     
