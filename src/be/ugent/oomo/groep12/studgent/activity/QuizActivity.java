@@ -15,8 +15,10 @@ import be.ugent.oomo.groep12.studgent.adapter.FriendAdapter;
 import be.ugent.oomo.groep12.studgent.adapter.QuizAdapter;
 import be.ugent.oomo.groep12.studgent.common.Friend;
 import be.ugent.oomo.groep12.studgent.common.ICalendarEvent;
+import be.ugent.oomo.groep12.studgent.common.IQuizQuestion;
 import be.ugent.oomo.groep12.studgent.common.QuizQuestion;
 import be.ugent.oomo.groep12.studgent.data.QuizQuestionsDataSource;
+import be.ugent.oomo.groep12.studgent.exception.DataSourceException;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import android.app.Activity;
 import android.content.AsyncTaskLoader;
@@ -48,7 +50,7 @@ public class QuizActivity extends Activity implements AdapterView.OnItemClickLis
 	
 	ListView quiz_list;
 	QuizAdapter adapter;
-	QuizQuestion currentQuestion;
+	IQuizQuestion currentQuestion;
 	
 	
 	
@@ -68,13 +70,21 @@ public class QuizActivity extends Activity implements AdapterView.OnItemClickLis
 		quiz_list.setOnItemClickListener(this);
 		
 		adapter.clear();
-		Collection<QuizQuestion> col = QuizQuestionsDataSource.getInstance().getLastItems().values();
-		ArrayList<QuizQuestion> data = new ArrayList<QuizQuestion>(col);
-		//Collections.sort(data, new QuizQuestionComparator());
-		for (QuizQuestion object : data ) {
-        	adapter.add(object);
-        }
-		renewListGui();  
+		// TODO: in separate thread:
+		
+		Collection<QuizQuestion> col;
+		try {
+			col = QuizQuestionsDataSource.getInstance().getLastItems().values();
+			ArrayList<QuizQuestion> data = new ArrayList<QuizQuestion>(col);
+			//Collections.sort(data, new QuizQuestionComparator());
+			for (QuizQuestion object : data ) {
+	        	adapter.add(object);
+	        }
+			renewListGui();  
+		} catch (DataSourceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 
 	}

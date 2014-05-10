@@ -15,7 +15,7 @@ import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class QuizQuestion implements IData {
+public class QuizQuestion implements IData, IQuizQuestion, IQuizQuestion {
 	protected int id;
 	protected int points;
 	protected String question;
@@ -60,6 +60,10 @@ public class QuizQuestion implements IData {
 	    
 	}
 
+	/* (non-Javadoc)
+	 * @see be.ugent.oomo.groep12.studgent.common.IQuizQuestion#getDistance()
+	 */
+	@Override
 	public double getDistance(){
 		if (location==null){
 			return 0;
@@ -69,6 +73,10 @@ public class QuizQuestion implements IData {
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see be.ugent.oomo.groep12.studgent.common.IQuizQuestion#checkAnswer(java.lang.String)
+	 */
+	@Override
 	public boolean checkAnswer(String givenanswer){
 		lastTry = Calendar.getInstance();
 		givenanswer = givenanswer.toLowerCase().trim().replace(" ","");
@@ -80,6 +88,10 @@ public class QuizQuestion implements IData {
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see be.ugent.oomo.groep12.studgent.common.IQuizQuestion#maySolve()
+	 */
+	@Override
 	public boolean maySolve(){
 		Calendar now = Calendar.getInstance();
 		now.add(Calendar.HOUR, -24);
@@ -90,67 +102,131 @@ public class QuizQuestion implements IData {
 		}		
 	}
 
+	/* (non-Javadoc)
+	 * @see be.ugent.oomo.groep12.studgent.common.IQuizQuestion#getId()
+	 */
+	@Override
 	public int getId() {
 		return id;
 	}
 
+	/* (non-Javadoc)
+	 * @see be.ugent.oomo.groep12.studgent.common.IQuizQuestion#getPoints()
+	 */
+	@Override
 	public int getPoints() {
 		return points;
 	}
 	
+	/* (non-Javadoc)
+	 * @see be.ugent.oomo.groep12.studgent.common.IQuizQuestion#getQuestion()
+	 */
+	@Override
 	public String getQuestion(){
 		return question;
 	}
 
+	/* (non-Javadoc)
+	 * @see be.ugent.oomo.groep12.studgent.common.IQuizQuestion#isSolved()
+	 */
+	@Override
 	public boolean isSolved() {
 		return solved;
 	}
 
+	/* (non-Javadoc)
+	 * @see be.ugent.oomo.groep12.studgent.common.IQuizQuestion#getPossibleAnswers()
+	 */
+	@Override
 	public List<String> getPossibleAnswers() {
 		return possibleAnswers;
 	}
 
+	/* (non-Javadoc)
+	 * @see be.ugent.oomo.groep12.studgent.common.IQuizQuestion#getAnswer()
+	 */
+	@Override
 	public String getAnswer() {
 		return answer;
 	}
 
+	/* (non-Javadoc)
+	 * @see be.ugent.oomo.groep12.studgent.common.IQuizQuestion#getLastTry()
+	 */
+	@Override
 	public Calendar getLastTry() {
 		return lastTry;
 	}
 
+	/* (non-Javadoc)
+	 * @see be.ugent.oomo.groep12.studgent.common.IQuizQuestion#getLocation()
+	 */
+	@Override
 	public LatLng getLocation() {
 		return location;
 	}
 
+	/* (non-Javadoc)
+	 * @see be.ugent.oomo.groep12.studgent.common.IQuizQuestion#setId(int)
+	 */
+	@Override
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	/* (non-Javadoc)
+	 * @see be.ugent.oomo.groep12.studgent.common.IQuizQuestion#setPoints(int)
+	 */
+	@Override
 	public void setPoints(int points) {
 		this.points = points;
 	}
 	
+	/* (non-Javadoc)
+	 * @see be.ugent.oomo.groep12.studgent.common.IQuizQuestion#setQuestion(java.lang.String)
+	 */
+	@Override
 	public void setQuestion(String question){
 		this.question=question;
 		 
 	}
 
+	/* (non-Javadoc)
+	 * @see be.ugent.oomo.groep12.studgent.common.IQuizQuestion#setSolved(boolean)
+	 */
+	@Override
 	public void setSolved(boolean solved) {
 		this.solved = solved;
 	}
 
+	/* (non-Javadoc)
+	 * @see be.ugent.oomo.groep12.studgent.common.IQuizQuestion#setPossibleAnswers(java.util.List)
+	 */
+	@Override
 	public void setPossibleAnswers(List<String> possibleAnswers) {
 		this.possibleAnswers = possibleAnswers;
 	}
 
+	/* (non-Javadoc)
+	 * @see be.ugent.oomo.groep12.studgent.common.IQuizQuestion#setAnswer(java.lang.String)
+	 */
+	@Override
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
 
+	/* (non-Javadoc)
+	 * @see be.ugent.oomo.groep12.studgent.common.IQuizQuestion#setLastTry(java.util.Calendar)
+	 */
+	@Override
 	public void setLastTry(Calendar lastTry) {
 		this.lastTry = lastTry;
 	}
 
+	/* (non-Javadoc)
+	 * @see be.ugent.oomo.groep12.studgent.common.IQuizQuestion#setLocation(com.google.android.gms.maps.model.LatLng)
+	 */
+	@Override
 	public void setLocation(LatLng location) {
 		this.location = location;
 	}
@@ -158,6 +234,10 @@ public class QuizQuestion implements IData {
 	
 	
 
+	/* (non-Javadoc)
+	 * @see be.ugent.oomo.groep12.studgent.common.IQuizQuestion#describeContents()
+	 */
+	@Override
 	@Override
 	public int describeContents() {
 		return 0;
@@ -187,12 +267,20 @@ public class QuizQuestion implements IData {
 	};
 
 
+	/* (non-Javadoc)
+	 * @see be.ugent.oomo.groep12.studgent.common.IQuizQuestion#getName()
+	 */
+	@Override
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
 		return question;
 	}
 
+	/* (non-Javadoc)
+	 * @see be.ugent.oomo.groep12.studgent.common.IQuizQuestion#setName(java.lang.String)
+	 */
+	@Override
 	@Override
 	public void setName(String name) {
 		// TODO Auto-generated method stub

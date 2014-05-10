@@ -25,6 +25,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.common.Friend;
+import be.ugent.oomo.groep12.studgent.common.IQuizQuestion;
 import be.ugent.oomo.groep12.studgent.common.QuizQuestion;
 
 public class QuizAdapter extends ArrayAdapter<QuizQuestion> {
@@ -77,7 +78,7 @@ public class QuizAdapter extends ArrayAdapter<QuizQuestion> {
             holder = (QuizAdapterItemHolder)row.getTag();
         }
         
-        QuizQuestion quizQuestion = data.get(position);
+        IQuizQuestion quizQuestion = data.get(position);
         
         holder.distance.setText(quizQuestion.getDistance() + " KM");
         holder.points.setText(quizQuestion.getPoints() + "");
