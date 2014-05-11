@@ -96,7 +96,9 @@ public class POIDetailActivity   extends Activity implements OnInfoWindowClickLi
 	
 	 public void navigateTo(View view) {
 			String uri = "geo:" + poi.getLocation().latitude + ","
-				+ poi.getLocation().longitude;
+				+ poi.getLocation().longitude 
+				+ "?q=" + poi.getStreet().replace(" ", "+")
+				+ "+" + poi.getNumber();
 				
 				try {
 					startActivity(new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri)));
@@ -112,7 +114,9 @@ public class POIDetailActivity   extends Activity implements OnInfoWindowClickLi
 		public void onInfoWindowClick(Marker marker) {
 			Log.i("clicked on marker", marker.getId() );
 			String uri = "geo:" + poi.getLocation().latitude + "," 
-								+ poi.getLocation().longitude ;
+								+ poi.getLocation().longitude 
+								+ "?q=" + poi.getStreet().replace(" ", "+")
+								+ "+" + poi.getNumber();
 			try {
 				startActivity(new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri)));
 			} catch(ActivityNotFoundException e){
@@ -141,7 +145,8 @@ public class POIDetailActivity   extends Activity implements OnInfoWindowClickLi
 		        	return;
 		        }
 		        
-		        if (poi.getStreet() != null){
+		        if (poi.getStreet() != null && poi.getNumber() == null){
+		        	// if number was null, assume address was incomplete, re-enter street info
 		    		TextView txtLocation = (TextView)findViewById(R.id.poi_detail_location);
 					txtLocation.setText(poi.getStreet());
 					txtLocation.setVisibility(View.VISIBLE);
