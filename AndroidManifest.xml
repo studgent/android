@@ -122,6 +122,10 @@
             android:icon="@drawable/studgent_logo"
             android:label="@string/title_activity_checkinDetails" >
         </activity>
+        <activity
+            android:name="be.ugent.oomo.groep12.studgent.AboutActivity"
+            android:label="@string/title_activity_about" >
+        </activity>
     </application>
 
 </manifest>

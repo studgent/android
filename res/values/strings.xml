@@ -27,25 +27,93 @@
     <string name="trophies">Trofeeën</string>
     <string name="title_activity_am_idrunk">Am I Drunk</string>
     <string name="title_activity_check_in">Zaken in de buurt</string>
-	<string name="button_checkin">Check In</string>
-	<string name="load_POIlist">gegevens worden opgehaald.</string>
-	<string name="remove_friend_title">verwijder vriend?</string>
-	<string name="remove_friend">wilt u deze persoon verwijderen als vriend</string>
-	
-	<string name="friend_description">check</string>
-	<string name="no_friend_description">nothing</string>
-	
-	<string name="achieved_description">achieved</string>
-	<string name="not_achieved_description">not achieved</string>
-	
-	<string name="add_friend_title">persoon toevoegen als vriend</string>
-	<string name="add_friend">wilt u deze persoon toevoegen als vriend</string>
-	<string name="yes">Ja</string>
-	<string name="no">Nee</string>
-	<string name="load_trophielist">trofeeën ophalen</string>
-	<string name="title_activity_trophies">Trofeeën</string>
-	<string name="where_are_you">Waar ben je?</string>
-	<string name="title_activity_checkinDetails">Check in</string>
-	<string name="still_checked_in_title">Nog ingechecked</string>
-</resources>
+    <string name="button_checkin">Check In</string>
+    <string name="load_POIlist">gegevens worden opgehaald.</string>
+    <string name="remove_friend_title">verwijder vriend?</string>
+    <string name="remove_friend">wilt u deze persoon verwijderen als vriend</string>
+    <string name="friend_description">check</string>
+    <string name="no_friend_description">nothing</string>
+    <string name="achieved_description">achieved</string>
+    <string name="not_achieved_description">not achieved</string>
+    <string name="add_friend_title">persoon toevoegen als vriend</string>
+    <string name="add_friend">wilt u deze persoon toevoegen als vriend</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nee</string>
+    <string name="load_trophielist">trofeeën ophalen</string>
+    <string name="title_activity_trophies">Trofeeën</string>
+    <string name="where_are_you">Waar ben je?</string>
+    <string name="title_activity_checkinDetails">Check in</string>
+    <string name="still_checked_in_title">Nog ingechecked</string>
+    <string name="title_activity_about">Info</string>
+    <string name="about_text">
+        <Data><![CDATA[ 
+            
+	        <h1>STUDGENT</h1>
+	        <h4>INTERACTIEVE STADSGIDS VOOR STUDENTEN IN GENT</h4>
+	        
+            <h6>VOOR WIE?</h6>
+            <p>
+                We doen dit voor nieuwe studenten die de stad waar ze gaan 
+                studeren nog niet volledig kennen, in dit geval voor studenten in 
+                Gent. Deze studenten weten vaak niet welke interessante plaatsen 
+                (restaurants, cafés) er zijn. Het duurt wel even tot men al deze 
+                zogenaamde Point of Interests gevonden heeft, zeker indien men van
+                wat verder moet pendelen. Net om deze reden missen deze studenten 
+                veel acties en evenementen waarin ze geïnteresseerd zouden kunnen 
+                zijn.
+            </p>
+             
+            <h6>TEAM</h6>
+            <p>
+                Benjamin Cottyn
+            </p>
+            <p>
+                Wouter Deryckere
+            </p>
+            <p>
+                Floris Devreese
+            </p>
+            <p>
+                Ah-Lun Tang
+            </p>
+            
+            
+            <h6>API</h6>
+            <p>
+                <a href="http://studgent.ahlun.be/api">http://studgent.ahlun.be/api</a>
+            </p>
+             
+            <h6>The MIT License (MIT)</h6>
+            <p>
+                Copyright (c) 2014 Benjamin Cottyn, Wouter Deryckere, 
+                Floris Devreese & Ah-Lun Tang
+            </p>
+            <p>
+                Permission is hereby granted, free of charge, to any person 
+                obtaining a copy of this software and associated documentation 
+                files (the "Software"), to deal in the Software without 
+                restriction, including without limitation the rights to use, 
+                copy, modify, merge, publish, distribute, sublicense, and/or 
+                sell copies of the Software, and to permit persons to whom the 
+                Software is furnished to do so, subject to the following 
+                conditions:
+            </p>
+            <p>
+                The above copyright notice and this permission notice shall be 
+                included in all copies or substantial portions of the Software.
+            </p>
+            <p>
+                THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
+                EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES 
+                OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND 
+                NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT 
+                HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, 
+                WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+                FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR 
+                OTHER DEALINGS IN THE SOFTWARE.
+            </p>
+	        
+         ]]> </Data>
+    </string>
 
+</resources>

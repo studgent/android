@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import be.ugent.oomo.groep12.studgent.AboutActivity;
 import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.utilities.LayoutUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
@@ -80,7 +81,7 @@ public class MainActivity extends Activity {
 		if ( LoginUtility.isLoggedIn() ) {
 			login_item.setTitle( getString(R.string.login) + "(" + LoginUtility.getEmail() + ")");
 		} else {
-			login_item.setTitle( getString(R.string.login) + "(" + LoginUtility.getEmail() + ")");
+			login_item.setTitle( getString(R.string.login) );
 		}
 		return true;
 		
@@ -93,7 +94,7 @@ public class MainActivity extends Activity {
 		    	openLoginActivity();
 		        return true;
 		    case R.id.info:
-		    	Toast.makeText(MainActivity.this, LoginUtility.getInstance().getToken(), Toast.LENGTH_LONG).show();
+		    	openAboutActivity();
 		        return true;
 		    default:
 		        return super.onOptionsItemSelected(item);
@@ -126,9 +127,13 @@ public class MainActivity extends Activity {
 		Intent intent = new Intent(this, FriendListActivity.class);
 		startActivity(intent);
 	}
-	
+
 	public void openLoginActivity(){
 		Intent intent = new Intent(this, LoginActivity.class);
+		startActivity(intent);
+	}
+	public void openAboutActivity(){
+		Intent intent = new Intent(this, AboutActivity.class);
 		startActivity(intent);
 	}
 	
