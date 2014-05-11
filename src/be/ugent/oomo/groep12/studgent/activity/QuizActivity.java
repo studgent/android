@@ -94,7 +94,7 @@ public class QuizActivity extends Activity implements AdapterView.OnItemClickLis
 		} catch (DataSourceException e) {
 			//not logged in or an error occured
 			e.printStackTrace();
-			Toast.makeText(this, "Log in om de quiz te kunnen spelen!", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "Log in om de quiz te kunnen spelen!", Toast.LENGTH_SHORT).show();
 			onBackPressed();
 		}
 		*/
@@ -220,23 +220,52 @@ public class QuizActivity extends Activity implements AdapterView.OnItemClickLis
 		LinearLayout detailview = (LinearLayout) findViewById(R.id.detailViewQuestion);
 		detailview.setVisibility(View.GONE);
 		Boolean correct;
-		try {
-			correct = QuizQuestionsDataSource.getInstance().checkAnswer((QuizQuestion) currentQuestion, answer);
-		} catch (DataSourceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			correct=false;
-		}
-		if (correct){
-			Toast.makeText(this, "Volledig correct!", Toast.LENGTH_SHORT).show();
-		}else{
-			Toast.makeText(this, "Woeps, dat is mis. Probeer nog eens binnen 24uur.", Toast.LENGTH_SHORT).show();
-		}
-		renewListGui();
+		
+		new AsyncQuizQuestionCheck().execute(answer);
+		
 	}
 
 
+	private class AsyncQuizQuestionCheck extends AsyncTask<String, Void, Boolean> {
+	    private final ProgressDialog dialog = new ProgressDialog(QuizActivity.this);
 
+	    @Override
+	    protected void onPreExecute() {        
+	        super.onPreExecute();
+	        dialog.setMessage(getString(R.string.load_checkAnswer));
+	        dialog.show();            
+	    }
+	    
+		@Override
+		protected Boolean doInBackground(String... answer) {
+			// TODO Auto-generated method stub
+			try {
+				return QuizQuestionsDataSource.getInstance().checkAnswer((QuizQuestion)(currentQuestion), answer[0]);
+			} catch (DataSourceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
+		}
+		
+	    @Override
+	    protected void onPostExecute(Boolean correct) {            
+	        super.onPostExecute(correct);
+	            dialog.dismiss();
+	            if (correct){
+	            	 Toast.makeText(getApplicationContext(), "Volledig correct!", Toast.LENGTH_SHORT).show();
+	            	 renewListGui();
+	            }else{
+	    			Toast.makeText(getApplicationContext(), "Woeps, dat is mis. Probeer nog eens binnen 24uur.", Toast.LENGTH_SHORT).show();
+	    		}
+	    		renewListGui();
+	    }
+	    
+	    
+	}
+
+	
+	
 	private class AsyncQuizQuestionListViewLoader extends AsyncTask<QuizAdapter, Void, Collection<QuizQuestion>> {
 	    private final ProgressDialog dialog = new ProgressDialog(QuizActivity.this);
 

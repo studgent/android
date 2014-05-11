@@ -57,28 +57,22 @@ public class QuizQuestionsDataSource implements IDataSource {
 		postData.put("token", LoginUtility.getInstance().getToken() );
 		postData.put("answer", givenanswer );
 		
-		
+		//update online	
 		try {
 			String apidata =  CurlUtil.post("user/" + userID + "/questions/" + question.getId(), postData);
-				
-			return true;
-		
 		} catch (CurlException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return false;
 		
-		
-		
-		/*question.setLastTry(Calendar.getInstance());
+		//update local
+		question.setLastTry(Calendar.getInstance());
 		givenanswer = givenanswer.toLowerCase().trim().replace(" ","");
 		if (question.getAnswer().equalsIgnoreCase(givenanswer)){
 			question.setSolved(true);
-			return true;
-		}else{
-			return false;
-		}*/
+		}
+		
+		return question.isSolved();
 	}
 
 	
@@ -111,7 +105,7 @@ public class QuizQuestionsDataSource implements IDataSource {
 		
 		try {
 			Log.i("retrieving resource", "user/" + userID + "/questions/all");
-			String apidata =  CurlUtil.get("user/" + userID + "/questions/all");
+			String apidata =  CurlUtil.get("user/" + userID + "/questions/all", true);
 			JSONArray question_items = new JSONArray(apidata);
 			for (int i = 0; i < question_items.length(); i++) {
 				JSONObject item = question_items.getJSONObject(i);

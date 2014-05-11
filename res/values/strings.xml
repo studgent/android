@@ -45,6 +45,7 @@
     <string name="title_activity_checkinDetails">Check in</string>
     <string name="still_checked_in_title">Nog ingechecked</string>
     <string name="title_activity_about">Info</string>
+    <string name="load_checkAnswer">Controleren van het antwoord...</string>
     <string name="about_text">
         <Data><![CDATA[ 
             
