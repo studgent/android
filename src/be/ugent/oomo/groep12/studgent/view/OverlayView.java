@@ -1,25 +1,31 @@
 package be.ugent.oomo.groep12.studgent.view;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
+import android.location.LocationListener;
+import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import be.ugent.oomo.groep12.studgent.activity.POIDetailActivity;
+import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
+import be.ugent.oomo.groep12.studgent.data.POIDataSource;
 import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
 
 import com.google.android.gms.maps.model.LatLng;
 
-public class OverlayView extends FrameLayout implements OnClickListener {
+public class OverlayView extends FrameLayout implements OnClickListener,
+		LocationListener {
 
 	private int screenWidth;
-	private int screenHeight;
-	private static int fov = 80;
+	private static int fov = 70;
+	private static int range = 500;
 
 	private Location devLoc;
 	private ArrayList<POIView> pois;
@@ -41,26 +47,12 @@ public class OverlayView extends FrameLayout implements OnClickListener {
 
 	private void init(Context context) {
 		screenWidth = context.getResources().getDisplayMetrics().widthPixels;
-		screenHeight = context.getResources().getDisplayMetrics().heightPixels;
 
 		// Set device location as static, for now
-		devLoc = LocationUtil.getLocationFromLatLng(new LatLng(50.848602,
-				3.175140));
-
-		// Add some dummy data
-		pois = new ArrayList<POIView>();
-		POIView t = new POIView(context, new PointOfInterest(10, "Noorden", "",
-				new LatLng(179, 0)));
-		pois.add(t);
-		t = new POIView(context, new PointOfInterest(10, "Delta Lights", "",
-				new LatLng(50.844924, 3.176591)));
-		pois.add(t);
-		for (POIView v : pois) {
-			this.addView(v);
-			// Make view clickable
-			v.setOnClickListener(this);
-			v.setClickable(true);
-		}
+		devLoc = LocationUtil
+				.getLocationFromLatLng(new LatLng(51.05389, 3.705));
+		// Pois
+		updatePois();
 	}
 
 	public void updateOverlay(int az) {
@@ -76,7 +68,7 @@ public class OverlayView extends FrameLayout implements OnClickListener {
 			} else {
 				float offset = ((az - bearing) + 180) % 360 - 180;
 				offset = (offset / fov) * screenWidth;
-				v.setTranslationX(-offset);
+				v.setTranslationX(-offset + (screenWidth/2 - v.getMinWidth()/2));
 				// Hackish way to force visibility with a SurfaceView beneath
 				// this view
 				v.setVisibility(View.VISIBLE);
@@ -84,7 +76,7 @@ public class OverlayView extends FrameLayout implements OnClickListener {
 			}
 		}
 	}
-	
+
 	@Override
 	public void onClick(View v) {
 		if (((POIView) v).getPoi() != null) {
@@ -92,5 +84,59 @@ public class OverlayView extends FrameLayout implements OnClickListener {
 			intent.putExtra("poi", ((POIView) v).getPoi());
 			getContext().startActivity(intent);
 		}
+	}
+
+	@Override
+	public void onLocationChanged(Location location) {
+		// Save new location
+		devLoc = location;
+		updatePois();
+	}
+
+	private ArrayList<POIView> getPoiList(float range) {
+		ArrayList<POIView> list = new ArrayList<POIView>();
+		// Fetch POI data
+		Map<Integer, IPointOfInterest> data = POIDataSource.getInstance()
+				.getLastItems();
+		// Only keep those within range
+		for (Map.Entry<Integer, IPointOfInterest> poi : data.entrySet()) {
+			if (devLoc.distanceTo(LocationUtil.getLocationFromLatLng(poi
+					.getValue().getLocation())) <= range) {
+				list.add(new POIView(getContext(), poi.getValue()));
+			}
+		}
+		return list;
+	}
+
+	private void updatePois() {
+		// Clear current pois
+		this.removeAllViews();
+		// Redraw with updated poi list
+		pois = getPoiList(range);
+		pois.add(new POIView(getContext(), new PointOfInterest(999999, "Noorden", "", new LatLng(179, 3))));
+		for (POIView v : pois) {
+			this.addView(v);
+			// Make view clickable
+			v.setOnClickListener(this);
+			v.setClickable(true);
+		}
+	}
+
+	@Override
+	public void onProviderDisabled(String provider) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onProviderEnabled(String provider) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		// TODO Auto-generated method stub
+
 	}
 }
