@@ -8,6 +8,7 @@ import android.os.Parcelable;
 
 public class Friend implements IData {
 	protected int id;
+	protected boolean following;
 	protected String lastName;
 	protected String firstName;
 	protected String email;
@@ -16,10 +17,11 @@ public class Friend implements IData {
 	protected int score;
 	protected Bitmap photo;
 	
-	public Friend(int id, String lastname, String firstname, String email, String description, String phone, int score) {
+	public Friend(int id, boolean following, String firstname, String lastname, String email, String description, String phone, int score) {
 		this.id = id;
-		this.lastName = lastname;
+		this.following = following;
 		this.firstName = firstname;
+		this.lastName = lastname;
 		this.email = email;
 		this.description = description;
 		this.phone = phone;
@@ -28,6 +30,7 @@ public class Friend implements IData {
 	
 	public Friend(Parcel in) {
 		this.id = in.readInt();
+		this.following =  ( in.readInt() == 1 ) ? true : false;
 		this.firstName = in.readString();
 		this.lastName = in.readString();
 		this.email = in.readString();
@@ -71,6 +74,7 @@ public class Friend implements IData {
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeInt(this.id);
+		dest.writeInt( this.following ? 1 : 0);
 		dest.writeString(this.firstName);
 		dest.writeString(this.lastName);
 		dest.writeString(this.email);
@@ -93,6 +97,10 @@ public class Friend implements IData {
 	public void setName(String name) {
 		this.lastName=name; //niet correct
 		
+	}
+	
+	public boolean isFollowing(){
+		return this.following;
 	}
 	
 	@Override

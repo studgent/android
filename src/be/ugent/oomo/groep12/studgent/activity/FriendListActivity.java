@@ -1,6 +1,7 @@
 package be.ugent.oomo.groep12.studgent.activity;
 
 import java.util.ArrayList;
+
 import android.widget.AdapterView;
 
 import java.util.Collections;
@@ -29,6 +30,7 @@ import android.view.View.OnTouchListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 import be.ugent.oomo.groep12.studgent.adapter.CalenderAdapter;
 import be.ugent.oomo.groep12.studgent.adapter.FriendAdapter;
 import be.ugent.oomo.groep12.studgent.common.Friend;
@@ -38,6 +40,7 @@ import be.ugent.oomo.groep12.studgent.common.IData;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import be.ugent.oomo.groep12.studgent.data.CalendarEventDataSource;
 import be.ugent.oomo.groep12.studgent.data.FriendListDataSource;
+import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 
 public class FriendListActivity extends Activity implements AdapterView.OnItemClickListener, TextWatcher {
 	
@@ -66,7 +69,13 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
         adapter = new FriendAdapter(this, R.layout.friend_list_item, new ArrayList<Friend>());
         
         friend_list_view.setAdapter(adapter);
-        new AsyncFriendListViewLoader().execute(adapter);
+
+		if (LoginUtility.getInstance().isLoggedIn()==false){
+			Toast.makeText(this, "Log in om de vrienden volgen!", Toast.LENGTH_SHORT).show();
+			onBackPressed();
+		}else{
+	        new AsyncFriendListViewLoader().execute(adapter);
+		}
         
 	}
 

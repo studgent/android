@@ -19,13 +19,16 @@ import be.ugent.oomo.groep12.studgent.common.Gender;
 import be.ugent.oomo.groep12.studgent.common.ICalendarEvent;
 import be.ugent.oomo.groep12.studgent.common.IData;
 import be.ugent.oomo.groep12.studgent.exception.CurlException;
+import be.ugent.oomo.groep12.studgent.exception.DataSourceException;
 import be.ugent.oomo.groep12.studgent.utilities.CurlUtil;
 import be.ugent.oomo.groep12.studgent.utilities.JSONUtil;
+import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 
 public class FriendListDataSource implements IDataSource {
 	
 	private static FriendListDataSource instance = null;
 	protected static Map<Integer, Friend> items;
+	protected int userID;
 	
 	protected FriendListDataSource() {
       // Exists only to defeat instantiation.
@@ -43,15 +46,13 @@ public class FriendListDataSource implements IDataSource {
 		items = new HashMap<Integer,Friend>();
 
 		try {
-			Log.i("retrieving resource", "user/all");
-			// populate with 'cal' resource
-			// 'cal/all' returns all items
-			// 'cal' returns a filtered list
-			String apidata =  CurlUtil.get("user/all");
+			Log.i("retrieving resource", "user/" + userID + "/following");
+			String apidata =  CurlUtil.get("user/" + userID + "/following");
 			JSONArray user_items = new JSONArray(apidata);
 			for (int i = 0; i < user_items.length(); i++) {
 				JSONObject item = user_items.getJSONObject(i);
-				Friend friend = parseFriend(item);
+				boolean following = item.getBoolean("following");
+				Friend friend = parseFriend(item.getJSONObject("user"), following);
 				items.put(friend.getId(), friend);
 			}
 			Log.i("items", ""+items.size());
@@ -65,7 +66,7 @@ public class FriendListDataSource implements IDataSource {
 
 	}
 	
-	protected Friend parseFriend(JSONObject item) throws JSONException, ParseException{
+	protected Friend parseFriend(JSONObject item, boolean following) throws JSONException, ParseException{
 		Friend friend;
 		int id = item.optInt("id",0);
 		int score = item.optInt("score",0);
@@ -75,11 +76,16 @@ public class FriendListDataSource implements IDataSource {
 			   description = JSONUtil.optString(item, "details"),
 			   phone = JSONUtil.optString(item, "phone");
 		
-		friend = new Friend(id, lastname,firstname, email, description, phone, score);
+		friend = new Friend(id, following, firstname, lastname, email, description, phone, score);
 		Log.i("Creating user", friend.toString());
 		return friend;
 	}
-	public Map<Integer, Friend> getLastItems() {
+	public Map<Integer, Friend> getLastItems() throws DataSourceException {
+		userID = LoginUtility.getInstance().getId();
+		if (userID == 0)
+		{
+			throw new DataSourceException("USER ID NOT SET");
+		}
 		if (items == null ) {
 			populateList();
 		}

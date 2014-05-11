@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import be.ugent.oomo.groep12.studgent.R;
@@ -24,6 +25,7 @@ public class FriendAdapter extends ArrayAdapter<Friend> implements Filterable{
     	ImageView image;
         TextView name;
         TextView location;
+        ImageButton follow;
     }
 	
     Context context; 
@@ -65,6 +67,8 @@ public class FriendAdapter extends ArrayAdapter<Friend> implements Filterable{
             holder.name = (TextView)row.findViewById(R.id.friend_item_name); 
             holder.location = (TextView)row.findViewById(R.id.friend_item_location);
             holder.image = (ImageView)row.findViewById(R.id.friend_item_image);
+            holder.follow = (ImageButton)row.findViewById(R.id.status_button);
+            
             row.setTag(holder);
         } else {
             holder = (FriendItemHolder)row.getTag();
@@ -75,6 +79,11 @@ public class FriendAdapter extends ArrayAdapter<Friend> implements Filterable{
         
         holder.name.setText(friend_item.getFirstName()+" "+friend_item.getLastName());
         holder.location.setText( "" + friend_item.getScore() );
+        if ( friend_item.isFollowing() ) {
+        	holder.follow.setBackgroundResource(R.drawable.check);
+        } else {
+        	holder.follow.setBackgroundResource(R.drawable.add_friend);
+        }
         //holder.image.setImageBitmap(friend_item.getPhoto()); //nog geen foto
         
         return row;
