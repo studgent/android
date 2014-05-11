@@ -70,8 +70,8 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
         
         friend_list_view.setAdapter(adapter);
 
-		if (LoginUtility.getInstance().isLoggedIn()==false){
-			Toast.makeText(this, "Log in om de vrienden volgen!", Toast.LENGTH_SHORT).show();
+		if (LoginUtility.getInstance().isLoggedIn() == false) {
+			Toast.makeText(this, "Log in om vrienden volgen!", Toast.LENGTH_SHORT).show();
 			onBackPressed();
 		}else{
 	        new AsyncFriendListViewLoader().execute(adapter);
@@ -123,7 +123,6 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
 
 		@Override
 		protected ArrayList<Friend> doInBackground(FriendAdapter... params) {
-			//adp = params[0];
 	        try {
 	        	Map<Integer, Friend> friends = FriendListDataSource.getInstance().getLastItems();
 	        	return new ArrayList<Friend>(friends.values());
@@ -132,6 +131,30 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
 	            t.printStackTrace();
 	        }
 	        return null;
+		}
+	}
+	
+
+	private class AsyncFollow extends AsyncTask<Integer, Void, Boolean> {
+
+	    @Override
+	    protected void onPostExecute(Boolean result) {            
+	        super.onPostExecute(result);
+			changeImageButton(result);
+	    }
+
+		@Override
+		protected Boolean doInBackground(Integer... params) {
+			int friendID = params[0];
+			boolean follow = ( params[1] == 1 );
+			try {
+				boolean result = FriendListDataSource.getInstance().follow(friendID, follow);
+	        	return result;
+	        }
+	        catch(Throwable t) {
+	            t.printStackTrace();
+				return false;
+	        }
 		}
 	}
 
@@ -168,8 +191,11 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
 		}
 	}
 	
+	
+	
 	public void change_friend_status(View view){
 		this.view = view;
+		final int friendID = (Integer) view.getTag();
 		System.out.println("er is geklikt op het icoon in de vriendenlijst");
 		System.out.println("view.getContentDescription() = "+view.getContentDescription());
 		System.out.println("R.string.check_discription = "+getString(R.string.friend_description));
@@ -183,7 +209,10 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
 				alertDialogBuilder.setCancelable(false);
 				alertDialogBuilder.setPositiveButton(R.string.yes,new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog,int id) {
-							changeImageButton(false);
+							Integer[] params = new Integer[2];
+							params[0] = friendID;
+							params[1] = 0; // 1 for follow, 0 for unfollow
+							new AsyncFollow().execute(params);
 							dialog.cancel();
 						}
 					  });
@@ -200,7 +229,10 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
 				alertDialogBuilder.setCancelable(false);
 				alertDialogBuilder.setPositiveButton(R.string.yes,new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog,int id) {
-							changeImageButton(true);
+							Integer[] params = new Integer[2];
+							params[0] = friendID;
+							params[1] = 1; // 1 for follow, 0 for unfollow
+							new AsyncFollow().execute(params);
 							dialog.cancel();
 						}
 					  });

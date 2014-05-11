@@ -1,22 +1,14 @@
 package be.ugent.oomo.groep12.studgent.data;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.google.android.gms.maps.model.LatLng;
-
+import android.annotation.SuppressLint;
 import android.util.Log;
-import be.ugent.oomo.groep12.studgent.common.CalendarEvent;
 import be.ugent.oomo.groep12.studgent.common.Friend;
-import be.ugent.oomo.groep12.studgent.common.Gender;
-import be.ugent.oomo.groep12.studgent.common.ICalendarEvent;
 import be.ugent.oomo.groep12.studgent.common.IData;
 import be.ugent.oomo.groep12.studgent.exception.CurlException;
 import be.ugent.oomo.groep12.studgent.exception.DataSourceException;
@@ -28,7 +20,6 @@ public class FriendListDataSource implements IDataSource {
 	
 	private static FriendListDataSource instance = null;
 	protected static Map<Integer, Friend> items;
-	protected int userID;
 	
 	protected FriendListDataSource() {
       // Exists only to defeat instantiation.
@@ -41,13 +32,49 @@ public class FriendListDataSource implements IDataSource {
 		return instance;
 	}
 	
+	
+	public boolean follow(int friendID, boolean follow) throws DataSourceException {
+
+		int userID = LoginUtility.getInstance().getId();
+		
+		Map<String, String> postData = new HashMap<String, String>();
+		postData.put("token", LoginUtility.getInstance().getToken() );
+		boolean added = false;
+		//update online	
+		String followunfollow = follow ? "/follow/" : "/unfollow/";
+		String resource = "user/" + 
+						  userID + 
+						  followunfollow + 
+						  friendID;
+		try {
+			String apidata =  CurlUtil.post(resource, postData);
+			JSONObject items = new JSONObject(apidata);
+			String message = items.getString("message");
+			if ( message.equals("added to following list") ){
+				added = true;
+			} else { // somethings wrong or user removed from list
+				added = false;
+			}
+		} catch (CurlException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return added;
+	}
+	
+	@SuppressLint("UseSparseArrays")
 	protected void populateList(){
+		int userID = LoginUtility.getInstance().getId();
 		// populate the list
 		items = new HashMap<Integer,Friend>();
 
 		try {
 			Log.i("retrieving resource", "user/" + userID + "/following");
-			String apidata =  CurlUtil.get("user/" + userID + "/following");
+			String apidata =  CurlUtil.get("user/" + userID + "/following", true);
 			JSONArray user_items = new JSONArray(apidata);
 			for (int i = 0; i < user_items.length(); i++) {
 				JSONObject item = user_items.getJSONObject(i);
@@ -81,7 +108,7 @@ public class FriendListDataSource implements IDataSource {
 		return friend;
 	}
 	public Map<Integer, Friend> getLastItems() throws DataSourceException {
-		userID = LoginUtility.getInstance().getId();
+		int userID = LoginUtility.getInstance().getId();
 		if (userID == 0)
 		{
 			throw new DataSourceException("USER ID NOT SET");

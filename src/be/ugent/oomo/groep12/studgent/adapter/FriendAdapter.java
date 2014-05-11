@@ -84,6 +84,7 @@ public class FriendAdapter extends ArrayAdapter<Friend> implements Filterable{
         } else {
         	holder.follow.setBackgroundResource(R.drawable.add_friend);
         }
+        holder.follow.setTag(friend_item.getId());
         //holder.image.setImageBitmap(friend_item.getPhoto()); //nog geen foto
         
         return row;
