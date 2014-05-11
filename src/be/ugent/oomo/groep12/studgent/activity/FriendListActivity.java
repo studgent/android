@@ -108,7 +108,7 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
 	    @Override
 	    protected void onPreExecute() {        
 	        super.onPreExecute();
-	        dialog.setMessage(getString(R.string.load_eventlist));
+	        dialog.setMessage("Gebruikers ophalen...");
 	        dialog.show();            
 	    }
 
@@ -116,8 +116,8 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
 		protected ArrayList<Friend> doInBackground(FriendAdapter... params) {
 			//adp = params[0];
 	        try {
-	        	Map<Integer, Friend> events = FriendListDataSource.getInstance().getLastItems();
-	        	return new ArrayList<Friend>(events.values());
+	        	Map<Integer, Friend> friends = FriendListDataSource.getInstance().getLastItems();
+	        	return new ArrayList<Friend>(friends.values());
 	        }
 	        catch(Throwable t) {
 	            t.printStackTrace();

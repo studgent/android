@@ -74,7 +74,7 @@ public class FriendAdapter extends ArrayAdapter<Friend> implements Filterable{
         //System.out.println("Friend friend_item: "+data.get(position).getFirstName());
         
         holder.name.setText(friend_item.getFirstName()+" "+friend_item.getLastName());
-        holder.location.setText( friend_item.getLocation() );
+        holder.location.setText( "" + friend_item.getScore() );
         //holder.image.setImageBitmap(friend_item.getPhoto()); //nog geen foto
         
         return row;

@@ -10,23 +10,30 @@ public class Friend implements IData {
 	protected int id;
 	protected String lastName;
 	protected String firstName;
-	protected Gender gender;
-	protected String location;
+	protected String email;
+	protected String description;
+	protected String phone;
+	protected int score;
 	protected Bitmap photo;
 	
-	public Friend(int id, String lastName, String firstName, Gender gender, String location){
-		this.lastName=lastName;
-		this.firstName=firstName;
-		this.gender=gender;
-		this.location=location;
+	public Friend(int id, String lastname, String firstname, String email, String description, String phone, int score) {
+		this.id = id;
+		this.lastName = lastname;
+		this.firstName = firstname;
+		this.email = email;
+		this.description = description;
+		this.phone = phone;
+		this.score = score;
 	}
 	
 	public Friend(Parcel in) {
 		this.id = in.readInt();
 		this.firstName = in.readString();
 		this.lastName = in.readString();
-		this.location = in.readString();
-		//protected IPointOfInterest this.poi;
+		this.email = in.readString();
+		this.description = in.readString();
+		this.phone = in.readString();
+		this.score = in.readInt();
 	}
 
 
@@ -35,12 +42,6 @@ public class Friend implements IData {
 	}
 	public void setFirstName(String firstName){
 		this.firstName=firstName;
-	}
-	public void setGender(Gender gender){
-		this.gender=gender;
-	}
-	public void setLocation(String location){
-		this.location=location;
 	}
 	public void setPhoto(Bitmap photo){
 		this.photo=photo;
@@ -51,14 +52,15 @@ public class Friend implements IData {
 	public String getFirstName(){
 		return this.firstName;
 	}
-	public String getGender(){
-		return this.gender.toString();
-	}
-	public String getLocation(){
-		return this.location;
-	}
 	public Bitmap getPhoto(){
 		return this.photo;
+	}
+	public String getDescription(){
+		return this.description;
+	}
+
+	public int getScore(){
+		return this.score;
 	}
 
 	@Override
@@ -71,7 +73,10 @@ public class Friend implements IData {
 		dest.writeInt(this.id);
 		dest.writeString(this.firstName);
 		dest.writeString(this.lastName);
-		dest.writeString(this.location);
+		dest.writeString(this.email);
+		dest.writeString(this.description);
+		dest.writeString(this.phone);
+		dest.writeInt(this.score);
 	}
 
 	@Override
@@ -88,6 +93,11 @@ public class Friend implements IData {
 	public void setName(String name) {
 		this.lastName=name; //niet correct
 		
+	}
+	
+	@Override
+	public String toString() {
+		return this.getName();
 	}
 	
 	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
