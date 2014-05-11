@@ -1,5 +1,9 @@
-package be.ugent.oomo.groep12.studgent;
+package be.ugent.oomo.groep12.studgent.activity;
 
+import be.ugent.oomo.groep12.studgent.R;
+import be.ugent.oomo.groep12.studgent.R.id;
+import be.ugent.oomo.groep12.studgent.R.layout;
+import be.ugent.oomo.groep12.studgent.R.string;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
