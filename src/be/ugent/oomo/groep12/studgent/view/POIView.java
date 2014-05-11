@@ -5,22 +5,24 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.View;
-import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
+import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
 
 public class POIView extends View {
 
-	private PointOfInterest poi;
+	private IPointOfInterest poi;
 	private Paint cpaint;
 	private Paint tpaint;
-	private int screenWidth;
 	private int screenHeight;
+	
+	private int circleRadius = 35;
+	private int minWidth;
 
 	public POIView(Context context) {
 		super(context);
 		init(context);
 	}
 
-	public POIView(Context context, PointOfInterest poi) {
+	public POIView(Context context, IPointOfInterest poi) {
 		super(context);
 		init(context);
 
@@ -41,7 +43,6 @@ public class POIView extends View {
 		tpaint.setColor(Color.GRAY);
 		tpaint.setTextSize(18.0f);
 
-		screenWidth = context.getResources().getDisplayMetrics().widthPixels;
 		screenHeight = context.getResources().getDisplayMetrics().heightPixels;
 		
 		// Make invisible until we're on screen
@@ -50,21 +51,48 @@ public class POIView extends View {
 
 	@Override
 	public void onDraw(Canvas canvas) {
-		canvas.drawCircle(screenWidth / 2, screenHeight / 2, 35, cpaint);
-		// Used to align POI name centered under the marker
-		int xPos = (int) ((screenWidth / 2) - (tpaint
-				.measureText(poi.getName()) / 2));
-		int yPos = (int) ((screenHeight / 2) - ((tpaint.descent() + tpaint
-				.ascent()) / 2)) + 48;
-		canvas.drawText(poi.getName(), xPos, yPos, tpaint);
+		int circleWidth = (int) (circleRadius*2 + cpaint.getStrokeWidth()*2);
+		int textWidth = (int) (tpaint.measureText(poi.getName()));
+		int yPos = (int) ((screenHeight /2) - ((tpaint.descent() + tpaint.ascent()) / 2)) + 48;
+		
+		if (circleWidth > textWidth) {
+			// Circle is biggest
+			int xPos = (circleWidth /2) - (textWidth / 2);
+			canvas.drawCircle((circleWidth / 2), (screenHeight / 2), circleRadius, cpaint);
+			canvas.drawText(poi.getName(), xPos, yPos, tpaint);
+		} else {
+			// Text is biggest
+			int xPos = (textWidth / 2);
+			canvas.drawCircle(xPos, (screenHeight / 2), circleRadius, cpaint);
+			canvas.drawText(poi.getName(), 0, yPos, tpaint);
+		}
 	}
+	
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    	minWidth = 0;
+    	int minHeight = 0;
+    	
+    	int textWidth = (int) tpaint.measureText(poi.getName());
+    	int iconWidth = (int) (circleRadius*2 + cpaint.getStrokeWidth()*2);
+    	minWidth = Math.max(textWidth, iconWidth);
 
-	public PointOfInterest getPoi() {
+    	minHeight = screenHeight;
+    	
+        setMeasuredDimension(MeasureSpec.makeMeasureSpec(minWidth, MeasureSpec.EXACTLY),
+        		MeasureSpec.makeMeasureSpec(minHeight, MeasureSpec.EXACTLY));
+    }
+
+	public IPointOfInterest getPoi() {
 		return poi;
 	}
 
-	public void setPoi(PointOfInterest poi) {
+	public void setPoi(IPointOfInterest poi) {
 		this.poi = poi;
+	}
+	
+	public int getMinWidth() {
+		return minWidth;
 	}
 
 }
