@@ -47,6 +47,11 @@ public final class LoginUtility {
     public static int getId() {
     	return getInstance().id;
     }
+
+
+	public static String getEmail() {
+    	return getInstance().email;
+	}
     
     public static void AutoLogin(String email, int id, String token) {
 		getInstance().email = email;
@@ -75,7 +80,7 @@ public final class LoginUtility {
 			// Set in  preferences
 			SharedPreferences settings = App.getContext().getSharedPreferences(PREFS_NAME, 0);
 			SharedPreferences.Editor editor = settings.edit();
-			editor.putString("email", email);
+			editor.putString("email", getInstance().email);
 			editor.putInt("userid", getInstance().id);
 			editor.putString("token", getInstance().token);
 			// Commit the edits!

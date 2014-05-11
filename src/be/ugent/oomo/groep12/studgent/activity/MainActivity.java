@@ -41,9 +41,13 @@ public class MainActivity extends Activity {
 		String email = settings.getString("email", null);
 		int id = settings.getInt("id", 0);
 		String token = settings.getString("token", null);
-		if ( email != null && id != 0 && token != null)
+		if ( email != null && !email.equals("") && 
+			 id != 0 && 
+			 token != null && !token.equals("") ) {
 			LoginUtility.AutoLogin(email, id, token);
+		}
 	}
+	
 	
 	
 	protected void setButtons(){
@@ -65,7 +69,22 @@ public class MainActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
-	}	
+	}
+	
+
+	@Override
+	public boolean onPrepareOptionsMenu (Menu menu) {
+
+		// change login text
+		MenuItem login_item = menu.findItem(R.id.login);
+		if ( LoginUtility.isLoggedIn() ) {
+			login_item.setTitle( getString(R.string.login) + "(" + LoginUtility.getEmail() + ")");
+		} else {
+			login_item.setTitle( getString(R.string.login) + "(" + LoginUtility.getEmail() + ")");
+		}
+		return true;
+		
+	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
