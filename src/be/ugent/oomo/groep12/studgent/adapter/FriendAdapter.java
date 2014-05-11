@@ -78,7 +78,7 @@ public class FriendAdapter extends ArrayAdapter<Friend> implements Filterable{
         //System.out.println("Friend friend_item: "+data.get(position).getFirstName());
         
         holder.name.setText(friend_item.getFirstName()+" "+friend_item.getLastName());
-        holder.location.setText( "" + friend_item.getScore() );
+        holder.location.setText( "" + friend_item.getScore() + " points" );
         if ( friend_item.isFollowing() ) {
         	holder.follow.setBackgroundResource(R.drawable.check);
         	holder.follow.setContentDescription("check");
@@ -104,5 +104,18 @@ public class FriendAdapter extends ArrayAdapter<Friend> implements Filterable{
 	@Override
 	public void clear() {
 		super.clear();
+	}
+	
+	public void setFollowStatus(int userID, boolean follow){
+		int i=0;
+		Friend f;
+		while(i<data.size() && data.get(i).getId()!=userID){
+			i++;
+		}
+		if(i!=data.size()){
+			data.get(i).setFollowing(follow);
+			this.notifyDataSetChanged();
+			this.notifyDataSetInvalidated();
+		}
 	}
 }

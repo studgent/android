@@ -79,7 +79,6 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
         
 	}
 
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -149,6 +148,7 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
 			boolean follow = ( params[1] == 1 );
 			try {
 				boolean result = FriendListDataSource.getInstance().follow(friendID, follow);
+				adapter.setFollowStatus(friendID, follow);
 	        	return result;
 	        }
 	        catch(Throwable t) {
@@ -196,12 +196,8 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
 	public void change_friend_status(View view){
 		this.view = view;
 		final int friendID = (Integer) view.getTag();
-		System.out.println("er is geklikt op het icoon in de vriendenlijst");
-		System.out.println("view.getContentDescription() = "+view.getContentDescription());
-		System.out.println("R.string.check_discription = "+getString(R.string.friend_description));
-		
 		//creating alert dialog frame
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this); //de this slaat op de ouder
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this); 
 			if(view.getContentDescription().equals(getString(R.string.friend_description))){ // in de adapter moet ik nog bij de niet vrienden die toegevoegd worden de contentDescription veranderen
 				//alert dialog opmaken voor verwijderen van vriend
 				alertDialogBuilder.setTitle(getString(R.string.remove_friend_title));

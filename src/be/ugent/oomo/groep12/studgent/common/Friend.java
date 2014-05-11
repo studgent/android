@@ -103,6 +103,10 @@ public class Friend implements IData {
 		return this.following;
 	}
 	
+	public void setFollowing(boolean following){
+		this.following=following;
+	}
+	
 	@Override
 	public String toString() {
 		return this.getName();
