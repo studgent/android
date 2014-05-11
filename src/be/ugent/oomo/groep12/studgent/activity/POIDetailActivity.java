@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class POIDetailActivity extends Activity {
+public class POIDetailActivity   extends Activity {
 
 	private PointOfInterest poi;
 
@@ -68,9 +68,5 @@ public class POIDetailActivity extends Activity {
 				}
 	 }
 	 
-	
-	
-	
-
 	
 }

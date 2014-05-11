@@ -103,6 +103,11 @@
             android:label="@string/quiz" >
         </activity>
         <activity
+            android:name="be.ugent.oomo.groep12.studgent.activity.TrophiesListActivity"
+            android:icon="@drawable/studgent_logo"
+            android:label="@string/title_activity_trophies" >
+        </activity>
+        <activity
             android:name="be.ugent.oomo.groep12.studgent.activity.AmIDrunkActivity"
             android:icon="@drawable/studgent_logo"
             android:label="@string/title_activity_am_idrunk" >
@@ -113,9 +118,9 @@
             android:label="@string/title_activity_check_in" >
         </activity>
         <activity
-            android:name="be.ugent.oomo.groep12.studgent.activity.TrophiesListActivity"
+            android:name="be.ugent.oomo.groep12.studgent.activity.CheckInDetailsActivity"
             android:icon="@drawable/studgent_logo"
-            android:label="@string/title_activity_trophies" >
+            android:label="@string/title_activity_checkinDetails" >
         </activity>
     </application>
 

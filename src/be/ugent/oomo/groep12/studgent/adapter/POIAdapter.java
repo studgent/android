@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.location.LocationManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,7 +85,7 @@ public class POIAdapter extends ArrayAdapter<PointOfInterest> implements Filtera
         
         PointOfInterest POI_item = data.get(position);
         //calculate distance. temponary work with hard point.
-        LatLng currentPosotion = new LatLng(51.032052, 3.701968);
+        LatLng currentPosotion = new LatLng(51.032052, 3.701968); //<-------------------- nog wijzigen
         
         double distance = distFrom(POI_item.getLocation().latitude, POI_item.getLocation().longitude, currentPosotion.latitude, currentPosotion.longitude);
         String unit = "m";

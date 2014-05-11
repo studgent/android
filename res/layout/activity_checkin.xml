@@ -9,11 +9,18 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".CheckInActivity" >
 
+    <TextView
+    android:id="@+id/where_are_you_text"
+    android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+    android:enabled="true"
+    android:text="@string/where_are_you"/>
+
     <ScrollView
-        android:id="@+id/poi_list_view"
-        android:layout_width="fill_parent"
+        android:id="@+id/checkin_list_view"
+        android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/where_are_you_text"
         android:layout_centerHorizontal="true"
         android:fillViewport="true" >
 

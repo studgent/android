@@ -44,6 +44,8 @@
 	<string name="no">Nee</string>
 	<string name="load_trophielist">trofeeën ophalen</string>
 	<string name="title_activity_trophies">Trofeeën</string>
-	
+	<string name="where_are_you">Waar ben je?</string>
+	<string name="title_activity_checkinDetails">Check in</string>
+	<string name="still_checked_in_title">Nog ingechecked</string>
 </resources>
 
