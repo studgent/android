@@ -1,45 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_checkin_detail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="8dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingTop="8dp" >
 
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-	    android:orientation="vertical" >
+    <ScrollView
+        android:id="@+id/poi_detail_scroll"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true"
+        android:orientation="vertical"  >
 
-     
-		    <TextView
-		        android:id="@+id/txtTitle"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="Large Text"
-		        android:textAppearance="?android:attr/textAppearanceLarge" />
-		    
-	        <TextView
-		        android:id="@+id/txtDetail"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="Medium Text"
-		            android:paddingTop="10dp"
-		    />
-		        
-		    <TextView
-		        android:id="@+id/txtURL"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="Small Text"
-		        android:textAppearance="?android:attr/textAppearanceSmall" />
-		    
-		    <LinearLayout
-		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
-		        android:paddingTop="10dp" >
+        <TableLayout
+            android:id="@+id/poi_detail_table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" 
+            android:shrinkColumns="0" >
 
-		        <Button
-		            android:id="@+id/check_in_Button"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:text="check voor de 1e keer in"
-		            android:onClick="checkIn" />
-		        
-		    </LinearLayout>
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+                
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical" >
+                        
+                    <ImageView
+                        android:id="@+id/poi_detail_icon_location"
+                        android:layout_width="30dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/studgent_logo" />
+            
+                    <TextView
+                        android:id="@+id/poi_detail_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignBottom="@+id/poi_detail_icon_location"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/poi_detail_icon_location"
+                        android:gravity="center_vertical"
+                        android:text="Location"
+                        android:textSize="18sp" />
+        
+                </RelativeLayout>
+            </TableRow>
 
-    </LinearLayout>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/poi_detail_summary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Summary"
+                    android:textSize="18sp" />
+            </TableRow>
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/poi_detail_uri"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="URI"
+                    android:textSize="18sp" />
+
+            </TableRow>
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:id="@+id/check_in_Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="check voor de 1e keer in"
+                    android:onClick="checkIn" />
+            </TableRow>
+
+        </TableLayout>
+        
+    </ScrollView>
+
+</RelativeLayout>
+    

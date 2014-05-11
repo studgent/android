@@ -95,7 +95,11 @@ public class POIAdapter extends ArrayAdapter<PointOfInterest> implements Filtera
         }
         //de category_image moet nog gedaan worden
         holder.name.setText(POI_item.getName());
-        holder.streetAndNumber.setText(POI_item.getStreet()+" "+POI_item.getNumber());
+        if ( POI_item != null && !( POI_item.getStreet() == null || (POI_item.getStreet().equals("")) ) ) {
+        	holder.streetAndNumber.setText(POI_item.getStreet()+" "+POI_item.getNumber());
+        } else {
+        	holder.streetAndNumber.setText("");
+        }
         holder.distance.setText(String.valueOf(round(distance, 2)));
         holder.unit.setText(unit);
         
