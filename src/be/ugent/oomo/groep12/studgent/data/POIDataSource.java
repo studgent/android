@@ -82,8 +82,8 @@ public class POIDataSource implements IDataSource {
 			   longitude = item.optDouble("longitude", 0.0);
 		LatLng location = new LatLng(latitude,longitude);
 		
-		String street = "Dummy straat";
-		String streetNumber="3";
+		String street = null;
+		String streetNumber= null;
 		
 		
 		poi  = new PointOfInterest(id, name, details, street , streetNumber , location );

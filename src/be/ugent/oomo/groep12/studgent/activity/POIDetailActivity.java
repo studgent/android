@@ -76,6 +76,9 @@ public class POIDetailActivity   extends Activity implements OnInfoWindowClickLi
 		if (poi.getStreet() != null || poi.getNumber() != null){
 			txtLocation.setText(poi.getStreet() + " " + poi.getNumber());
 			txtLocation.setVisibility(View.VISIBLE);
+		} else if (poi.getName() != null) {
+			txtLocation.setText(poi.getName());
+			txtLocation.setVisibility(View.VISIBLE);
 		}
 		
 		if (poi.getUrl() != null ) {
@@ -109,9 +112,7 @@ public class POIDetailActivity   extends Activity implements OnInfoWindowClickLi
 		public void onInfoWindowClick(Marker marker) {
 			Log.i("clicked on marker", marker.getId() );
 			String uri = "geo:" + poi.getLocation().latitude + "," 
-								+ poi.getLocation().longitude 
-								+ "?q=" + poi.getStreet().replace(" ", "+")
-								+ "+" + poi.getNumber();
+								+ poi.getLocation().longitude ;
 			try {
 				startActivity(new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri)));
 			} catch(ActivityNotFoundException e){
@@ -121,16 +122,17 @@ public class POIDetailActivity   extends Activity implements OnInfoWindowClickLi
 			}
 		}
 		
-		private class AsyncMapLoader extends AsyncTask<IPointOfInterest, Void, LatLng> {
+		private class AsyncMapLoader extends AsyncTask<IPointOfInterest, Void, String> {
 		    private final ProgressDialog dialog = new ProgressDialog(POIDetailActivity.this);
 
 		    @Override
-		    protected void onPostExecute(LatLng result) {            
+		    protected void onPostExecute(String result) {            
 		        super.onPostExecute(result);
 		        
 		        if(result != null){ // if we found cošrdinates, update the PoI
-		        	poi.setLocation(result);
-		        } else if (poi.getLocation().latitude == 0.0 ||
+		        	poi.setStreet(result);
+		        } 
+		        if (poi.getLocation().latitude == 0.0 ||
 		        		poi.getLocation().longitude == 0.0) {
 		        	// no valid cošrdinates in the PoI
 		        	String message = "Kon geen cošrdinaten vinden, map wordt niet getoond.";
@@ -138,6 +140,12 @@ public class POIDetailActivity   extends Activity implements OnInfoWindowClickLi
 		        	dialog.dismiss();
 		        	return;
 		        }
+		        
+		        if (poi.getStreet() != null){
+		    		TextView txtLocation = (TextView)findViewById(R.id.poi_detail_location);
+					txtLocation.setText(poi.getStreet() + " " + poi.getNumber());
+					txtLocation.setVisibility(View.VISIBLE);
+				}
 		        
 		        // create new row
 		        TableRow tr = new TableRow(POIDetailActivity.this);
@@ -192,23 +200,18 @@ public class POIDetailActivity   extends Activity implements OnInfoWindowClickLi
 		    }
 
 		    @Override
-		    protected LatLng doInBackground(IPointOfInterest... params) {
+		    protected String doInBackground(IPointOfInterest... params) {
 		    	PointOfInterest poi = (PointOfInterest) params[0];
 				if(poi.getLocation().latitude == 0.0 || poi.getLocation().latitude == 0.0) {
 			    	String locationname = "";
 					try {
-						locationname = poi.getStreet() + "+" + poi.getNumber() + "+Gent";
-						LatLng location = LocationUtil.getLatLongFromAddress(locationname);
+						String location = LocationUtil.getAddressFromLatLng(poi.getLocation());
+						Log.i("poi street:", location + "" );
 						if(location != null){
 							return location;
-						} 
-						// try with different location info
-						location = LocationUtil.getLatLongFromAddress(poi.getName());
-						if(location != null){
-							return location;
-						} 
+						}
 					} catch (CurlException e) {
-						Log.e("Geocoder exception", locationname);
+						Log.e("Reverse geocoder exception", locationname);
 						e.printStackTrace();
 					}
 				}
@@ -217,5 +220,5 @@ public class POIDetailActivity   extends Activity implements OnInfoWindowClickLi
 		}
 
 	 
-	
+
 }
