@@ -46,8 +46,8 @@ public class CheckInActivity extends Activity implements AdapterView.OnItemClick
 	protected POIAdapter adapter;
 	protected ListView poi_list_view;
 	protected SharedPreferences sharedPreferences;
-	protected double checkinRadius = 2000.0;
-	protected long checkinTime = 1000*60*1; //=30 minits
+	protected double checkinRadius = 2000.0; //in meter   must be set to 50m 
+	protected long checkinTime = 1000*60*30; //=30 minits
 	protected boolean comesFromCheckInDetailActivity = false;
 
 	@Override
