@@ -123,7 +123,7 @@
             android:label="@string/title_activity_checkinDetails" >
         </activity>
         <activity
-            android:name="be.ugent.oomo.groep12.studgent.AboutActivity"
+            android:name="be.ugent.oomo.groep12.studgent.activity.AboutActivity"
             android:label="@string/title_activity_about" >
         </activity>
     </application>

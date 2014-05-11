@@ -27,14 +27,37 @@
         android:inputType="textPassword" />
 
     <Button
-        android:id="@+id/showNavigation"
+        android:id="@+id/loginbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/login_password"
-        android:layout_alignRight="@+id/email"
         android:layout_below="@+id/login_password"
         android:layout_marginTop="42dp"
-        android:text="Login"
-        android:onClick="login" />
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:onClick="login"
+        android:text="Login" />
+
+    <TextView
+        android:id="@+id/login_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="29dp"
+        android:gravity="center"
+        android:text="Niet ingelogd" />
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="22dp"
+        android:onClick="logout"
+        android:text="Uitloggen"
+        android:visibility="gone" />
 
 </RelativeLayout>

@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.adapter.CalenderAdapter;
@@ -32,6 +33,8 @@ public class LoginActivity extends Activity {
 
 
 	protected Button button_login;
+	protected Button button_logout;
+	protected TextView login_info;
 	protected EditText email_box;
 	protected EditText password_box;
 
@@ -39,8 +42,34 @@ public class LoginActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		login_info = (TextView) findViewById(R.id.login_info);
 		email_box = (EditText) findViewById(R.id.login_email);
 		password_box = (EditText) findViewById(R.id.login_password);
+		button_logout = (Button) findViewById(R.id.logout);
+		button_login = (Button) findViewById(R.id.loginbutton);
+		
+		if ( LoginUtility.isLoggedIn() ) {
+			setLoggedIn();
+		} else {
+			setLoggedOut();
+		}
+		
+	}
+	
+	public void setLoggedIn() {
+		login_info.setText("Ingelogd als :\n" + LoginUtility.getEmail() );
+		email_box.setVisibility(android.view.View.GONE);
+		password_box.setVisibility(android.view.View.GONE);
+		button_login.setVisibility(android.view.View.GONE);
+		button_logout.setVisibility(android.view.View.VISIBLE);
+	}
+	
+	public void setLoggedOut() {
+		login_info.setText("Niet ingelogd" );
+		email_box.setVisibility(android.view.View.VISIBLE);
+		password_box.setVisibility(android.view.View.VISIBLE);
+		button_login.setVisibility(android.view.View.VISIBLE);
+		button_logout.setVisibility(android.view.View.GONE);
 	}
 	
 	public void login(View view){
@@ -48,6 +77,11 @@ public class LoginActivity extends Activity {
 		credentials[0] = email_box.getEditableText().toString();
 		credentials[1] = password_box.getEditableText().toString();
 		new AsyncLoginLoader().execute(credentials);
+	}
+	
+	public void logout(View view) {
+		LoginUtility.LogOut();
+		setLoggedOut();
 	}
 	
 

@@ -60,6 +60,21 @@ public final class LoginUtility {
 		getInstance().logged_in = true;
     }
     
+    
+    public static void LogOut() {
+    	// Set in  preferences
+		SharedPreferences settings = App.getContext().getSharedPreferences(PREFS_NAME, 0);
+		SharedPreferences.Editor editor = settings.edit();
+		editor.remove("email");
+		editor.remove("userid");
+		editor.remove("token");
+		getInstance().email = null;
+		getInstance().id = 0;
+		getInstance().logged_in = false;
+		// Commit the edits!
+		editor.commit();
+    }
+    
     public static boolean LogIn(String email, String password) {
 
 		try {
