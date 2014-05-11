@@ -81,8 +81,10 @@ public class FriendAdapter extends ArrayAdapter<Friend> implements Filterable{
         holder.location.setText( "" + friend_item.getScore() );
         if ( friend_item.isFollowing() ) {
         	holder.follow.setBackgroundResource(R.drawable.check);
+        	holder.follow.setContentDescription("check");
         } else {
         	holder.follow.setBackgroundResource(R.drawable.add_friend);
+        	holder.follow.setContentDescription("nothing");
         }
         holder.follow.setTag(friend_item.getId());
         //holder.image.setImageBitmap(friend_item.getPhoto()); //nog geen foto
