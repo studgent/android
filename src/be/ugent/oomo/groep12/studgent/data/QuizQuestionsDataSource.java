@@ -52,14 +52,33 @@ public class QuizQuestionsDataSource implements IDataSource {
 	}
 	
 	public boolean checkAnswer(QuizQuestion question, String givenanswer ) throws DataSourceException {
-		question.setLastTry(Calendar.getInstance());
+		
+		Map<String, String> postData = new HashMap<String, String>();
+		postData.put("token", LoginUtility.getInstance().getToken() );
+		postData.put("answer", givenanswer );
+		
+		
+		try {
+			String apidata =  CurlUtil.post("user/" + userID + "/questions/" + question.getId(), postData);
+				
+			return true;
+		
+		} catch (CurlException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+		
+		
+		
+		/*question.setLastTry(Calendar.getInstance());
 		givenanswer = givenanswer.toLowerCase().trim().replace(" ","");
 		if (question.getAnswer().equalsIgnoreCase(givenanswer)){
 			question.setSolved(true);
 			return true;
 		}else{
 			return false;
-		}
+		}*/
 	}
 
 	
@@ -129,8 +148,9 @@ public class QuizQuestionsDataSource implements IDataSource {
 			JSONObject last =  item.getJSONObject("last_answer");
 			date_answered = item.optString("date_from").equals("null") ? 
 								null :
-								new SimpleDateFormat("yyyy-MM-dd").parse(last.optString("date"));
-			date = new GregorianCalendar( date_answered.getYear(), date_answered.getMonth(), date_answered.getDay() );
+								new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(last.optString("date"));
+			date = new GregorianCalendar();
+			date.setTime(date_answered);
 			correct = item.optBoolean("correct");
 		}
 		
@@ -140,14 +160,14 @@ public class QuizQuestionsDataSource implements IDataSource {
 		if ( choices_json.length() > 0 ) {
 			choices = new ArrayList<String>();
 			for (int i = 0; i < choices_json.length(); i++) {
-				choices.add(choices_json.getString(i));
+				choices.add(choices_json.getJSONObject(i).getString("choice"));
 			} 
 		}
 
 		quizquestion = new QuizQuestion(id, 
 										points, 
 										question, 
-										answered, 
+										correct, 
 										choices, 
 										answer, 
 										date , 
