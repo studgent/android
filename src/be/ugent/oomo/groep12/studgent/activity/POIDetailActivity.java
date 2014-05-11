@@ -143,7 +143,7 @@ public class POIDetailActivity   extends Activity implements OnInfoWindowClickLi
 		        
 		        if (poi.getStreet() != null){
 		    		TextView txtLocation = (TextView)findViewById(R.id.poi_detail_location);
-					txtLocation.setText(poi.getStreet() + " " + poi.getNumber());
+					txtLocation.setText(poi.getStreet());
 					txtLocation.setVisibility(View.VISIBLE);
 				}
 		        
@@ -202,16 +202,16 @@ public class POIDetailActivity   extends Activity implements OnInfoWindowClickLi
 		    @Override
 		    protected String doInBackground(IPointOfInterest... params) {
 		    	PointOfInterest poi = (PointOfInterest) params[0];
-				if(poi.getLocation().latitude == 0.0 || poi.getLocation().latitude == 0.0) {
-			    	String locationname = "";
+				if(poi.getStreet() == null || poi.getStreet().equals("") || poi.getNumber() == null || poi.getNumber().equals("")) {
+					String location = null;
 					try {
-						String location = LocationUtil.getAddressFromLatLng(poi.getLocation());
+						location = LocationUtil.getAddressFromLatLng(poi.getLocation());
 						Log.i("poi street:", location + "" );
 						if(location != null){
 							return location;
 						}
 					} catch (CurlException e) {
-						Log.e("Reverse geocoder exception", locationname);
+						Log.e("Reverse geocoder exception", location);
 						e.printStackTrace();
 					}
 				}

@@ -47,6 +47,7 @@ public class LocationUtil {
 
 	        jsonObject = ((JSONArray)jsonObject.get("results")).getJSONObject(0);
 	        String address = JSONUtil.optString(jsonObject, "formatted_address");
+	        Log.i("LocationUtil", address);
 	        return address;
 	    } catch (JSONException e) {
 	        e.printStackTrace();
