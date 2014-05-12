@@ -90,6 +90,9 @@ public class AugmentedViewActivity extends Activity implements
 				SensorManager.SENSOR_DELAY_GAME);
 		sensorManager.registerListener(this, magnetometer,
 				SensorManager.SENSOR_DELAY_GAME);
+		
+		// GPS
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, MIN_DISTANCE, overlayView);
 	}
 
 	@Override
