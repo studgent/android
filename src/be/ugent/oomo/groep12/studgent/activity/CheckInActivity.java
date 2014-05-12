@@ -7,11 +7,13 @@ import java.util.Map;
 
 import com.google.android.gms.maps.model.LatLng;
 
+
 import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.adapter.POIAdapter;
 import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import be.ugent.oomo.groep12.studgent.data.POIDataSource;
+import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -20,6 +22,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -31,6 +34,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class CheckInActivity extends Activity implements AdapterView.OnItemClickListener {
 
@@ -46,8 +50,6 @@ public class CheckInActivity extends Activity implements AdapterView.OnItemClick
 	protected POIAdapter adapter;
 	protected ListView poi_list_view;
 	protected SharedPreferences sharedPreferences;
-	protected double checkinRadius = 2000.0; //in meter   must be set to 50m 
-	protected long checkinTime = 1000*60*30; //=30 minits
 	protected boolean comesFromCheckInDetailActivity = false;
 
 	@Override
@@ -73,11 +75,17 @@ public class CheckInActivity extends Activity implements AdapterView.OnItemClick
         //sharedPreferences = this.getSharedPreferences()(Context.MODE_PRIVATE);
         sharedPreferences = this.getSharedPreferences("LastCheckin", Context.MODE_PRIVATE);
         
-        if(checkInAllowed()){
-        	new AsyncFriendListViewLoader().execute(adapter);
-        }
-        else
-        	checkinNotAllowedDiagram();
+        if (LoginUtility.getInstance().isLoggedIn() == false) {
+			Toast.makeText(this, "Log in om in te checken!", Toast.LENGTH_SHORT).show();
+			onBackPressed();
+		}else{
+			if(checkInAllowed()){
+	        	new AsyncFriendListViewLoader().execute(adapter);
+	        }
+	        else
+	        	checkinNotAllowedDiagram();
+		}
+        
         
 	}
 
@@ -139,7 +147,7 @@ public class CheckInActivity extends Activity implements AdapterView.OnItemClick
 	        for(IPointOfInterest poi: result){
 	        	LatLng currentPosotion = new LatLng(51.032052, 3.701968); //<-------------------- nog wijzigen
 	            double distance = distFrom(poi.getLocation().latitude, poi.getLocation().longitude, currentPosotion.latitude, currentPosotion.longitude);
-	            if(distance<=checkinRadius)// we zoeken alles in straal van 50 meter
+	            if(distance<=getResources().getInteger(R.integer.max_distance_to_checkin))// we zoeken alles in straal van 50 meter
 	            	adapter.add((PointOfInterest) poi);
 	        }
 	        poi_list_view.setAdapter(adapter);
@@ -149,7 +157,7 @@ public class CheckInActivity extends Activity implements AdapterView.OnItemClick
 	    @Override
 	    protected void onPreExecute() {        
 	        super.onPreExecute();
-	        dialog.setMessage(getString(R.string.load_eventlist));
+	        dialog.setMessage(getString(R.string.load_POIlist));
 	        dialog.show();            
 	    }
 
@@ -199,6 +207,7 @@ public class CheckInActivity extends Activity implements AdapterView.OnItemClick
 		alertDialog.show();
 		
 	}
+	
 	private void closeActivity(){
 		this.finish();
 	}
@@ -214,7 +223,7 @@ public class CheckInActivity extends Activity implements AdapterView.OnItemClick
         System.out.println("CheckInActivity: lat: "+sharedPreferences.getString("lat", "error"));
         System.out.println("CheckInActivity: lon: "+sharedPreferences.getString("lon", "error"));
         System.out.println("checkinAllowed: verschil="+verschil);
-        if(verschil!=0 && verschil<checkinTime){
+        if(verschil!=0 && verschil>getResources().getInteger(R.integer.checkin_time)){
         	//calculation the distance the user has moved from the last checkin
         	double lat = Double.parseDouble(sharedPreferences.getString("lat", "-1.0"));
         	double lon = Double.parseDouble(sharedPreferences.getString("lon", "-1.0"));
@@ -222,7 +231,7 @@ public class CheckInActivity extends Activity implements AdapterView.OnItemClick
         	LatLng currentPosotion = new LatLng(51.032052, 3.701968);//<---------------------aanpassen
             double distance = distFrom(lat, lon, currentPosotion.latitude, currentPosotion.longitude);
             System.out.println("checkinAllowed: distance="+distance);
-            if(distance<=checkinRadius)
+            if(distance<=getResources().getInteger(R.integer.max_distance_to_checkin))
             	return false;
             else
             	return true;

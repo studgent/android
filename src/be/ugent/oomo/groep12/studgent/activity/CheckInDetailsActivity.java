@@ -32,8 +32,11 @@ import android.widget.Toast;
 import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
+import be.ugent.oomo.groep12.studgent.data.FriendListDataSource;
+import be.ugent.oomo.groep12.studgent.data.POIDataSource;
 import be.ugent.oomo.groep12.studgent.exception.CurlException;
 import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
+import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import be.ugent.oomo.groep12.studgent.utilities.PlayServicesUtil;
 
 public class CheckInDetailsActivity extends Activity implements
@@ -103,8 +106,27 @@ public class CheckInDetailsActivity extends Activity implements
 		checkIn();
 	}
 
-	protected void checkIn() {
+	private class AsyncCheckin extends AsyncTask<Integer, Void, Boolean> {
 
+	    @Override
+	    protected void onPostExecute(Boolean result) {            
+	        super.onPostExecute(result);
+	    }
+
+		@Override
+		protected Boolean doInBackground(Integer... params) {
+			try {
+				boolean result = POIDataSource.getInstance().checkin(poi);
+	        	return result;
+	        }
+	        catch(Throwable t) {
+	            t.printStackTrace();
+				return false;
+	        }
+		}
+	}
+	
+	protected void checkIn() {
 		// finish checkin. This means storing the key value pare wich remambers
 		// the time, location and POIid of the last checkin
 		SharedPreferences sharedPreferences = this.getSharedPreferences(
@@ -118,16 +140,8 @@ public class CheckInDetailsActivity extends Activity implements
 		editor.putLong("date", now.getTime());
 		editor.putString("name", poi.getName());
 		editor.commit();
-		long def = 1;
-		System.out.println("CheckInDetailsActivity: name: "
-				+ sharedPreferences.getString("name", "error"));
-		System.out.println("CheckInDetailsActivity: date: "
-				+ sharedPreferences.getLong("date", def));
-		System.out.println("CheckInDetailsActivity: lat: "
-				+ sharedPreferences.getString("lat", "error"));
-		System.out.println("CheckInDetailsActivity: lon: "
-				+ sharedPreferences.getString("lon", "error"));
-		// deze checkin moet hier ook nog geregistreerd worden aan de backend
+		
+		new AsyncCheckin().execute();
 		this.finish();
 	}
 

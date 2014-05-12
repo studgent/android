@@ -1,5 +1,8 @@
 package be.ugent.oomo.groep12.studgent.activity;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -12,13 +15,19 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
+import be.ugent.oomo.groep12.studgent.data.POIDataSource;
 import be.ugent.oomo.groep12.studgent.exception.CurlException;
 import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
+import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import be.ugent.oomo.groep12.studgent.utilities.PlayServicesUtil;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -36,6 +45,7 @@ public class POIDetailActivity extends Activity implements
 		OnInfoWindowClickListener {
 
 	private PointOfInterest poi;
+	protected SharedPreferences sharedPreferences;
 	protected TableLayout table_view;
 	protected LayoutParams row_layout;
 	protected LayoutParams table_layout;
@@ -96,6 +106,7 @@ public class POIDetailActivity extends Activity implements
 		if (PlayServicesUtil.hasPlayServices(this, noPlayServices)) {
 			new AsyncMapLoader().execute(poi);
 		}
+		sharedPreferences = this.getSharedPreferences("LastCheckin", Context.MODE_PRIVATE);
 	}
 
 	public void navigateTo(View view) {
@@ -231,6 +242,114 @@ public class POIDetailActivity extends Activity implements
 			}
 			return null;
 		}
+		
+	}
+	public void checkIn(View view) {
+		checkIn();
 	}
 
+	private class AsyncCheckin extends AsyncTask<Integer, Void, Boolean> {
+
+	    @Override
+	    protected void onPostExecute(Boolean result) {            
+	        super.onPostExecute(result);
+	    }
+
+		@Override
+		protected Boolean doInBackground(Integer... params) {
+			try {
+				boolean result = POIDataSource.getInstance().checkin(poi);
+	        	return result;
+	        }
+	        catch(Throwable t) {
+	            t.printStackTrace();
+				return false;
+	        }
+		}
+	}
+	
+	protected void checkIn() {
+		if (LoginUtility.getInstance().isLoggedIn() == false) {
+			Toast.makeText(this, "Log in om in te checken!", Toast.LENGTH_SHORT).show();
+			onBackPressed();
+		}else{
+			if(checkInAllowed()){
+				SharedPreferences.Editor editor = sharedPreferences.edit();
+				editor.putString("lat", String.valueOf(poi.getLocation().latitude));
+				editor.putString("lon", String.valueOf(poi.getLocation().longitude));
+				Calendar c = Calendar.getInstance();
+				Date now = c.getTime();
+				editor.putLong("date", now.getTime());
+				editor.putString("name", poi.getName());
+				editor.commit();
+				
+				new AsyncCheckin().execute();
+				this.finish();
+			}
+			else
+				checkinNotAllowedDiagram();
+		}
+		
+	}
+
+	private boolean checkInAllowed() {
+        //calculating time beween now and time of last checkin
+        Calendar c = Calendar.getInstance();
+        Date now = c.getTime();
+        Date lastCheckin = new Date(sharedPreferences.getLong("date", now.getTime()));
+        long verschil = now.getTime()-lastCheckin.getTime(); //in milliseconds
+        System.out.println("CheckInActivity: name: "+sharedPreferences.getString("name", "error"));
+        System.out.println("CheckInActivity: date: "+sharedPreferences.getLong("date", now.getTime()));
+        System.out.println("CheckInActivity: lat: "+sharedPreferences.getString("lat", "error"));
+        System.out.println("CheckInActivity: lon: "+sharedPreferences.getString("lon", "error"));
+        System.out.println("checkinAllowed: verschil="+verschil);
+        System.out.println("checkinAllowed: MAXverschil="+getResources().getInteger(R.integer.max_distance_to_checkin));
+        if(verschil!=0 && verschil>getResources().getInteger(R.integer.checkin_time)){
+        	//calculation the distance the user has moved from the last checkin
+        	double lat = Double.parseDouble(sharedPreferences.getString("lat", "-1.0"));
+        	double lon = Double.parseDouble(sharedPreferences.getString("lon", "-1.0"));
+        	//getting current position
+        	LatLng currentPosotion = new LatLng(51.032052, 3.701968);//<---------------------aanpassen
+            double distance = distFrom(lat, lon, currentPosotion.latitude, currentPosotion.longitude);
+            System.out.println("checkinAllowed: distance="+distance);
+            if(distance<=getResources().getInteger(R.integer.max_distance_to_checkin))
+            	return false;
+            else
+            	return true;
+        }
+        else
+        	return true;
+	}
+	
+	private void checkinNotAllowedDiagram() {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this); //de this slaat op de ouder
+	
+		alertDialogBuilder.setTitle(getString(R.string.still_checked_in_title));
+		alertDialogBuilder.setMessage("Je bent nog steeds ingechecked in "+sharedPreferences.getString("name", "fout")+
+				".\n wacht nog effen, of zet een stapje, voordat je terug inchecked.");
+		alertDialogBuilder.setCancelable(false);
+		alertDialogBuilder.setPositiveButton("ok",new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog,int id) {
+					dialog.cancel();
+				}
+			  });
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
+		
+	}
+	
+	private double distFrom(double lat1, double lng1, double lat2, double lng2) {
+	    double earthRadius = 3958.75;
+	    double dLat = Math.toRadians(lat2-lat1);
+	    double dLng = Math.toRadians(lng2-lng1);
+	    double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+	               Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+	               Math.sin(dLng/2) * Math.sin(dLng/2);
+	    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+	    double dist = earthRadius * c;
+
+	    int meterConversion = 1609;
+
+	    return (double) (dist * meterConversion);
+	}
 }

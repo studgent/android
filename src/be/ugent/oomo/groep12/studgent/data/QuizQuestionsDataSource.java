@@ -16,7 +16,11 @@ import org.json.JSONObject;
 
 import com.google.android.gms.maps.model.LatLng;
 
+<<<<<<< HEAD
+import android.app.DownloadManager.Query;
+=======
 import android.annotation.SuppressLint;
+>>>>>>> bb8c42380267044c80cc7cf0a88ec9490af9ad94
 import android.util.Log;
 import be.ugent.oomo.groep12.studgent.common.QuizQuestion;
 import be.ugent.oomo.groep12.studgent.exception.CurlException;
@@ -25,7 +29,7 @@ import be.ugent.oomo.groep12.studgent.utilities.CurlUtil;
 import be.ugent.oomo.groep12.studgent.utilities.JSONUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 
-@SuppressLint("UseSparseArrays")
+
 public class QuizQuestionsDataSource implements IDataSource {
 
 	private static QuizQuestionsDataSource instance = null;
