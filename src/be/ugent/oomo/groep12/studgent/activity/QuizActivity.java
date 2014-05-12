@@ -100,7 +100,9 @@ public class QuizActivity extends Activity implements AdapterView.OnItemClickLis
 		setContentView(R.layout.activity_quiz);
 		
 		quiz_list = (ListView) findViewById(R.id.quiz_list );
-		
+
+		// hide keyboard on start activity
+	    this.getWindow().setSoftInputMode(android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		
 		adapter = new QuizAdapter(this, R.layout.quiz_question_item, new ArrayList<QuizQuestion>());
 		quiz_list.setAdapter(adapter); 

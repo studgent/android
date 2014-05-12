@@ -200,7 +200,7 @@ public class POIDetailActivity extends Activity implements
 					.snippet(snippet)
 					.position(poi.getLocation())
 					.icon(BitmapDescriptorFactory
-							.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+					.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
 			marker.showInfoWindow();
 		}
 

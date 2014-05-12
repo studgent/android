@@ -79,12 +79,12 @@ public class POIMapviewActivity extends Activity implements
 				.findFragmentById(R.id.mapFullscreen));
 		map = mapFragment.getMap();
 
-		// locationManager = (LocationManager)
-		// getSystemService(Context.LOCATION_SERVICE);
-		// LocationManager.NETWORK_PROVIDER, LocationManager.GPS_PROVIDER and
-		// LocationManager.PASSIVE_PROVIDER
-		// locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-		// MIN_TIME, MIN_DISTANCE, this);
+		locationManager = (LocationManager)
+		getSystemService(Context.LOCATION_SERVICE);
+		//LocationManager.NETWORK_PROVIDER, LocationManager.GPS_PROVIDER and
+		//LocationManager.PASSIVE_PROVIDER
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+		MIN_TIME, MIN_DISTANCE, this);
 
 		String noPlayServices = "Google Play Services not found, map will not be shown.";
 		if (PlayServicesUtil.hasPlayServices(this, noPlayServices)) {

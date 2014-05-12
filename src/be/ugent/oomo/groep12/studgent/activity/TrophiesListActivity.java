@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
+import android.view.WindowManager.LayoutParams;
 import android.widget.EditText;
 import android.widget.ListView;
 import be.ugent.oomo.groep12.studgent.R;
@@ -30,7 +31,10 @@ public class TrophiesListActivity  extends Activity implements TextWatcher {
 		this.overridePendingTransition(R.anim.animation_enter,
 				R.anim.animation_leave);
 		setContentView(R.layout.activity_trophies);
-		
+
+		// hide keyboard on start activity
+	    this.getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+	    
 		trophie_list_view = (ListView) findViewById(R.id.trophie_list);
 		inputSearch = (EditText) findViewById(R.id.searchTrophies_EditText);
 		inputSearch.addTextChangedListener(this);

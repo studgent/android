@@ -27,6 +27,7 @@ import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.view.WindowManager.LayoutParams;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -62,8 +63,9 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
 		inputSearch = (EditText) findViewById(R.id.searchFriends_EditText);
 		inputSearch.addTextChangedListener(this);
 		
-        /*View header = (View)getLayoutInflater().inflate(R.layout.listview_header_row, null);
-        event_list_view.addHeaderView(header);*/
+		// hide keyboard on start activity
+	    this.getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
 		
 		// create adapter with empty list and attach custom item view
         adapter = new FriendAdapter(this, R.layout.friend_list_item, new ArrayList<Friend>());
@@ -76,6 +78,7 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
 		}else{
 	        new AsyncFriendListViewLoader().execute(adapter);
 		}
+		
         
 	}
 
@@ -162,7 +165,6 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
 	@Override
 	public void beforeTextChanged(CharSequence s, int start, int count,
 			int after) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -170,13 +172,12 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
 	@Override
 	public void onTextChanged(CharSequence s, int start, int before, int count) {
 		adapter.getFilter().filter(s);
-		
 	}
 
 
 	@Override
 	public void afterTextChanged(Editable s) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 	

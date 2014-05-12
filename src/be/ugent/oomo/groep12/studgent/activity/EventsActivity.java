@@ -1,6 +1,7 @@
 package be.ugent.oomo.groep12.studgent.activity;
 
 import java.util.ArrayList;
+
 import android.widget.AdapterView;
 
 import java.util.Collections;
@@ -17,12 +18,16 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.view.WindowManager.LayoutParams;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import be.ugent.oomo.groep12.studgent.adapter.CalenderAdapter;
 import be.ugent.oomo.groep12.studgent.common.ICalendarEvent;
@@ -31,11 +36,12 @@ import be.ugent.oomo.groep12.studgent.common.IData;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import be.ugent.oomo.groep12.studgent.data.CalendarEventDataSource;
 
-public class EventsActivity extends Activity implements AdapterView.OnItemClickListener {
+public class EventsActivity extends Activity implements AdapterView.OnItemClickListener, TextWatcher {
 	
 	protected ICalendarEvent[] event_data;
 	protected CalenderAdapter adapter;
 	protected ListView event_list_view;
+	private EditText inputSearch;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +52,11 @@ public class EventsActivity extends Activity implements AdapterView.OnItemClickL
 		
 		event_list_view = (ListView) findViewById(R.id.events_list);
 		event_list_view.setOnItemClickListener(this);
+		inputSearch = (EditText) findViewById(R.id.searchEvents_EditText);
+		inputSearch.addTextChangedListener(this);
 		
-        /*View header = (View)getLayoutInflater().inflate(R.layout.listview_header_row, null);
-        event_list_view.addHeaderView(header);*/
+		// hide keyboard on start activity
+	    this.getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		
 		// create adapter with empty list and attach custom item view
         adapter = new CalenderAdapter(this, R.layout.calendar_list_item, new ArrayList<ICalendarEvent>());
@@ -114,6 +122,28 @@ public class EventsActivity extends Activity implements AdapterView.OnItemClickL
 	        }
 	        return null;
 	    }
+	}
+
+	// Implements TextWatcher
+	
+	@Override
+	public void beforeTextChanged(CharSequence s, int start, int count,
+			int after) {
+
+		
+	}
+
+
+	@Override
+	public void onTextChanged(CharSequence s, int start, int before, int count) {
+		adapter.getFilter().filter(s);
+	}
+
+
+	@Override
+	public void afterTextChanged(Editable s) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

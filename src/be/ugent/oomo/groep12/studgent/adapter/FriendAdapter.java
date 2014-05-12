@@ -19,7 +19,7 @@ import be.ugent.oomo.groep12.studgent.common.Friend;
 import be.ugent.oomo.groep12.studgent.common.FriendFilter;
 import be.ugent.oomo.groep12.studgent.common.POIFilter;
 
-public class FriendAdapter extends ArrayAdapter<Friend> implements Filterable{
+public class FriendAdapter extends ArrayAdapter<Friend> implements Filterable {
     static class FriendItemHolder
     {
     	ImageView image;
