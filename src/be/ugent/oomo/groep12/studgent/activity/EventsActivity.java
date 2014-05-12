@@ -25,6 +25,7 @@ import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.view.WindowManager.LayoutParams;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -54,8 +55,8 @@ public class EventsActivity extends Activity implements AdapterView.OnItemClickL
 		inputSearch = (EditText) findViewById(R.id.searchEvents_EditText);
 		inputSearch.addTextChangedListener(this);
 		
-        /*View header = (View)getLayoutInflater().inflate(R.layout.listview_header_row, null);
-        event_list_view.addHeaderView(header);*/
+		// hide keyboard on start activity
+	    this.getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		
 		// create adapter with empty list and attach custom item view
         adapter = new CalenderAdapter(this, R.layout.calendar_list_item, new ArrayList<ICalendarEvent>());
