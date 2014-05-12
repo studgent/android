@@ -79,7 +79,7 @@ public class EventDetailActivity extends Activity implements OnInfoWindowClickLi
 						+ selected_event.getLocation().getNumber() );
 		addTextRow("Beschrijving", Html.fromHtml("" +  selected_event.getDescription() ).toString() );
 		addTextRow("Contact", Html.fromHtml("" +  selected_event.getContact() ).toString() );
-		addTextRow("Email", Html.fromHtml("<a href='" +  selected_event.getEmail() +"'>" +  selected_event.getEmail() + "</a>" ).toString() );
+		addTextRow("Email", Html.fromHtml("<a href='mailto:" +  selected_event.getEmail() +"'>" +  selected_event.getEmail() + "</a>" ).toString() );
 
 	}
 
