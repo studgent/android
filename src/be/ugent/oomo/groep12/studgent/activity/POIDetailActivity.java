@@ -41,6 +41,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -112,6 +113,7 @@ public class POIDetailActivity extends Activity implements
 		if (poi.getUrl() != null) {
 			txtUrl.setText(Html.fromHtml("<a href='" + poi.getUrl() + "'>"
 					+ poi.getUrl() + "</a>"));
+			txtUrl.setMovementMethod(LinkMovementMethod.getInstance());
 			txtUrl.setVisibility(View.VISIBLE);
 		}
 
