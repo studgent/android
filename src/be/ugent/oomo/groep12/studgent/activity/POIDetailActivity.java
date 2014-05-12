@@ -244,7 +244,7 @@ public class POIDetailActivity extends Activity implements
 		}
 		
 	}
-	public void checkIn(View view) {
+	public void check_In(View view) {
 		checkIn();
 	}
 
