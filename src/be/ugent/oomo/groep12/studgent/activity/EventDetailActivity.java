@@ -17,6 +17,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -48,7 +49,7 @@ public class EventDetailActivity extends Activity implements OnInfoWindowClickLi
 		setContentView(R.layout.activity_event_detail);
 		Bundle b = getIntent().getExtras();
         Integer id = (Integer) b.get("id");
-        //CalendarEvent item = (CalendarEvent) CalendarEventDataSource.getInstance().getDetails(id);
+        
         // getting parcelable is faster than using datasource.
         selected_event = (CalendarEvent) getIntent().getParcelableExtra("calendarItem");
 
@@ -73,9 +74,9 @@ public class EventDetailActivity extends Activity implements OnInfoWindowClickLi
 		location.setText( selected_event.getLocation().getStreet() 
 						+ " " 
 						+ selected_event.getLocation().getNumber() );
-		addTextRow("Beschrijving", selected_event.getDescription());
-		addTextRow("Contact", selected_event.getContact());
-		addTextRow("Email", selected_event.getEmail());
+		addTextRow("Beschrijving", Html.fromHtml("" +  selected_event.getDescription() ).toString() );
+		addTextRow("Contact", Html.fromHtml("" +  selected_event.getContact() ).toString() );
+		addTextRow("Email", Html.fromHtml("" +  selected_event.getEmail() ).toString() );
 
 	}
 
@@ -180,8 +181,8 @@ public class EventDetailActivity extends Activity implements OnInfoWindowClickLi
 	        		selected_event.getLocation().getStreet() + " " + selected_event.getLocation().getNumber()
 	        		: "";
 	        Marker marker = map.addMarker(new MarkerOptions()
-	        								.title(selected_event.getName())
-	        								.snippet(snippet)
+	        								.title(Html.fromHtml("" +  selected_event.getName() ).toString())
+	        								.snippet(Html.fromHtml("" +  snippet).toString())
 	        								.position(selected_event.getLocation().getLocation())
 	        								.icon( BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN) )
 	        							 );

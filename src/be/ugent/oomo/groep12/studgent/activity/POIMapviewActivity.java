@@ -228,8 +228,8 @@ public class POIMapviewActivity extends Activity implements
 
 				Marker marker = map
 						.addMarker(new MarkerOptions()
-								.title(Html.fromHtml( poi.getValue().getName() ).toString() )
-								.snippet(Html.fromHtml(
+								.title("" + Html.fromHtml( poi.getValue().getName() ).toString() )
+								.snippet("" + Html.fromHtml(
 										poi.getValue().getDetails() + "\n"
 												+ poi.getValue().getUrl()).toString())
 								.position(poi.getValue().getLocation()) 
