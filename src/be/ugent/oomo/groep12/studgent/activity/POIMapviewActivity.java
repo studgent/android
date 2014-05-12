@@ -78,8 +78,9 @@ public class POIMapviewActivity extends Activity implements
 		mapFragment = (MapFragment) (fmanager
 				.findFragmentById(R.id.mapFullscreen));
 		map = mapFragment.getMap();
-		map.setMyLocationEnabled(true);
-
+		if(map != null) {
+			map.setMyLocationEnabled(true);
+		}
 		locationManager = (LocationManager)
 		getSystemService(Context.LOCATION_SERVICE);
 		//LocationManager.NETWORK_PROVIDER, LocationManager.GPS_PROVIDER and
