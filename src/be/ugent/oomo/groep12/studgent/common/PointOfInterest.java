@@ -2,6 +2,7 @@ package be.ugent.oomo.groep12.studgent.common;
 
 import java.util.Date;
 
+import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -24,8 +25,8 @@ public class PointOfInterest implements IPointOfInterest {
 	protected String url;
 	protected double distance;
 	
-	public void setDistance(Double distance){
-		this.distance=distance;
+	public void setDistance(float distance2){
+		this.distance=distance2;
 	}
 	
 	public double getDistance(){
@@ -164,6 +165,13 @@ public class PointOfInterest implements IPointOfInterest {
 	public String getUrl() {
 		// TODO Auto-generated method stub
 		return url;
+	}
+
+	public Location getLocationAsLocation() {
+		Location loc = new Location("dummyprovider"); 
+		loc.setLatitude(location.latitude);
+		loc.setLongitude(location.longitude);
+		return loc;		
 	}
 	
 	

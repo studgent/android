@@ -475,12 +475,8 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener
 			} catch (DataSourceException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-		}else{
-			
-		}		
-	
-		
+			}			
+		}			
 	}
 	@Override
 	public void onLocationChanged(Location location) {
