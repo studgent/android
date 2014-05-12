@@ -6,7 +6,6 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import android.annotation.SuppressLint;
 import android.util.Log;
 import be.ugent.oomo.groep12.studgent.common.Friend;
 import be.ugent.oomo.groep12.studgent.common.IData;
@@ -66,7 +65,6 @@ public class FriendListDataSource implements IDataSource {
 		return added;
 	}
 	
-	@SuppressLint("UseSparseArrays")
 	protected void populateList(){
 		int userID = LoginUtility.getInstance().getId();
 		// populate the list

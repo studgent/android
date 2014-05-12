@@ -86,6 +86,21 @@
                     android:text="Navigeer naar" />
             </TableRow>
 
+            <TableRow
+                android:id="@+id/tableRow1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:id="@+id/check_in_Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3px"
+                    android:onClick="checkIn"
+                    android:text="check in" />
+
+            </TableRow>
+
         </TableLayout>
         
     </ScrollView>

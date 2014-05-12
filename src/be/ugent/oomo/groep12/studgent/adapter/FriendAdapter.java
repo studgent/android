@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,8 +78,8 @@ public class FriendAdapter extends ArrayAdapter<Friend> implements Filterable {
         Friend friend_item = data.get(position);
         //System.out.println("Friend friend_item: "+data.get(position).getFirstName());
         
-        holder.name.setText(friend_item.getFirstName()+" "+friend_item.getLastName());
-        holder.location.setText( "" + friend_item.getScore() + " points" );
+        holder.name.setText(Html.fromHtml(friend_item.getFirstName()+" "+friend_item.getLastName()) );
+        holder.location.setText( Html.fromHtml(friend_item.getScore() + " points") );
         if ( friend_item.isFollowing() ) {
         	holder.follow.setBackgroundResource(R.drawable.check);
         	holder.follow.setContentDescription("check");
@@ -87,7 +88,6 @@ public class FriendAdapter extends ArrayAdapter<Friend> implements Filterable {
         	holder.follow.setContentDescription("nothing");
         }
         holder.follow.setTag(friend_item.getId());
-        //holder.image.setImageBitmap(friend_item.getPhoto()); //nog geen foto
         
         return row;
     }

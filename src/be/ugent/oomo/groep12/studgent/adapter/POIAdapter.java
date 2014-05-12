@@ -6,6 +6,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.location.LocationManager;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,12 +97,12 @@ public class POIAdapter extends ArrayAdapter<PointOfInterest> implements Filtera
         //de category_image moet nog gedaan worden
         holder.name.setText(POI_item.getName());
         if ( POI_item != null && !( POI_item.getStreet() == null || (POI_item.getStreet().equals("")) ) ) {
-        	holder.streetAndNumber.setText(POI_item.getStreet()+" "+POI_item.getNumber());
+        	holder.streetAndNumber.setText(Html.fromHtml("" +  POI_item.getStreet()+" "+POI_item.getNumber()) );
         } else {
         	holder.streetAndNumber.setText("");
         }
-        holder.distance.setText(String.valueOf(round(distance, 2)));
-        holder.unit.setText(unit);
+        holder.distance.setText( Html.fromHtml("" +  String.valueOf(round(distance, 2))) );
+        holder.unit.setText( Html.fromHtml("" +  unit) );
         
         return row;
     }
