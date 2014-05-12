@@ -4,6 +4,7 @@ import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.R.id;
 import be.ugent.oomo.groep12.studgent.R.layout;
 import be.ugent.oomo.groep12.studgent.R.string;
+import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
@@ -29,6 +30,27 @@ public class AboutActivity extends Activity {
 					.add(R.id.container, new AboutFragment()).commit();
 		}
 	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+	
+
+	@Override
+	public boolean onPrepareOptionsMenu (Menu menu) {
+
+		return MenuUtil.PrepareMenu(this, menu);
+		
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    return MenuUtil.OptionsItemSelected(this, item);
+	}
+	
 
 
 	/**

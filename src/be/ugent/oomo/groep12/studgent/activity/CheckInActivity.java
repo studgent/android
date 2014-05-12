@@ -7,13 +7,13 @@ import java.util.Map;
 
 import com.google.android.gms.maps.model.LatLng;
 
-
 import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.adapter.POIAdapter;
 import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import be.ugent.oomo.groep12.studgent.data.POIDataSource;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
+import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -105,14 +105,28 @@ public class CheckInActivity extends Activity implements AdapterView.OnItemClick
 				.getSelectedNavigationIndex());
 	}
 
-	
+
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.events, menu);
+		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+	
+
+	@Override
+	public boolean onPrepareOptionsMenu (Menu menu) {
+
+		return MenuUtil.PrepareMenu(this, menu);
 		
 	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    return MenuUtil.OptionsItemSelected(this, item);
+	}
+	
 	@Override
 	protected void onResume(){
 		super.onResume();

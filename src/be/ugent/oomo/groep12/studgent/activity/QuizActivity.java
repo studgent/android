@@ -34,6 +34,7 @@ import be.ugent.oomo.groep12.studgent.exception.CurlException;
 import be.ugent.oomo.groep12.studgent.exception.DataSourceException;
 import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
+import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -53,6 +54,8 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -108,6 +111,17 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener
 		}
 	}
 
+	
+	@Override
+	public void onPause(){
+		locationManager.removeUpdates(this);
+	}
+	
+	@Override
+	public void onResume(){
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+				MIN_TIME, MIN_DISTANCE, this);	
+	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -193,6 +207,26 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener
 	}
 
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+	
+
+	@Override
+	public boolean onPrepareOptionsMenu (Menu menu) {
+
+		return MenuUtil.PrepareMenu(this, menu);
+		
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    return MenuUtil.OptionsItemSelected(this, item);
+	}
+	
 
 	
 	@Override
@@ -357,13 +391,11 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener
 		        	adapter.add(question);
 		        }
 		        //calculate distance with latest known GPS location
-		        if (locationManager==null){
-					locationManager = (LocationManager)
+		        locationManager = (LocationManager)
 						getSystemService(Context.LOCATION_SERVICE);
-				}
-		        Location lastKnownLocation = locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria() , false));
-		        onLocationChanged(locationManager.getLastKnownLocation(Context.LOCATION_SERVICE));
-		       
+				Location lastKnownLocation = locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria() , false));
+		        updateLocation(lastKnownLocation);
+		        
 		        renewListGui();
 		        
 	        
@@ -407,7 +439,7 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener
 					return location;
 				}
 			} catch (CurlException e) {
-				Log.e("Reverse geocoder exception", location);
+				Log.e("Reverse geocoder exception","");
 				e.printStackTrace();
 			}
 			return null;
@@ -429,9 +461,8 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener
 	}
 
 
-	@Override
-	public void onLocationChanged(Location location) {
-		// TODO Auto-generated method stub
+	
+	public void updateLocation(Location location){
 		
 		if (location != null && location.getLatitude() != 0 && location.getLongitude() != 0 ){
 			try {
@@ -448,6 +479,13 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener
 		}else{
 			
 		}		
+	
+		
+	}
+	@Override
+	public void onLocationChanged(Location location) {
+		// TODO Auto-generated method stub
+		updateLocation(location);
 	}
 
 

@@ -45,6 +45,7 @@ import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import be.ugent.oomo.groep12.studgent.data.CalendarEventDataSource;
 import be.ugent.oomo.groep12.studgent.data.POIDataSource;
+import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 import be.ugent.oomo.groep12.studgent.utilities.PlayServicesUtil;
 
 public class POIMapviewActivity extends Activity implements
@@ -91,6 +92,8 @@ public class POIMapviewActivity extends Activity implements
 		String noPlayServices = "Google Play Services not found, map will not be shown.";
 		if (PlayServicesUtil.hasPlayServices(this, noPlayServices)) {
 			loadPOIs();
+		} else {
+			setNavigation();
 		}
 	}
 
@@ -158,26 +161,27 @@ public class POIMapviewActivity extends Activity implements
 
 	// END switchbar
 
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.poi, menu);
+		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+	
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.poi_open_augmented:
-			openAugmentedViewActivity();
-			return true;
-		case R.id.poi_open_list:
-			openPOIListActivity();
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
+	public boolean onPrepareOptionsMenu (Menu menu) {
+
+		return MenuUtil.PrepareMenu(this, menu);
+		
 	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    return MenuUtil.OptionsItemSelected(this, item);
+	}
+	
 
 	private void openPOIListActivity() {
 		Intent intent = new Intent(this, POIListActivity.class);

@@ -9,6 +9,7 @@ import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import be.ugent.oomo.groep12.studgent.exception.CurlException;
 import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
+import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 import be.ugent.oomo.groep12.studgent.utilities.PlayServicesUtil;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -20,6 +21,7 @@ import android.content.Intent;
 import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.RelativeLayout;
@@ -80,12 +82,26 @@ public class EventDetailActivity extends Activity implements OnInfoWindowClickLi
 
 	}
 
-	
+
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.event_detail, menu);
+		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+	
+
+	@Override
+	public boolean onPrepareOptionsMenu (Menu menu) {
+
+		return MenuUtil.PrepareMenu(this, menu);
+		
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    return MenuUtil.OptionsItemSelected(this, item);
 	}
 	
 

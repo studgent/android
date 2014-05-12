@@ -22,6 +22,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -35,6 +36,7 @@ import be.ugent.oomo.groep12.studgent.common.CalendarEvent;
 import be.ugent.oomo.groep12.studgent.common.IData;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import be.ugent.oomo.groep12.studgent.data.CalendarEventDataSource;
+import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 
 public class EventsActivity extends Activity implements AdapterView.OnItemClickListener, TextWatcher {
 	
@@ -67,12 +69,27 @@ public class EventsActivity extends Activity implements AdapterView.OnItemClickL
 	}
 
 
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.events, menu);
+		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+	
+
+	@Override
+	public boolean onPrepareOptionsMenu (Menu menu) {
+
+		return MenuUtil.PrepareMenu(this, menu);
+		
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    return MenuUtil.OptionsItemSelected(this, item);
+	}
+	
 
 
 	@Override

@@ -1,9 +1,12 @@
 package be.ugent.oomo.groep12.studgent.activity;
 
 import be.ugent.oomo.groep12.studgent.R;
+import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 public class ChallengeActivity extends Activity {
@@ -15,6 +18,27 @@ public class ChallengeActivity extends Activity {
 				R.anim.animation_leave);
 		setContentView(R.layout.activity_challenge);
 	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+	
+
+	@Override
+	public boolean onPrepareOptionsMenu (Menu menu) {
+
+		return MenuUtil.PrepareMenu(this, menu);
+		
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    return MenuUtil.OptionsItemSelected(this, item);
+	}
+	
 
 	public void openQuizActivity(View view){
 		Intent intent = new Intent(this, QuizActivity.class);

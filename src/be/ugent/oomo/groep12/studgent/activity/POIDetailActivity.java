@@ -19,6 +19,7 @@ import be.ugent.oomo.groep12.studgent.data.POIDataSource;
 import be.ugent.oomo.groep12.studgent.exception.CurlException;
 import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
+import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 import be.ugent.oomo.groep12.studgent.utilities.PlayServicesUtil;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -33,6 +34,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.RelativeLayout;
@@ -108,6 +111,28 @@ public class POIDetailActivity extends Activity implements
 		}
 		sharedPreferences = this.getSharedPreferences("LastCheckin", Context.MODE_PRIVATE);
 	}
+	
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+	
+
+	@Override
+	public boolean onPrepareOptionsMenu (Menu menu) {
+
+		return MenuUtil.PrepareMenu(this, menu);
+		
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    return MenuUtil.OptionsItemSelected(this, item);
+	}
+	
 
 	public void navigateTo(View view) {
 		String uri = "geo:" + poi.getLocation().latitude + ","
