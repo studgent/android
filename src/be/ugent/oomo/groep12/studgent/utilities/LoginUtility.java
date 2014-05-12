@@ -11,6 +11,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 import be.ugent.oomo.groep12.studgent.activity.EventDetailActivity;
+import be.ugent.oomo.groep12.studgent.data.FriendListDataSource;
+import be.ugent.oomo.groep12.studgent.data.QuizQuestionsDataSource;
+import be.ugent.oomo.groep12.studgent.data.TrophieListDataSource;
 import be.ugent.oomo.groep12.studgent.exception.CurlException;
 
 public final class LoginUtility {
@@ -73,6 +76,9 @@ public final class LoginUtility {
 		getInstance().logged_in = false;
 		// Commit the edits!
 		editor.commit();
+		QuizQuestionsDataSource.getInstance().delete();
+		FriendListDataSource.getInstance().delete();
+		TrophieListDataSource.getInstance().delete();
     }
     
     public static boolean LogIn(String email, String password) {

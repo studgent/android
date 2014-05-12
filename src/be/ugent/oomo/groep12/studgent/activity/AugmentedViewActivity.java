@@ -144,21 +144,6 @@ public class AugmentedViewActivity extends Activity implements
 		}
 	}
 
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.augmented, menu);
-		return true;
-	}
-
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.switch_to_map:
-			Intent intent = new Intent(this, POIMapviewActivity.class);
-			startActivity(intent);
-			return true;
-		}
-		return false;
-	}
-
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {

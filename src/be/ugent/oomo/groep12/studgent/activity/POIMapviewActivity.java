@@ -78,6 +78,7 @@ public class POIMapviewActivity extends Activity implements
 		mapFragment = (MapFragment) (fmanager
 				.findFragmentById(R.id.mapFullscreen));
 		map = mapFragment.getMap();
+		map.setMyLocationEnabled(true);
 
 		locationManager = (LocationManager)
 		getSystemService(Context.LOCATION_SERVICE);
@@ -185,7 +186,7 @@ public class POIMapviewActivity extends Activity implements
 
 	private void loadPOIs() {
 		map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.05389,
-				3.705), 16));
+				3.725), 14));
 		new AsyncPOILoader().execute(map);
 
 		map.setOnInfoWindowClickListener(this);

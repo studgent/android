@@ -124,4 +124,8 @@ public class FriendListDataSource implements IDataSource {
 		return items.get(id);
 	}
 
+	
+	public void delete(){
+		items = null;
+	}
 }
