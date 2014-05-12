@@ -96,7 +96,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3px"
-                    android:onClick="checkIn"
+                    android:onClick="check_In"
                     android:text="check in" />
 
             </TableRow>

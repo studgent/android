@@ -86,9 +86,9 @@ public class POIAdapter extends ArrayAdapter<PointOfInterest> implements Filtera
         
         PointOfInterest POI_item = data.get(position);
         //calculate distance. temponary work with hard point.
-        LatLng currentPosotion = new LatLng(51.032052, 3.701968); //<-------------------- nog wijzigen
-        
-        double distance = distFrom(POI_item.getLocation().latitude, POI_item.getLocation().longitude, currentPosotion.latitude, currentPosotion.longitude);
+        //LatLng currentPosotion = new LatLng(51.032052, 3.701968); //<-------------------- nog wijzigen
+        //double distance = distFrom(POI_item.getLocation().latitude, POI_item.getLocation().longitude, currentPosotion.latitude, currentPosotion.longitude);
+        double distance = POI_item.getDistance();
         String unit = "m";
         if(distance>=1000.0){
         	distance=distance/1000.0;

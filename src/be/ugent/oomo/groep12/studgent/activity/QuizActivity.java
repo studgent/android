@@ -398,7 +398,7 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener
 					return location;
 				}
 			} catch (CurlException e) {
-				Log.e("Reverse geocoder exception", location);
+				Log.e("Reverse geocoder exception","");
 				e.printStackTrace();
 			}
 			return null;
