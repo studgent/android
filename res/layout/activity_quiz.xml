@@ -50,15 +50,23 @@
                android:inputType="text"
                 >
             </EditText>
-            
         </RelativeLayout>
+ 		<Button
+                android:id="@+id/navigateToQuestion"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="Navigeer naar de locatie"
+                android:onClick="navigateTo" />        
     </LinearLayout>
 
 	<ListView
 	       android:id="@+id/quiz_list"
 	       android:layout_width="fill_parent"
 	       android:layout_height="wrap_content" >
-	
+
 	</ListView>
 	      
   

@@ -9,8 +9,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.android.gms.drive.internal.OnContentsResponse;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -26,15 +29,21 @@ import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import be.ugent.oomo.groep12.studgent.common.QuizQuestion;
 import be.ugent.oomo.groep12.studgent.data.POIDataSource;
 import be.ugent.oomo.groep12.studgent.data.QuizQuestionsDataSource;
+import be.ugent.oomo.groep12.studgent.exception.CurlException;
 import be.ugent.oomo.groep12.studgent.exception.DataSourceException;
+import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.AsyncTaskLoader;
+import android.content.Intent;
+import android.net.Uri;
 import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -50,6 +59,7 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
@@ -61,8 +71,25 @@ public class QuizActivity extends Activity implements AdapterView.OnItemClickLis
 	ListView quiz_list;
 	QuizAdapter adapter;
 	IQuizQuestion currentQuestion;
+	String currentAddress;
 	
 	
+	public void navigateTo(View view) {
+		String uri = "geo:" + currentQuestion.getLocation().latitude + ","
+				+ currentQuestion.getLocation().longitude;
+		if (currentAddress!=null){
+			uri += "?q=" + currentAddress.replace(" ", "+");
+		}
+		try {
+			startActivity(new Intent(android.content.Intent.ACTION_VIEW,
+					Uri.parse(uri)));
+		} catch (ActivityNotFoundException e) {
+			String message = "Navigatie kan niet geopend worden.";
+			Toast.makeText(this, message, Toast.LENGTH_LONG)
+					.show();
+		}
+	}
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -162,6 +189,13 @@ public class QuizActivity extends Activity implements AdapterView.OnItemClickLis
 			RelativeLayout oneAnswerPanel = (RelativeLayout) findViewById(R.id.layoutAnswer);
 			GridLayout multipleAnswerPanel = (GridLayout) findViewById(R.id.layoutAnswers);
 					
+			Button btnNavigateto = (Button) findViewById(R.id.navigateToQuestion);
+			if (currentQuestion.getLocation() == null){
+				btnNavigateto.setVisibility(view.GONE);	
+			}else{
+				btnNavigateto.setVisibility(view.VISIBLE);
+			}
+			
 			if (currentQuestion.getPossibleAnswers()==null || currentQuestion.getPossibleAnswers().size()==0){
 				//no multiple answer question, show inputbox
 				oneAnswerPanel.setVisibility(view.VISIBLE);
@@ -302,6 +336,55 @@ public class QuizActivity extends Activity implements AdapterView.OnItemClickLis
 	    }
 	}
 
+	
+	private class AsyncGEOLoader extends
+	AsyncTask<QuizQuestion, Void, String> {
+		
+		private final ProgressDialog dialog = new ProgressDialog(
+				QuizActivity.this);
+		
+		@Override
+		protected void onPostExecute(String result) {
+			super.onPostExecute(result);
+		
+			if (result != null) { // if we found coordinates, update the PoI
+				currentAddress = result;
+			}
+			if (currentQuestion.getLocation().latitude == 0.0
+					|| currentQuestion.getLocation().longitude == 0.0) {
+				String message = "Kon geen coordinaten vinden.";
+				Toast.makeText(getApplicationContext(), message,
+						Toast.LENGTH_LONG).show();
+				dialog.dismiss();
+				return;
+			}
+		}
+		
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			dialog.setMessage(getString(R.string.load_map));
+			dialog.show();
+		}
+		
+		@Override
+		protected String doInBackground(QuizQuestion... params) {
+			QuizQuestion quiz = params[0];
+			String location = null;
+			try {
+				location = LocationUtil.getAddressFromLatLng(currentQuestion
+						.getLocation());
+				Log.i("poi street:", location + "");
+				if (location != null) {
+					return location;
+				}
+			} catch (CurlException e) {
+				Log.e("Reverse geocoder exception", location);
+				e.printStackTrace();
+			}
+			return null;
+		}
+	}
 	
 
 

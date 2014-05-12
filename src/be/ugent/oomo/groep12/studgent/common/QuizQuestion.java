@@ -8,6 +8,7 @@ import java.util.Random;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import be.ugent.oomo.groep12.studgent.service.GpsReadingService;
 import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
 
 import android.R.bool;
@@ -269,8 +270,5 @@ public class QuizQuestion implements IData, IQuizQuestion {
 		// TODO Auto-generated method stub
 		question = name;
 	}
-	
-	
-	
 	
 }
