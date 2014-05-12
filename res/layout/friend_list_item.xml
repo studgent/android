@@ -11,7 +11,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-
+            android:focusable="false"
             android:src="@drawable/ic_launcher" />
 
         <TextView
@@ -21,6 +21,8 @@
             android:layout_marginLeft="23dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/friend_item_image"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:text="voornaam naam"
             android:textSize="16sp" />
 
@@ -30,6 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/friend_item_image"
             android:layout_alignLeft="@+id/friend_item_name"
+            android:focusable="false"
             android:text="woonplaats" />
         
         <ImageButton
@@ -38,9 +41,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
+            android:background="@drawable/check"
             android:clickable="true"
             android:contentDescription="@string/friend_description"
-            android:onClick="change_friend_status"
-            android:background="@drawable/check" />
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:onClick="change_friend_status" />
 
     </RelativeLayout> 

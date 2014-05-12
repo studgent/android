@@ -2,6 +2,10 @@
 <resources>
 
     <string name="app_name">StudGent</string>
+    <string name="trophie_button">Bekijk Trofeeën</string>
+    <string name="checkin_button">Bekijk Checkins</string>
+    <string name="trophies_title">Trophies:</string>
+    <string name="checkins_title">Checkins:</string>
     <string name="action_settings">Instellingen</string>
     <string name="login">Inloggen</string>
     <string name="in_the_neighbourhood">In de buurt</string>
