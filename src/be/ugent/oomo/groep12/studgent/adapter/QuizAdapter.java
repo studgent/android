@@ -80,7 +80,12 @@ public class QuizAdapter extends ArrayAdapter<QuizQuestion> {
         
         IQuizQuestion quizQuestion = data.get(position);
         
-        holder.distance.setText(quizQuestion.getDistance() + " KM");
+        if (quizQuestion.getLocation() != null && quizQuestion.getLocation().latitude != 0 && quizQuestion.getLocation().longitude != 0  ){
+        	holder.distance.setText(quizQuestion.getDistance() + " KM");
+        	holder.distance.setVisibility(View.VISIBLE);
+        }else{
+        	holder.distance.setVisibility(View.GONE);
+        }
         holder.points.setText(quizQuestion.getPoints() + "");
         holder.question.setText(quizQuestion.getQuestion() + "");
         

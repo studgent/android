@@ -141,7 +141,6 @@ public class POIMapviewActivity extends Activity implements
 	@Override
 	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
 		Log.i("selected ", "" + itemPosition + '-' + itemId);
-
 		// keep correct item in this activity
 		getActionBar().setSelectedNavigationItem(0);
 		switch (itemPosition) {

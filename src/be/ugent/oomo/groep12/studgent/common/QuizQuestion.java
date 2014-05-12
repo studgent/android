@@ -25,7 +25,7 @@ public class QuizQuestion implements IData, IQuizQuestion {
 	protected String answer;
 	protected Calendar lastTry;
 	protected LatLng location;
-	
+	protected double distance;
 	
 	public QuizQuestion(int id, int points, String question, Boolean solved,
 			List<String> possibleAnswers, String answer, Calendar lastTry,
@@ -70,10 +70,13 @@ public class QuizQuestion implements IData, IQuizQuestion {
 			return 0;
 		}else{
 			//DUMMY, must be replaced if GPS of the device is known!
-			return (new Random()).nextInt(20);
+			return distance;
 		}
 	}
 	
+	public void setDistance(float distance2){
+		this.distance=distance2;
+	}
 	
 	/* (non-Javadoc)
 	 * @see be.ugent.oomo.groep12.studgent.common.IQuizQuestion#maySolve()
@@ -153,6 +156,12 @@ public class QuizQuestion implements IData, IQuizQuestion {
 		return location;
 	}
 
+	public Location getLocationAsLocation(){
+		Location loc = new Location("dummyprovider"); 
+		loc.setLatitude(location.latitude);
+		loc.setLongitude(location.longitude);
+		return loc;
+	}
 	/* (non-Javadoc)
 	 * @see be.ugent.oomo.groep12.studgent.common.IQuizQuestion#setId(int)
 	 */

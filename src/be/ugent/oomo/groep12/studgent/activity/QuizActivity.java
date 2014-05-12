@@ -34,11 +34,17 @@ import be.ugent.oomo.groep12.studgent.exception.CurlException;
 import be.ugent.oomo.groep12.studgent.exception.DataSourceException;
 import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.AsyncTaskLoader;
+import android.content.Context;
 import android.content.Intent;
+import android.location.GpsStatus.Listener;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.opengl.Visibility;
 import android.os.AsyncTask;
@@ -67,12 +73,22 @@ import android.widget.Toast;
 
 
 
-public class QuizActivity extends Activity implements AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener  {
+public class QuizActivity extends Activity implements 
+AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener
+, LocationListener
+{
 	
 	ListView quiz_list;
 	QuizAdapter adapter;
 	IQuizQuestion currentQuestion;
 	String currentAddress;
+	
+	//GPS
+	LocationManager locationManager;
+	private static final long MIN_TIME = 400;
+	private static final float MIN_DISTANCE = 1000;
+	
+
 	
 	
 	public void navigateTo(View view) {
@@ -134,7 +150,10 @@ public class QuizActivity extends Activity implements AdapterView.OnItemClickLis
 		}else{
 			new AsyncQuizQuestionListViewLoader().execute(adapter);
 		}
+		
+		startGPS();
 	}
+	
 	
 	private void renewListGui(){
 		    adapter.sort(new Comparator<QuizQuestion>() {
@@ -382,6 +401,56 @@ public class QuizActivity extends Activity implements AdapterView.OnItemClickLis
 			}
 			return null;
 		}
+	}
+	
+	
+	public void startGPS(){
+		locationManager = (LocationManager)
+		getSystemService(Context.LOCATION_SERVICE);
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+		MIN_TIME, MIN_DISTANCE, this);
+		
+	}
+
+
+	@Override
+	public void onLocationChanged(Location location) {
+		// TODO Auto-generated method stub
+		try {
+			Collection<QuizQuestion> questions =  QuizQuestionsDataSource.getInstance().getLastItems().values();
+			for( QuizQuestion q : questions ){
+					float distance = location.distanceTo(q.getLocationAsLocation());
+					q.setDistance(distance);
+			}
+			renewListGui();
+		} catch (DataSourceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+
+
+	@Override
+	public void onProviderDisabled(String provider) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onProviderEnabled(String provider) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 
