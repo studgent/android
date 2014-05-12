@@ -2,75 +2,44 @@ package be.ugent.oomo.groep12.studgent.activity;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import com.google.android.gms.R.styleable;
-import com.google.android.gms.drive.internal.OnContentsResponse;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import be.ugent.oomo.groep12.studgent.R;
-import be.ugent.oomo.groep12.studgent.adapter.FriendAdapter;
-import be.ugent.oomo.groep12.studgent.adapter.POIAdapter;
 import be.ugent.oomo.groep12.studgent.adapter.QuizAdapter;
-import be.ugent.oomo.groep12.studgent.common.Friend;
-import be.ugent.oomo.groep12.studgent.common.ICalendarEvent;
-import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
 import be.ugent.oomo.groep12.studgent.common.IQuizQuestion;
-import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import be.ugent.oomo.groep12.studgent.common.QuizQuestion;
-import be.ugent.oomo.groep12.studgent.data.POIDataSource;
 import be.ugent.oomo.groep12.studgent.data.QuizQuestionsDataSource;
 import be.ugent.oomo.groep12.studgent.exception.CurlException;
 import be.ugent.oomo.groep12.studgent.exception.DataSourceException;
 import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
-import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Criteria;
-import android.location.GpsStatus.Listener;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
-import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
-import android.view.inputmethod.EditorInfo;
-import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
-import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
@@ -115,12 +84,15 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener
 	@Override
 	public void onPause(){
 		locationManager.removeUpdates(this);
+		super.onPause();
 	}
 	
 	@Override
 	public void onResume(){
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-				MIN_TIME, MIN_DISTANCE, this);	
+		if (locationManager != null)
+			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+				MIN_TIME, MIN_DISTANCE, this);
+		super.onResume();
 	}
 	
 	@Override
@@ -141,24 +113,9 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener
 		quiz_list.setOnItemClickListener(this);
 		
 		adapter.clear();
-		// TODO: in separate thread:
 		
+		startGPS();
 		
-		/* Collection<QuizQuestion> col;
-		try {
-			col = QuizQuestionsDataSource.getInstance().getLastItems().values();
-			ArrayList<QuizQuestion> data = new ArrayList<QuizQuestion>(col);
-			for (QuizQuestion object : data ) {
-	        	adapter.add(object);
-	        }
-			renewListGui();  
-		} catch (DataSourceException e) {
-			//not logged in or an error occured
-			e.printStackTrace();
-			Toast.makeText(getApplicationContext(), "Log in om de quiz te kunnen spelen!", Toast.LENGTH_SHORT).show();
-			onBackPressed();
-		}
-		*/
 		if (LoginUtility.getInstance().isLoggedIn()==false){
 			Toast.makeText(this, "Log in om de quiz te kunnen spelen!", Toast.LENGTH_SHORT).show();
 			onBackPressed();
@@ -166,7 +123,6 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener
 			new AsyncQuizQuestionListViewLoader().execute(adapter);
 		}
 		
-		startGPS();
 	}
 	
 	
@@ -311,6 +267,9 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener
 		//hide answer panel
 		LinearLayout detailview = (LinearLayout) findViewById(R.id.detailViewQuestion);
 		detailview.setVisibility(View.GONE);
+		//quiz_list.setFocusable(true);
+		//quiz_list.requestFocus();
+		
 		Boolean correct;
 		
 		new AsyncQuizQuestionCheck().execute(answer);

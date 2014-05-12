@@ -15,6 +15,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.google.android.gms.maps.model.LatLng;
+
+import android.app.DownloadManager.Query;
+import android.annotation.SuppressLint;
 import android.app.DownloadManager.Query;
 import android.util.Log;
 import be.ugent.oomo.groep12.studgent.common.QuizQuestion;
