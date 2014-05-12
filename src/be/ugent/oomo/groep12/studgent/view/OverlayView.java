@@ -9,6 +9,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
@@ -69,8 +70,7 @@ public class OverlayView extends FrameLayout implements OnClickListener,
 				float offset = ((az - bearing) + 180) % 360 - 180;
 				offset = (offset / fov) * screenWidth;
 				v.setTranslationX(-offset + (screenWidth/2 - v.getMinWidth()/2));
-				// Hackish way to force visibility with a SurfaceView beneath
-				// this view
+				// Hackish way to force visibility with a SurfaceView beneath this view
 				v.setVisibility(View.VISIBLE);
 				v.requestLayout();
 			}
@@ -91,6 +91,7 @@ public class OverlayView extends FrameLayout implements OnClickListener,
 		// Save new location
 		devLoc = location;
 		updatePois();
+		Log.d("Hmm", devLoc.toString());
 	}
 
 	private ArrayList<POIView> getPoiList(float range) {

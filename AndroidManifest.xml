@@ -63,7 +63,7 @@
         </activity>
         <activity
             android:name="be.ugent.oomo.groep12.studgent.activity.POIMapviewActivity"
-            android:icon="@drawable/calendar_logo"
+            android:icon="@drawable/studgent_logo"
             android:label="@string/title_activity_poi_mapview" >
         </activity>
         <activity
@@ -79,7 +79,7 @@
         </activity>
         <activity
             android:name="be.ugent.oomo.groep12.studgent.activity.POIListActivity"
-            android:icon="@drawable/calendar_logo"
+            android:icon="@drawable/studgent_logo"
             android:label="@string/title_poi_list_events" >
         </activity>
         <activity
@@ -124,6 +124,7 @@
         </activity>
         <activity
             android:name="be.ugent.oomo.groep12.studgent.activity.AboutActivity"
+            android:icon="@drawable/studgent_logo"
             android:label="@string/title_activity_about" >
         </activity>
     </application>

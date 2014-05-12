@@ -17,15 +17,7 @@ import org.json.JSONObject;
 import com.google.android.gms.maps.model.LatLng;
 
 import android.annotation.SuppressLint;
-import android.app.DownloadManager.Query;
 import android.util.Log;
-import be.ugent.oomo.groep12.studgent.activity.LoginActivity;
-import be.ugent.oomo.groep12.studgent.common.CalendarEvent;
-import be.ugent.oomo.groep12.studgent.common.ICalendarEvent;
-import be.ugent.oomo.groep12.studgent.common.IData;
-import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
-import be.ugent.oomo.groep12.studgent.common.IQuizQuestion;
-import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import be.ugent.oomo.groep12.studgent.common.QuizQuestion;
 import be.ugent.oomo.groep12.studgent.exception.CurlException;
 import be.ugent.oomo.groep12.studgent.exception.DataSourceException;
