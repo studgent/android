@@ -6,6 +6,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.Html;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -81,11 +82,11 @@ public class CalenderAdapter extends ArrayAdapter<ICalendarEvent> implements Fil
         SimpleDateFormat day = new SimpleDateFormat("dd");
         SimpleDateFormat year = new SimpleDateFormat("yyyy");
         
-        holder.name.setText(calendar_item.getName());
-        holder.month.setText( month.format(calendar_item.getFromDate()) );
-        holder.day_of_month.setText( day.format(calendar_item.getFromDate()) );
-        holder.year.setText( year.format(calendar_item.getFromDate()) );
-        holder.location.setText( calendar_item.getLocation().getName() );
+        holder.name.setText(Html.fromHtml("" +  calendar_item.getName()));
+        holder.month.setText( Html.fromHtml("" +  month.format(calendar_item.getFromDate())) );
+        holder.day_of_month.setText( Html.fromHtml("" +  day.format(calendar_item.getFromDate())) );
+        holder.year.setText( Html.fromHtml("" +  year.format(calendar_item.getFromDate())) );
+        holder.location.setText( Html.fromHtml("" +  calendar_item.getLocation().getName()) );
         
         return row;
     }

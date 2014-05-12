@@ -138,4 +138,9 @@ public class POIDataSource implements IDataSource {
 		return added;
 	}
 
+	
+	public void delete(){
+		items = null;
+	}
+
 }

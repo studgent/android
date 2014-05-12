@@ -16,15 +16,12 @@ import org.json.JSONObject;
 
 import com.google.android.gms.maps.model.LatLng;
 
+<<<<<<< HEAD
 import android.app.DownloadManager.Query;
+=======
+import android.annotation.SuppressLint;
+>>>>>>> bb8c42380267044c80cc7cf0a88ec9490af9ad94
 import android.util.Log;
-import be.ugent.oomo.groep12.studgent.activity.LoginActivity;
-import be.ugent.oomo.groep12.studgent.common.CalendarEvent;
-import be.ugent.oomo.groep12.studgent.common.ICalendarEvent;
-import be.ugent.oomo.groep12.studgent.common.IData;
-import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
-import be.ugent.oomo.groep12.studgent.common.IQuizQuestion;
-import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import be.ugent.oomo.groep12.studgent.common.QuizQuestion;
 import be.ugent.oomo.groep12.studgent.exception.CurlException;
 import be.ugent.oomo.groep12.studgent.exception.DataSourceException;
@@ -76,7 +73,7 @@ public class QuizQuestionsDataSource implements IDataSource {
 		
 		//update local
 		question.setLastTry(Calendar.getInstance());
-		givenanswer = givenanswer.toLowerCase().trim().replace(" ","");
+		//givenanswer = givenanswer.toLowerCase().trim().replace(" ","");
 		/*if (question.getAnswer().equalsIgnoreCase(givenanswer)){
 			question.setSolved(true);
 		}*/
@@ -85,6 +82,7 @@ public class QuizQuestionsDataSource implements IDataSource {
 		return question.isSolved();
 	}
 
+	
 	
 	@Override
 	public Map<Integer, QuizQuestion> getLastItems() throws DataSourceException {
@@ -173,5 +171,9 @@ public class QuizQuestionsDataSource implements IDataSource {
 	@Override
 	public QuizQuestion getDetails(int id) {
 		return items.get(id);
+	}
+	
+	public void delete(){
+		items = null;
 	}
 }

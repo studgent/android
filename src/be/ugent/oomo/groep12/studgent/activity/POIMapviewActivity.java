@@ -32,6 +32,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -70,7 +71,6 @@ public class POIMapviewActivity extends Activity implements
 				R.anim.animation_leave);
 		setContentView(R.layout.activity_poi_mapview);
 
-		setNavigation();
 
 		marker_data = new HashMap<String, IPointOfInterest>();
 
@@ -78,6 +78,7 @@ public class POIMapviewActivity extends Activity implements
 		mapFragment = (MapFragment) (fmanager
 				.findFragmentById(R.id.mapFullscreen));
 		map = mapFragment.getMap();
+		map.setMyLocationEnabled(true);
 
 		locationManager = (LocationManager)
 		getSystemService(Context.LOCATION_SERVICE);
@@ -140,7 +141,6 @@ public class POIMapviewActivity extends Activity implements
 	@Override
 	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
 		Log.i("selected ", "" + itemPosition + '-' + itemId);
-
 		// keep correct item in this activity
 		getActionBar().setSelectedNavigationItem(0);
 		switch (itemPosition) {
@@ -185,7 +185,7 @@ public class POIMapviewActivity extends Activity implements
 
 	private void loadPOIs() {
 		map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.05389,
-				3.705), 16));
+				3.725), 15));
 		new AsyncPOILoader().execute(map);
 
 		map.setOnInfoWindowClickListener(this);
@@ -221,15 +221,17 @@ public class POIMapviewActivity extends Activity implements
 		}
 
 		protected void onPostExecute(GoogleMap map) {
+
+			setNavigation();
 			for (Map.Entry<Integer, IPointOfInterest> poi : data.entrySet()) {
 
 				Marker marker = map
 						.addMarker(new MarkerOptions()
-								.title(poi.getValue().getName())
-								.snippet(
+								.title("" + Html.fromHtml( poi.getValue().getName() ).toString() )
+								.snippet("" + Html.fromHtml(
 										poi.getValue().getDetails() + "\n"
-												+ poi.getValue().getUrl())
-								.position(poi.getValue().getLocation())
+												+ poi.getValue().getUrl()).toString())
+								.position(poi.getValue().getLocation()) 
 								.icon(BitmapDescriptorFactory
 										.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
 								.flat(true));
@@ -248,6 +250,19 @@ public class POIMapviewActivity extends Activity implements
 				10);
 		map.animateCamera(cameraUpdate);
 		locationManager.removeUpdates(this);
+	}
+	
+	@Override
+	public void onPause() {
+		
+		locationManager.removeUpdates(this);
+		super.onPause();
+	}
+	
+	@Override
+	public void onResume(){
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, MIN_DISTANCE, this);
+		super.onResume();
 	}
 
 	@Override

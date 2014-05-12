@@ -80,7 +80,12 @@ public class QuizAdapter extends ArrayAdapter<QuizQuestion> {
         
         IQuizQuestion quizQuestion = data.get(position);
         
-        holder.distance.setText(quizQuestion.getDistance() + " KM");
+        if (quizQuestion.getLocation() != null && quizQuestion.getDistance() != 0 && quizQuestion.getLocation().latitude != 0 && quizQuestion.getLocation().longitude != 0  ){
+        	holder.distance.setText(Math.floor(quizQuestion.getDistance()*100)/100 + " KM");
+        	holder.distance.setVisibility(View.VISIBLE);
+        }else{
+        	holder.distance.setVisibility(View.GONE);
+        }
         holder.points.setText(quizQuestion.getPoints() + "");
         holder.question.setText(quizQuestion.getQuestion() + "");
         
@@ -112,8 +117,6 @@ public class QuizAdapter extends ArrayAdapter<QuizQuestion> {
         
         return row;
     }
-    
-
 
     public List<QuizQuestion> getItemList() {
         return data;

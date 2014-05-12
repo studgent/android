@@ -79,11 +79,11 @@ public class POIDetailActivity extends Activity implements
 		if (poi.getName() != null) {
 			// txtTitle.setText(poi.getName());
 			// txtTitle.setVisibility(View.VISIBLE);
-			setTitle(poi.getName());
+			setTitle(Html.fromHtml("" +  poi.getName()) );
 		}
 
 		if (poi.getDetails() != null) {
-			txtDetail.setText(poi.getDetails().replace(';', '\n'));
+			txtDetail.setText(Html.fromHtml("" +  poi.getDetails() ) );
 			txtDetail.setVisibility(View.VISIBLE);
 		}
 
@@ -91,7 +91,7 @@ public class POIDetailActivity extends Activity implements
 			txtLocation.setText(poi.getStreet() + " " + poi.getNumber());
 			txtLocation.setVisibility(View.VISIBLE);
 		} else if (poi.getName() != null) {
-			txtLocation.setText(poi.getName());
+			txtLocation.setText(Html.fromHtml("" +  poi.getName()));
 			txtLocation.setVisibility(View.VISIBLE);
 		}
 
@@ -207,8 +207,8 @@ public class POIDetailActivity extends Activity implements
 			String snippet = poi.getStreet() != null ? poi.getStreet() + " "
 					+ poi.getNumber() : "";
 			Marker marker = map.addMarker(new MarkerOptions()
-					.title(poi.getName())
-					.snippet(snippet)
+					.title(Html.fromHtml("" +  poi.getName()).toString() )
+					.snippet(Html.fromHtml("" +  snippet).toString())
 					.position(poi.getLocation())
 					.icon(BitmapDescriptorFactory
 					.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
