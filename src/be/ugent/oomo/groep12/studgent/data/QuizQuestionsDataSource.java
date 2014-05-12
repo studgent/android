@@ -56,11 +56,21 @@ public class QuizQuestionsDataSource implements IDataSource {
 		Map<String, String> postData = new HashMap<String, String>();
 		postData.put("token", LoginUtility.getInstance().getToken() );
 		postData.put("answer", givenanswer );
-		
+		boolean correct = false;
 		//update online	
 		try {
 			String apidata =  CurlUtil.post("user/" + userID + "/questions/" + question.getId(), postData);
+			JSONObject items = new JSONObject(apidata);
+			String message = items.getString("message");
+			if ( message.equalsIgnoreCase("correct") ){
+				correct = true;
+			} else {
+				correct = false;
+			}
 		} catch (CurlException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -68,9 +78,10 @@ public class QuizQuestionsDataSource implements IDataSource {
 		//update local
 		question.setLastTry(Calendar.getInstance());
 		givenanswer = givenanswer.toLowerCase().trim().replace(" ","");
-		if (question.getAnswer().equalsIgnoreCase(givenanswer)){
+		/*if (question.getAnswer().equalsIgnoreCase(givenanswer)){
 			question.setSolved(true);
-		}
+		}*/
+		question.setSolved(correct);
 		
 		return question.isSolved();
 	}
@@ -93,15 +104,6 @@ public class QuizQuestionsDataSource implements IDataSource {
 
 	private void populateList(){
 		items = new HashMap<Integer,QuizQuestion>();
-		/*items.put(0, new QuizQuestion(1, 10, "Wanneer is de bouw van de boekentoren gestart?", false, null, "1942", new GregorianCalendar(2013,1,28,13,24,56), new LatLng(51.044935, 3.725798)));
-		
-		ArrayList<String> solutions = new ArrayList<String>();
-		solutions.add("Apen");solutions.add("Bananen");solutions.add("Lichten");solutions.add("Schoolboeken");
-		
-		items.put(1, new QuizQuestion(1, 2, "Wat vind je niet terug aan het plafond van café de pi-nuts? ", false, solutions, "Schoolboeken", new GregorianCalendar(2013,1,28,13,24,56), new LatLng(51.0436016,3.7210573)));
-		items.put(2, new QuizQuestion(1, 50, "Dummy opgeloste vraag.", true, null, "2", new GregorianCalendar(2013,1,28,13,24,56) , new LatLng(51.03431, 3.701)));
-		items.put(3, new QuizQuestion(1, 1, "Dummy vraag mis?", false, null, "2", Calendar.getInstance() , new LatLng(51.03431, 3.701)));
-		*/
 		
 		try {
 			Log.i("retrieving resource", "user/" + userID + "/questions/all");
@@ -170,8 +172,7 @@ public class QuizQuestionsDataSource implements IDataSource {
 	}
 
 	@Override
-	public IData getDetails(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public QuizQuestion getDetails(int id) {
+		return items.get(id);
 	}
 }
