@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.android.gms.R.styleable;
 import com.google.android.gms.drive.internal.OnContentsResponse;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -177,7 +178,8 @@ public class QuizActivity extends Activity implements AdapterView.OnItemClickLis
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		currentQuestion = adapter.getItem(position);
-		
+		currentAddress="";
+		new AsyncGEOLoader().execute((QuizQuestion)(currentQuestion));
 		if (currentQuestion.maySolve() && currentQuestion.isSolved()==false){
 			//detailview visible
 			LinearLayout detailview = (LinearLayout) findViewById(R.id.detailViewQuestion);
@@ -342,9 +344,6 @@ public class QuizActivity extends Activity implements AdapterView.OnItemClickLis
 	private class AsyncGEOLoader extends
 	AsyncTask<QuizQuestion, Void, String> {
 		
-		private final ProgressDialog dialog = new ProgressDialog(
-				QuizActivity.this);
-		
 		@Override
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
@@ -357,7 +356,6 @@ public class QuizActivity extends Activity implements AdapterView.OnItemClickLis
 				String message = "Kon geen coordinaten vinden.";
 				Toast.makeText(getApplicationContext(), message,
 						Toast.LENGTH_LONG).show();
-				dialog.dismiss();
 				return;
 			}
 		}
@@ -365,8 +363,6 @@ public class QuizActivity extends Activity implements AdapterView.OnItemClickLis
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			dialog.setMessage(getString(R.string.load_map));
-			dialog.show();
 		}
 		
 		@Override
