@@ -122,6 +122,7 @@ public class PointOfInterest implements IPointOfInterest {
 		this.number = in.readString();
 		this.location = new LatLng(in.readDouble(),in.readDouble());
 		this.url = in.readString();
+		this.distance = in.readDouble();
 	}
 	
 
@@ -140,6 +141,7 @@ public class PointOfInterest implements IPointOfInterest {
 		dest.writeDouble(this.location.latitude);
 		dest.writeDouble(this.location.longitude);
 		dest.writeString(this.url);
+		dest.writeDouble(this.distance);
 	}
 	
 

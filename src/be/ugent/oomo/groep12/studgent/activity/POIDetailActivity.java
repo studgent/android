@@ -1,6 +1,7 @@
 package be.ugent.oomo.groep12.studgent.activity;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -15,8 +16,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
+import be.ugent.oomo.groep12.studgent.common.QuizQuestion;
 import be.ugent.oomo.groep12.studgent.data.POIDataSource;
+import be.ugent.oomo.groep12.studgent.data.QuizQuestionsDataSource;
 import be.ugent.oomo.groep12.studgent.exception.CurlException;
+import be.ugent.oomo.groep12.studgent.exception.DataSourceException;
 import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
@@ -29,6 +33,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -46,13 +54,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class POIDetailActivity extends Activity implements
-		OnInfoWindowClickListener {
+		OnInfoWindowClickListener, LocationListener {
 
 	private PointOfInterest poi;
 	protected SharedPreferences sharedPreferences;
 	protected TableLayout table_view;
 	protected LayoutParams row_layout;
 	protected LayoutParams table_layout;
+	protected Location currentLocation;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +121,10 @@ public class POIDetailActivity extends Activity implements
 			new AsyncMapLoader().execute(poi);
 		}
 		sharedPreferences = this.getSharedPreferences("LastCheckin", Context.MODE_PRIVATE);
+	
+		//start GPS
+		startGPS();
+		renewDistanceGui();
 	}
 	
 
@@ -262,8 +276,8 @@ public class POIDetailActivity extends Activity implements
 						return location;
 					}
 				} catch (CurlException e) {
-					Log.e("Reverse geocoder exception", location);
-					e.printStackTrace();
+					Log.e("Reverse geocoder exception", ""+location);
+					e.printStackTrace(); 
 				}
 			}
 			return null;
@@ -302,13 +316,13 @@ public class POIDetailActivity extends Activity implements
 			ceckInDialog();
 		}
 		else{
-			if(checkinPossible.equals("je bent nog ingelogd in poi in uw buurt")){
+			if(checkinPossible.equals("Je bent nog ingelogd in poi in uw buurt")){
 				checkinNotAllowedDiagram();
 			}
-			if(checkinPossible.equals("poi is te ver")){
+			if(checkinPossible.equals("POI is te ver")){
 				checkinPOIIsToFareDiagram();
 			}
-			if(checkinPossible.equals("gebruiker is niet ingelogd")){
+			if(checkinPossible.equals("Gebruiker is niet ingelogd")){
 				Toast.makeText(this, "Log in om in te checken!", Toast.LENGTH_SHORT).show();
 			}
 		}
@@ -320,8 +334,7 @@ public class POIDetailActivity extends Activity implements
 			return "gebruiker is niet ingelogd";
 		
         //checking if poi is in area
-		LatLng currentPosotion = new LatLng(51.032052, 3.701968);//<---------------------aanpassen
-        double distance = distFrom(poi.getLocation().latitude, poi.getLocation().longitude, currentPosotion.latitude, currentPosotion.longitude);
+		double distance = poi.getDistance();
         if(distance>getResources().getInteger(R.integer.max_distance_to_checkin))
         	return "poi is te ver";
         
@@ -329,7 +342,11 @@ public class POIDetailActivity extends Activity implements
         //check if you previous checkin was in in the you area
         double lat = Double.parseDouble(sharedPreferences.getString("lat", "-1.0"));
     	double lon = Double.parseDouble(sharedPreferences.getString("lon", "-1.0"));
-        distance = distFrom(lat, lon, currentPosotion.latitude, currentPosotion.longitude);
+    	Location previousCheckin = new Location("dummy");
+    	previousCheckin.setLatitude(lat);
+    	previousCheckin.setLongitude(lon);
+    	
+        distance = previousCheckin.distanceTo( currentLocation );
         if(distance>getResources().getInteger(R.integer.max_distance_to_checkin))
         	return ""; // checkinis allowed
         
@@ -417,18 +434,79 @@ public class POIDetailActivity extends Activity implements
 		alertDialog.show();
 	}
 	
-	private double distFrom(double lat1, double lng1, double lat2, double lng2) {
-	    double earthRadius = 3958.75;
-	    double dLat = Math.toRadians(lat2-lat1);
-	    double dLng = Math.toRadians(lng2-lng1);
-	    double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-	               Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
-	               Math.sin(dLng/2) * Math.sin(dLng/2);
-	    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-	    double dist = earthRadius * c;
 
-	    int meterConversion = 1609;
-
-	    return (double) (dist * meterConversion);
+	
+	//------------GPS---------------
+	LocationManager locationManager;
+	private static final long MIN_TIME = 400;
+	private static final float MIN_DISTANCE = 1000;
+	@Override
+	public void onPause(){
+		locationManager.removeUpdates(this);
+		super.onPause();
 	}
+	
+	@Override
+	public void onResume(){
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+				MIN_TIME, MIN_DISTANCE, this);	
+		super.onResume();
+	}
+	
+	public void renewDistanceGui(){
+		TextView distance = (TextView) findViewById(R.id.poi_detail_distance);
+		if (poi.getDistance() > 1000){
+			distance.setText( Math.floor(poi.getDistance()/1000) + " km");
+		}else{
+			distance.setText( Math.floor(poi.getDistance()) + " m");
+		}
+		
+	}
+
+	public void startGPS(){
+		if (locationManager==null){
+			locationManager = (LocationManager)
+				getSystemService(Context.LOCATION_SERVICE);
+		}
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+		MIN_TIME, MIN_DISTANCE, this);			
+	}	
+	public void updateLocation(Location location){
+		if (location == null){
+			  locationManager = (LocationManager)
+						getSystemService(Context.LOCATION_SERVICE);
+			   location = locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria() , false));       
+		}
+		
+		if (location != null && location.getLatitude() != 0 && location.getLongitude() != 0 ){
+			Collection<IPointOfInterest> pois =  POIDataSource.getInstance().getLastItems().values();
+			for( IPointOfInterest  p : pois ){
+					PointOfInterest p2 = (PointOfInterest) p;
+					float distance = location.distanceTo(p2.getLocationAsLocation());
+					p2.setDistance(distance);
+			}
+			currentLocation = location;
+		}					
+	}
+	@Override
+	public void onLocationChanged(Location location) {
+		// TODO Auto-generated method stub
+		updateLocation(location);
+	}
+	@Override
+	public void onProviderDisabled(String provider) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void onProviderEnabled(String provider) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }
