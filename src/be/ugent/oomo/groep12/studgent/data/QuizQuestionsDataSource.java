@@ -77,7 +77,7 @@ public class QuizQuestionsDataSource implements IDataSource {
 		
 		//update local
 		question.setLastTry(Calendar.getInstance());
-		givenanswer = givenanswer.toLowerCase().trim().replace(" ","");
+		//givenanswer = givenanswer.toLowerCase().trim().replace(" ","");
 		/*if (question.getAnswer().equalsIgnoreCase(givenanswer)){
 			question.setSolved(true);
 		}*/
@@ -86,6 +86,7 @@ public class QuizQuestionsDataSource implements IDataSource {
 		return question.isSolved();
 	}
 
+	
 	
 	@Override
 	public Map<Integer, QuizQuestion> getLastItems() throws DataSourceException {

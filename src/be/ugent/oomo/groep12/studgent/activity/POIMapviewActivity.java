@@ -70,7 +70,6 @@ public class POIMapviewActivity extends Activity implements
 				R.anim.animation_leave);
 		setContentView(R.layout.activity_poi_mapview);
 
-		setNavigation();
 
 		marker_data = new HashMap<String, IPointOfInterest>();
 
@@ -186,7 +185,7 @@ public class POIMapviewActivity extends Activity implements
 
 	private void loadPOIs() {
 		map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.05389,
-				3.725), 14));
+				3.725), 15));
 		new AsyncPOILoader().execute(map);
 
 		map.setOnInfoWindowClickListener(this);
@@ -222,6 +221,8 @@ public class POIMapviewActivity extends Activity implements
 		}
 
 		protected void onPostExecute(GoogleMap map) {
+
+			setNavigation();
 			for (Map.Entry<Integer, IPointOfInterest> poi : data.entrySet()) {
 
 				Marker marker = map
