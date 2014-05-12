@@ -35,8 +35,8 @@ public class AugmentedViewActivity extends Activity implements
 	
 	//GPS
 	private LocationManager locationManager;
-	private static long MIN_TIME = 400;
-	private static float MIN_DISTANCE = 1000;
+	private static long MIN_TIME = 5000;
+	private static float MIN_DISTANCE = 100;
 	
 	// Layout elements
 	private SurfaceView surfaceView;
@@ -70,7 +70,7 @@ public class AugmentedViewActivity extends Activity implements
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		// LocationManager.NETWORK_PROVIDER, LocationManager.GPS_PROVIDER and
 		// LocationManager.PASSIVE_PROVIDER
-		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DISTANCE, overlayView);
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, MIN_DISTANCE, overlayView);
 
 		// Video
 		holder = surfaceView.getHolder();
@@ -104,6 +104,9 @@ public class AugmentedViewActivity extends Activity implements
 
 		// Compass
 		sensorManager.unregisterListener(this);
+		
+		// GPS
+		locationManager.removeUpdates(overlayView);
 
 		super.onPause();
 	}
