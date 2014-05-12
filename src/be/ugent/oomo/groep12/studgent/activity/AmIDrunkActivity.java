@@ -210,7 +210,7 @@ public class AmIDrunkActivity extends Activity implements SensorEventListener {
 		
 		// set image to drunk or sober
 		img.setImageResource(drunk ? R.drawable.drunk : R.drawable.sober);
-		text.setText(drunk ? "You are drunk!\n New checkins disabled for 24h." : "Still sober! \n Party on and keep checking in!");
+		text.setText(drunk ? "You are drunk!\n We advise you to go home and sleep." : "Still sober! \n Party on and keep checking in!");
 		
 		TableLayout resulttable = (TableLayout)findViewById(R.id.am_i_drunk_result_table);
 		resulttable.setVisibility(View.VISIBLE);
