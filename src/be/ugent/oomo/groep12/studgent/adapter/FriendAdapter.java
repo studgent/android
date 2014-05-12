@@ -80,6 +80,10 @@ public class FriendAdapter extends ArrayAdapter<Friend> implements Filterable {
         
         holder.name.setText(Html.fromHtml(friend_item.getFirstName()+" "+friend_item.getLastName()) );
         holder.location.setText( Html.fromHtml(friend_item.getScore() + " points") );
+        
+        holder.follow.setFocusable(false);
+        holder.follow.setFocusableInTouchMode(false);
+        
         if ( friend_item.isFollowing() ) {
         	holder.follow.setBackgroundResource(R.drawable.check);
         	holder.follow.setContentDescription("check");

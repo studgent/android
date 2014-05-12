@@ -7,6 +7,8 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Map;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -58,6 +60,7 @@ public class POIListActivity extends Activity implements
 	protected POIAdapter adapter;
 	protected ListView poi_list_view;
 	protected EditText inputSearch;
+	protected boolean filterByDistance;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +69,9 @@ public class POIListActivity extends Activity implements
 				R.anim.animation_leave);
 		setContentView(R.layout.activity_poi_list);
 		setNavigation();
-		
+		filterByDistance = false;
+		filterByDistance = getIntent().getExtras().getBoolean("filter");
+		System.out.println("filteren?----------"+filterByDistance);
 		// hide keyboard on start activity
 	    this.getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		
@@ -83,8 +88,8 @@ public class POIListActivity extends Activity implements
 		startGPS();
 		
 		// create adapter with empty list and attach custom item view
+		
         adapter = new POIAdapter(this, R.layout.poi_list_item, new ArrayList<PointOfInterest>());
-        
         poi_list_view.setAdapter(adapter);
         new AsyncPOIListViewLoader().execute(adapter);
         
@@ -202,9 +207,10 @@ public class POIListActivity extends Activity implements
 	@Override
 	public void onItemClick(AdapterView<?> parent, View item, int position, long rowID) {
 		PointOfInterest poi = this.adapter.getItem(position);
-		System.out.println("geklikt op poi");
 		Intent intent = new Intent(this, POIDetailActivity.class);
 		intent.putExtra("poi", poi);
+		if(filterByDistance)
+			intent.putExtra("parentIsCheckInActivity", true);
 		startActivity(intent);
 	}
 
@@ -222,7 +228,12 @@ public class POIListActivity extends Activity implements
 	        //adapter.setItemList(result);
 	        adapter.clear();
 	        for(IPointOfInterest poi: result){
-	        	adapter.add((PointOfInterest) poi);
+	        	if(filterByDistance){
+	        		if(poi.getDistance()<=getResources().getInteger(R.integer.max_distance_to_checkin))
+	        			adapter.add((PointOfInterest) poi);
+	        	}
+	        	else
+	        		adapter.add((PointOfInterest) poi);
 	        }
 	        poi_list_view.setAdapter(adapter);
 	        renewListGui();

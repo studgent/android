@@ -14,18 +14,21 @@ import android.view.MenuItem;
 import android.view.WindowManager.LayoutParams;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.adapter.TrophieAdapter;
 import be.ugent.oomo.groep12.studgent.common.Trophie;
 import be.ugent.oomo.groep12.studgent.data.TrophieListDataSource;
+import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 
-public class TrophiesListActivity  extends Activity implements TextWatcher {
+public class TrophiesListActivity  extends Activity {
 	
 	protected Trophie[] trophie_data;
 	protected TrophieAdapter adapter;
 	protected ListView trophie_list_view;
 	protected EditText inputSearch;
+	private int userID;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +36,13 @@ public class TrophiesListActivity  extends Activity implements TextWatcher {
 		this.overridePendingTransition(R.anim.animation_enter,
 				R.anim.animation_leave);
 		setContentView(R.layout.activity_trophies);
+		
+		userID = getIntent().getExtras().getInt("userID");
 
 		// hide keyboard on start activity
 	    this.getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 	    
 		trophie_list_view = (ListView) findViewById(R.id.trophie_list);
-		inputSearch = (EditText) findViewById(R.id.searchTrophies_EditText);
-		inputSearch.addTextChangedListener(this);
 		
         /*View header = (View)getLayoutInflater().inflate(R.layout.listview_header_row, null);
         event_list_view.addHeaderView(header);*/
@@ -48,7 +51,13 @@ public class TrophiesListActivity  extends Activity implements TextWatcher {
         adapter = new TrophieAdapter(this, R.layout.trophie_list_item, new ArrayList<Trophie>());
         
         trophie_list_view.setAdapter(adapter);
-        new AsyncTrophieListViewLoader().execute(adapter);
+        
+        if (LoginUtility.getInstance().isLoggedIn() == false) {
+			Toast.makeText(this, "Log in om je trofeën te bekijken!", Toast.LENGTH_SHORT).show();
+			onBackPressed();
+		}else{
+			new AsyncTrophieListViewLoader().execute(adapter);
+		}
         
 	}
 
@@ -81,7 +90,9 @@ public class TrophiesListActivity  extends Activity implements TextWatcher {
 		protected ArrayList<Trophie> doInBackground(TrophieAdapter... params) {
 			//adp = params[0];
 	        try {
-	        	Map<Integer, Trophie> trophies = TrophieListDataSource.getInstance().getLastItems();
+	        	TrophieListDataSource trofieDataSource = TrophieListDataSource.getInstance();
+	        	trofieDataSource.setUserID(userID);
+	        	Map<Integer, Trophie> trophies = trofieDataSource.getLastItems();
 	        	return new ArrayList<Trophie>(trophies.values());
 	        }
 	        catch(Throwable t) {
@@ -109,28 +120,6 @@ public class TrophiesListActivity  extends Activity implements TextWatcher {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    return MenuUtil.OptionsItemSelected(this, item);
-	}
-	
-
-	@Override
-	public void beforeTextChanged(CharSequence s, int start, int count,
-			int after) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void onTextChanged(CharSequence s, int start, int before, int count) {
-		adapter.getFilter().filter(s);
-		
-	}
-
-
-	@Override
-	public void afterTextChanged(Editable s) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

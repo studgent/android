@@ -62,6 +62,7 @@ public class POIAdapter extends ArrayAdapter<PointOfInterest> implements Filtera
 		return data;
 	}
 	
+	
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {

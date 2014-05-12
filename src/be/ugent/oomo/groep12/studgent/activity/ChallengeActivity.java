@@ -1,6 +1,7 @@
 package be.ugent.oomo.groep12.studgent.activity;
 
 import be.ugent.oomo.groep12.studgent.R;
+import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 import android.app.Activity;
 import android.content.Intent;
@@ -51,12 +52,14 @@ public class ChallengeActivity extends Activity {
 	}
 	
 	public void openCheckInActivity(View view){
-		Intent intent = new Intent(this, CheckInActivity.class);
+		Intent intent = new Intent(this, POIListActivity.class);
+		intent.putExtra("filter", true);
 		startActivity(intent);
 	}
 	
 	public void openTrophiesActivity(View view){
 		Intent intent = new Intent(this, TrophiesListActivity.class);
+		intent.putExtra("userID", LoginUtility.getInstance().getId());
 		startActivity(intent);
 	}
 	

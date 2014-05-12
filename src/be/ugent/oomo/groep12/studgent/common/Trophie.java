@@ -8,7 +8,6 @@ public class Trophie implements IData {
 	protected int id;
 	protected String name;
 	protected int points;
-	protected Bitmap image;
 	
 	public Trophie(int id, String name, int points){
 		this.name=name;
@@ -24,33 +23,24 @@ public class Trophie implements IData {
 	}
 
 
-	public void setId(int id){
-		this.id=id;
-	}
 	@Override
 	public void setName(String name) {
 		this.name=name;
 		
 	}
-	public void setPoints(int points){
-		this.points=points;
-	}
-	public void setImage(Bitmap image){
-		this.image=image;
-	}
-	@Override
-	public int getId() {
-		return this.id;
-	}
 	@Override
 	public String getName() {
 		return this.name;
 	}
+	public void setPoints(int points){
+		this.points=points;
+	}
 	public int getPoints(){
 		return this.points;
 	}
-	public Bitmap getImage(){
-		return this.image;
+	@Override
+	public int getId() {
+		return this.id;
 	}
 
 	@Override
@@ -63,7 +53,6 @@ public class Trophie implements IData {
 		dest.writeInt(this.id);
 		dest.writeString(this.name);
 		dest.writeInt(this.points);
-		//hier nog iets voor de image
 	}
 	
 	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {

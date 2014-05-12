@@ -65,12 +65,15 @@ public class POIDetailActivity extends Activity implements
 	protected LayoutParams row_layout;
 	protected LayoutParams table_layout;
 	protected Location currentLocation;
+	protected boolean parentIsCheckInActivity;
 	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		poi = getIntent().getParcelableExtra("poi");
+		parentIsCheckInActivity = false;
+		parentIsCheckInActivity = getIntent().getExtras().getBoolean("parentIsCheckInActivity");
 		setContentView(R.layout.activity_poi_detail);
 
 		// get the table from view
@@ -87,6 +90,10 @@ public class POIDetailActivity extends Activity implements
 		TextView txtLocation = (TextView) findViewById(R.id.poi_detail_location);
 		TextView txtDetail = (TextView) findViewById(R.id.poi_detail_summary);
 		TextView txtUrl = (TextView) findViewById(R.id.poi_detail_uri);
+		if(parentIsCheckInActivity){
+			TableRow tableRow =  (TableRow) findViewById(R.id.tableRowNavigation);
+			tableRow.setVisibility(View.INVISIBLE);
+		}
 
 		// txtTitle.setVisibility(View.INVISIBLE);
 		txtDetail.setVisibility(View.INVISIBLE);

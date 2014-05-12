@@ -119,6 +119,7 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
 		intent.putExtra("email", name);
 		intent.putExtra("phone", name);
 		intent.putExtra("score", score);
+		intent.putExtra("userID", adapter.getItem(position).getId());
 		startActivity(intent);
 	}
 

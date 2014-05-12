@@ -21,10 +21,8 @@ import be.ugent.oomo.groep12.studgent.common.TrophieFilter;
 public class TrophieAdapter extends ArrayAdapter<Trophie> implements Filterable{
     static class TrophieItemHolder
     {
-    	ImageView image;
         TextView name;
-        TextView points;
-        ImageView status;
+        TextView value;
     }
 	
     Context context; 
@@ -64,9 +62,7 @@ public class TrophieAdapter extends ArrayAdapter<Trophie> implements Filterable{
             
             holder = new TrophieItemHolder();
             holder.name = (TextView)row.findViewById(R.id.trophie_item_name); 
-            holder.points = (TextView)row.findViewById(R.id.trophie_item_points);
-            holder.image = (ImageView)row.findViewById(R.id.trophie_item_image);
-            holder.status = (ImageView)row.findViewById(R.id.trophie_status);
+            holder.value = (TextView)row.findViewById(R.id.trofie_item_value);
             row.setTag(holder);
         } else {
             holder = (TrophieItemHolder)row.getTag();
@@ -76,7 +72,7 @@ public class TrophieAdapter extends ArrayAdapter<Trophie> implements Filterable{
         //System.out.println("Friend friend_item: "+data.get(position).getName());
         
         holder.name.setText(trophie_item.getName());
-        holder.points.setText( "" + trophie_item.getPoints());
+        holder.value.setText( "" + trophie_item.getPoints());
         //holder.image.setImageBitmap(trophie_item.getImage()); //nog geen foto
         
         return row;

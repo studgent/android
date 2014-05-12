@@ -25,21 +25,29 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/trophie_item_points"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/trophie_item_image"
-            android:layout_alignLeft="@+id/trophie_item_name"
-            android:text="100" />
+	        android:id="@+id/trofie_item_value"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignBottom="@+id/trophie_item_name"
+	        android:layout_alignParentRight="true"
+	        android:layout_alignTop="@+id/trophie_item_image"
+	        android:gravity="center"
+	        android:text="40"
+	        android:textAlignment="center"
+	        android:textAppearance="?android:attr/textAppearanceSmall"
+	        android:textSize="15sp" />
+    
+	    <TextView
+	        android:id="@+id/trofie_item_points"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/trofie_item_value"
+	        android:layout_alignRight="@+id/trofie_item_value"
+	        android:gravity="center"
+	        android:text="Points"
+	        android:textAlignment="center"
+	        android:textAppearance="?android:attr/textAppearanceSmall"
+	        android:textSize="11sp" />
         
-        <ImageView
-		    android:src="@drawable/check" 
-		    android:contentDescription="@string/achieved_description"
-		    android:layout_width="wrap_content"
-		    android:layout_alignParentRight="true"
-		    android:id="@+id/trophie_status"
-		    android:layout_height="wrap_content"
-		    android:layout_alignParentTop="true"
-		    android:background="@null" />
 
     </RelativeLayout> 

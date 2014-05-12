@@ -16,6 +16,7 @@ import be.ugent.oomo.groep12.studgent.utilities.LayoutUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 import be.ugent.oomo.groep12.studgent.activity.AboutActivity;
+import be.ugent.oomo.groep12.studgent.data.TrophieListDataSource;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -26,6 +27,7 @@ public class UserProfileActivity extends Activity {
 
 	protected Button button_trofies;
 	protected Button button_checkin;
+	private int userID;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,8 @@ public class UserProfileActivity extends Activity {
 		// enable on touch effect
 		LayoutUtil.buttonEffect(button_trofies);
 		LayoutUtil.buttonEffect(button_checkin);
+
+		userID = getIntent().getExtras().getInt("userID");
 		
 		//set profile values
 		String name = getIntent().getExtras().getString("name");
@@ -60,6 +64,13 @@ public class UserProfileActivity extends Activity {
 		TextView txtEmail = (TextView)findViewById(R.id.user_profile_email); 
 		TextView txtPhone = (TextView)findViewById(R.id.user_profile_phone); 
 		TextView txtscore = (TextView)findViewById(R.id.user_profile_score); 
+		Button btnTrofie = (Button)findViewById(R.id.button_trofie); 
+		Button btnCheckin = (Button)findViewById(R.id.button_checkin); 
+		
+		//hier nog de text van btntrophie veranderen (zodat het aantal trofies er ook in staat)
+		String btnbtncheckin = btnCheckin.getText()+"  ("+TrophieListDataSource.getCheckinNumber(userID)+")";
+		btnCheckin.setText(btnbtncheckin);
+		
 		txtName.setText(Html.fromHtml(name));
 		txtEmail.setText(Html.fromHtml("<a href=\"mailto:"+email+"\" >"+email+"</a>"));
 		txtEmail.setMovementMethod(LinkMovementMethod.getInstance());
@@ -68,7 +79,8 @@ public class UserProfileActivity extends Activity {
 	}
 	
 	public void openTrofieListActivity(View view){
-		Intent intent = new Intent(this, ChallengeActivity.class);
+		Intent intent = new Intent(this, TrophiesListActivity.class);
+		intent.putExtra("userID", userID);
 		startActivity(intent);
 	}
 	
