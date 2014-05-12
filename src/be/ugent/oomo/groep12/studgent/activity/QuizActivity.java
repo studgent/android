@@ -410,6 +410,9 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
 		MIN_TIME, MIN_DISTANCE, this);
 		
+		//Network on main thread error:
+		//onLocationChanged(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER));
+			
 	}
 
 
@@ -419,7 +422,7 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener
 		try {
 			Collection<QuizQuestion> questions =  QuizQuestionsDataSource.getInstance().getLastItems().values();
 			for( QuizQuestion q : questions ){
-					float distance = location.distanceTo(q.getLocationAsLocation());
+					float distance = location.distanceTo(q.getLocationAsLocation()) / 1000;
 					q.setDistance(distance);
 			}
 			renewListGui();
@@ -427,9 +430,6 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
 	}
 
 
