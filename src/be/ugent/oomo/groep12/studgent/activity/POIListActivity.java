@@ -1,6 +1,8 @@
 package be.ugent.oomo.groep12.studgent.activity;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 
 import android.app.ActionBar;
@@ -8,6 +10,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
@@ -251,6 +254,7 @@ public class POIListActivity extends Activity implements
 		// TODO Auto-generated method stub
 		
 	}
+	
 	
 
 }

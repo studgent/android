@@ -14,7 +14,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.google.android.gms.maps.model.LatLng;
-import android.annotation.SuppressLint;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -35,7 +34,6 @@ import be.ugent.oomo.groep12.studgent.utilities.JSONUtil;
  *
  */
 
-@SuppressLint("UseSparseArrays")
 public class CalendarEventDataSource implements IDataSource {
 	
 	private static CalendarEventDataSource instance = null;

@@ -16,7 +16,6 @@ import org.json.JSONObject;
 
 import com.google.android.gms.maps.model.LatLng;
 
-import android.annotation.SuppressLint;
 import android.app.DownloadManager.Query;
 import android.util.Log;
 import be.ugent.oomo.groep12.studgent.activity.LoginActivity;
@@ -33,7 +32,7 @@ import be.ugent.oomo.groep12.studgent.utilities.CurlUtil;
 import be.ugent.oomo.groep12.studgent.utilities.JSONUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 
-@SuppressLint("UseSparseArrays")
+
 public class QuizQuestionsDataSource implements IDataSource {
 
 	private static QuizQuestionsDataSource instance = null;

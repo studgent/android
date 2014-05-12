@@ -21,6 +21,7 @@ import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import be.ugent.oomo.groep12.studgent.exception.CurlException;
 import be.ugent.oomo.groep12.studgent.utilities.CurlUtil;
 import be.ugent.oomo.groep12.studgent.utilities.JSONUtil;
+import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 
 public class POIDataSource implements IDataSource {
 
@@ -98,6 +99,43 @@ public class POIDataSource implements IDataSource {
 	@Override
 	public IData getDetails(int id) {
 		return null;
+	}
+
+	public boolean checkin(PointOfInterest poi) {
+
+		int userID = LoginUtility.getInstance().getId();
+		
+		Map<String, String> postData = new HashMap<String, String>();
+		postData.put("token", LoginUtility.getInstance().getToken() );
+		postData.put("longitude", String.valueOf(poi.getLocation().longitude));
+		postData.put("latitude", String.valueOf(poi.getLocation().latitude) );
+		postData.put("message", "" );
+		
+		boolean added = false;
+		//update online	
+		//http://studgent.ahlun.be/user/{user_id}/checkin/{poi_id}
+		String resource = "user/" + 
+						  userID + 
+						  "/checkin/" + 
+						  poi.getId();
+		try {
+			String apidata =  CurlUtil.post(resource, postData);
+			JSONObject items = new JSONObject(apidata);
+			String message = items.getString("status");
+			if ( message.equalsIgnoreCase("OK") ){
+				added = true;
+			} else { // somethings wrong or user removed from list
+				added = false;
+			}
+		} catch (CurlException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return added;
 	}
 
 }

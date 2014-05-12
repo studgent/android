@@ -89,8 +89,8 @@ public class TrophiesListActivity  extends Activity implements TextWatcher {
 		protected ArrayList<Trophie> doInBackground(TrophieAdapter... params) {
 			//adp = params[0];
 	        try {
-	        	Map<Integer, Trophie> events = TrophieListDataSource.getInstance().getLastItems();
-	        	return new ArrayList<Trophie>(events.values());
+	        	Map<Integer, Trophie> trophies = TrophieListDataSource.getInstance().getLastItems();
+	        	return new ArrayList<Trophie>(trophies.values());
 	        }
 	        catch(Throwable t) {
 	            t.printStackTrace();
