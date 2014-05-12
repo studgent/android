@@ -357,13 +357,11 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener
 		        	adapter.add(question);
 		        }
 		        //calculate distance with latest known GPS location
-		        if (locationManager==null){
-					locationManager = (LocationManager)
+		        locationManager = (LocationManager)
 						getSystemService(Context.LOCATION_SERVICE);
-				}
-		        Location lastKnownLocation = locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria() , false));
-		        onLocationChanged(locationManager.getLastKnownLocation(Context.LOCATION_SERVICE));
-		       
+				Location lastKnownLocation = locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria() , false));
+		        updateLocation(lastKnownLocation);
+		        
 		        renewListGui();
 		        
 	        
@@ -429,9 +427,8 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener
 	}
 
 
-	@Override
-	public void onLocationChanged(Location location) {
-		// TODO Auto-generated method stub
+	
+	public void updateLocation(Location location){
 		
 		if (location != null && location.getLatitude() != 0 && location.getLongitude() != 0 ){
 			try {
@@ -448,6 +445,13 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener
 		}else{
 			
 		}		
+	
+		
+	}
+	@Override
+	public void onLocationChanged(Location location) {
+		// TODO Auto-generated method stub
+		updateLocation(location);
 	}
 
 
