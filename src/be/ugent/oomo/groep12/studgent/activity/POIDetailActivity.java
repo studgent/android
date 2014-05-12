@@ -69,11 +69,11 @@ public class POIDetailActivity extends Activity implements
 		if (poi.getName() != null) {
 			// txtTitle.setText(poi.getName());
 			// txtTitle.setVisibility(View.VISIBLE);
-			setTitle(poi.getName());
+			setTitle(Html.fromHtml("" +  poi.getName()) );
 		}
 
 		if (poi.getDetails() != null) {
-			txtDetail.setText(poi.getDetails().replace(';', '\n'));
+			txtDetail.setText(Html.fromHtml("" +  poi.getDetails() ) );
 			txtDetail.setVisibility(View.VISIBLE);
 		}
 
