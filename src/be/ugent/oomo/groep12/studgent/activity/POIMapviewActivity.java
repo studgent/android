@@ -32,6 +32,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -226,11 +227,11 @@ public class POIMapviewActivity extends Activity implements
 
 				Marker marker = map
 						.addMarker(new MarkerOptions()
-								.title(poi.getValue().getName())
-								.snippet(
+								.title("" + Html.fromHtml( poi.getValue().getName() ).toString() )
+								.snippet("" + Html.fromHtml(
 										poi.getValue().getDetails() + "\n"
-												+ poi.getValue().getUrl())
-								.position(poi.getValue().getLocation())
+												+ poi.getValue().getUrl()).toString())
+								.position(poi.getValue().getLocation()) 
 								.icon(BitmapDescriptorFactory
 										.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
 								.flat(true));
@@ -249,6 +250,19 @@ public class POIMapviewActivity extends Activity implements
 				10);
 		map.animateCamera(cameraUpdate);
 		locationManager.removeUpdates(this);
+	}
+	
+	@Override
+	public void onPause() {
+		
+		locationManager.removeUpdates(this);
+		super.onPause();
+	}
+	
+	@Override
+	public void onResume(){
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, MIN_DISTANCE, this);
+		super.onResume();
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -50,8 +51,10 @@ public class OverlayView extends FrameLayout implements OnClickListener,
 		screenWidth = context.getResources().getDisplayMetrics().widthPixels;
 
 		// Set device location as static, for now
-		devLoc = LocationUtil
-				.getLocationFromLatLng(new LatLng(51.05389, 3.705));
+		//devLoc = LocationUtil.getLocationFromLatLng(new LatLng(51.05389, 3.705));
+		// Get current location from last known network location
+		devLoc = ((LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE)).getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+		
 		// Pois
 		updatePois();
 	}
@@ -91,7 +94,7 @@ public class OverlayView extends FrameLayout implements OnClickListener,
 		// Save new location
 		devLoc = location;
 		updatePois();
-		Log.d("Hmm", devLoc.toString());
+		//Log.d("Hmm", devLoc.toString());
 	}
 
 	private ArrayList<POIView> getPoiList(float range) {
