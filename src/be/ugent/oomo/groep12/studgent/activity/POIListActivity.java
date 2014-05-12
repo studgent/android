@@ -311,6 +311,7 @@ public class POIListActivity extends Activity implements
 					float distance = location.distanceTo(p2.getLocationAsLocation());
 					p2.setDistance(distance);
 			}
+			renewListGui();
 		}			
 	}
 	

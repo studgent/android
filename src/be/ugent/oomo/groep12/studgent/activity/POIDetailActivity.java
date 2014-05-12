@@ -44,6 +44,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.view.InflateException;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -222,40 +223,45 @@ public class POIDetailActivity extends Activity implements
 			rl.setLayoutParams(row_layout);
 			tr.addView(rl);
 			// inflate map fragment in row
-			View map_view = (View) getLayoutInflater().inflate(
+			try {
+					View map_view = (View) getLayoutInflater().inflate(
 					R.layout.fragment_map, rl);
+			
 
-			// add row to table_view
-			table_view.addView(tr, table_layout);
-
-			MapFragment map_fragment = (MapFragment) ((Activity) map_view
-					.getContext()).getFragmentManager().findFragmentById(
-					R.id.map);
-			GoogleMap map = map_fragment.getMap();
-			dialog.dismiss();
-
-			// map.setMyLocationEnabled(true);
-
-			// offset on location latitude (to show infowindow from marker)
-			LatLng maplocation = new LatLng(
-					poi.getLocation().latitude + 0.00024,
-					poi.getLocation().longitude);
-			map.setOnInfoWindowClickListener(POIDetailActivity.this);
-			map.moveCamera(CameraUpdateFactory.newLatLngZoom(maplocation, 18));
-
-			Log.i("LatLng (w/o offset):", "(" + poi.getLocation().latitude
-					+ " ; " + poi.getLocation().longitude + ")");
-			Log.i("LatLng (with offset):", "(" + maplocation.latitude + " ; "
-					+ maplocation.longitude + ")");
-			String snippet = poi.getStreet() != null ? poi.getStreet() + " "
-					+ poi.getNumber() : "";
-			Marker marker = map.addMarker(new MarkerOptions()
-					.title(Html.fromHtml("" +  poi.getName()).toString() )
-					.snippet(Html.fromHtml("" +  snippet).toString())
-					.position(poi.getLocation())
-					.icon(BitmapDescriptorFactory
-					.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-			marker.showInfoWindow();
+				// add row to table_view
+				table_view.addView(tr, table_layout);
+	
+				MapFragment map_fragment = (MapFragment) ((Activity) map_view
+						.getContext()).getFragmentManager().findFragmentById(
+						R.id.map);
+				GoogleMap map = map_fragment.getMap();
+				dialog.dismiss();
+	
+				// map.setMyLocationEnabled(true);
+	
+				// offset on location latitude (to show infowindow from marker)
+				LatLng maplocation = new LatLng(
+						poi.getLocation().latitude + 0.00024,
+						poi.getLocation().longitude);
+				map.setOnInfoWindowClickListener(POIDetailActivity.this);
+				map.moveCamera(CameraUpdateFactory.newLatLngZoom(maplocation, 18));
+	
+				Log.i("LatLng (w/o offset):", "(" + poi.getLocation().latitude
+						+ " ; " + poi.getLocation().longitude + ")");
+				Log.i("LatLng (with offset):", "(" + maplocation.latitude + " ; "
+						+ maplocation.longitude + ")");
+				String snippet = poi.getStreet() != null ? poi.getStreet() + " "
+						+ poi.getNumber() : "";
+				Marker marker = map.addMarker(new MarkerOptions()
+						.title(Html.fromHtml("" +  poi.getName()).toString() )
+						.snippet(Html.fromHtml("" +  snippet).toString())
+						.position(poi.getLocation())
+						.icon(BitmapDescriptorFactory
+						.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+				marker.showInfoWindow();
+			} catch (InflateException e){
+				Log.e("Inflate error (emulator?)", "emulator");
+			}
 		}
 
 		@Override
@@ -427,9 +433,9 @@ public class POIDetailActivity extends Activity implements
 	public void renewDistanceGui(){
 		TextView distance = (TextView) findViewById(R.id.poi_detail_distance);
 		if (poi.getDistance() > 1000){
-			distance.setText( Math.floor(poi.getDistance()/1000) + " km");
+			distance.setText( Math.round(poi.getDistance()/1000) + " km");
 		}else{
-			distance.setText( Math.floor(poi.getDistance()) + " m");
+			distance.setText( Math.round(poi.getDistance()) + " m");
 		}
 		
 	}
@@ -455,8 +461,13 @@ public class POIDetailActivity extends Activity implements
 					PointOfInterest p2 = (PointOfInterest) p;
 					float distance = location.distanceTo(p2.getLocationAsLocation());
 					p2.setDistance(distance);
+					
+					if (p2.getId() == poi.getId()){
+						poi.setDistance(distance);
+					}
 			}
 			currentLocation = location;
+			renewDistanceGui();
 		}					
 	}
 	@Override
