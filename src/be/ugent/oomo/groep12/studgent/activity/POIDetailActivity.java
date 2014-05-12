@@ -289,36 +289,56 @@ public class POIDetailActivity extends Activity implements
 			else
 				checkinNotAllowedDiagram();
 		}
-		
+		String checkinPossible = checkInAllowed();
+		if(checkinPossible.equals("")){
+			SharedPreferences.Editor editor = sharedPreferences.edit();
+			editor.putString("lat", String.valueOf(poi.getLocation().latitude));
+			editor.putString("lon", String.valueOf(poi.getLocation().longitude));
+			Calendar c = Calendar.getInstance();
+			Date now = c.getTime();
+			editor.putLong("date", now.getTime());
+			editor.putString("name", poi.getName());
+			editor.commit();
+			
+			new AsyncCheckin().execute();
+		}
+		else{
+			if(checkinPossible.equals("je bent nog ingelogd in poi in uw buurt")){
+				checkinNotAllowedDiagram();
+			}
+			if(checkinPossible.equals("poi is te ver")){
+				checkinPOIIsToFareDiagram();
+			}
+		}
 	}
 
-	private boolean checkInAllowed() {
-        //calculating time beween now and time of last checkin
+	private String checkInAllowed() {
+        //checking if poi is in area
+		LatLng currentPosotion = new LatLng(51.032052, 3.701968);//<---------------------aanpassen
+        double distance = distFrom(poi.getLocation().latitude, poi.getLocation().longitude, currentPosotion.latitude, currentPosotion.longitude);
+        if(distance>getResources().getInteger(R.integer.max_distance_to_checkin))
+        	return "poi is te ver";
+        
+        //we know now that the poi is in your area
+        //check if you previous checkin was in in the you area
+        double lat = Double.parseDouble(sharedPreferences.getString("lat", "-1.0"));
+    	double lon = Double.parseDouble(sharedPreferences.getString("lon", "-1.0"));
+        distance = distFrom(lat, lon, currentPosotion.latitude, currentPosotion.longitude);
+        if(distance>getResources().getInteger(R.integer.max_distance_to_checkin))
+        	return ""; // checkinis allowed
+        
+        //we know now that the last checkin was in you earea
+        //check if last login was in the checkin_time
         Calendar c = Calendar.getInstance();
         Date now = c.getTime();
         Date lastCheckin = new Date(sharedPreferences.getLong("date", now.getTime()));
         long verschil = now.getTime()-lastCheckin.getTime(); //in milliseconds
-        System.out.println("CheckInActivity: name: "+sharedPreferences.getString("name", "error"));
-        System.out.println("CheckInActivity: date: "+sharedPreferences.getLong("date", now.getTime()));
-        System.out.println("CheckInActivity: lat: "+sharedPreferences.getString("lat", "error"));
-        System.out.println("CheckInActivity: lon: "+sharedPreferences.getString("lon", "error"));
-        System.out.println("checkinAllowed: verschil="+verschil);
-        System.out.println("checkinAllowed: MAXverschil="+getResources().getInteger(R.integer.max_distance_to_checkin));
-        if(verschil!=0 && verschil>getResources().getInteger(R.integer.checkin_time)){
-        	//calculation the distance the user has moved from the last checkin
-        	double lat = Double.parseDouble(sharedPreferences.getString("lat", "-1.0"));
-        	double lon = Double.parseDouble(sharedPreferences.getString("lon", "-1.0"));
-        	//getting current position
-        	LatLng currentPosotion = new LatLng(51.032052, 3.701968);//<---------------------aanpassen
-            double distance = distFrom(lat, lon, currentPosotion.latitude, currentPosotion.longitude);
-            System.out.println("checkinAllowed: distance="+distance);
-            if(distance<=getResources().getInteger(R.integer.max_distance_to_checkin))
-            	return false;
-            else
-            	return true;
-        }
-        else
-        	return true;
+        if(verschil!=0 && verschil<getResources().getInteger(R.integer.checkin_time))
+        	return "je bent nog ingelogd in poi in uw buurt";
+        
+        //checkin is allowed
+        return "";
+        
 	}
 	
 	private void checkinNotAllowedDiagram() {
@@ -336,6 +356,21 @@ public class POIDetailActivity extends Activity implements
 		AlertDialog alertDialog = alertDialogBuilder.create();
 		alertDialog.show();
 		
+	}
+	
+	private void checkinPOIIsToFareDiagram(){
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this); //de this slaat op de ouder
+		
+		alertDialogBuilder.setTitle(getString(R.string.still_checked_in_title));
+		alertDialogBuilder.setMessage(poi.getName()+" is te ver om in te loggen");
+		alertDialogBuilder.setCancelable(false);
+		alertDialogBuilder.setPositiveButton("ok",new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog,int id) {
+					dialog.cancel();
+				}
+			  });
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
 	}
 	
 	private double distFrom(double lat1, double lng1, double lat2, double lng2) {
