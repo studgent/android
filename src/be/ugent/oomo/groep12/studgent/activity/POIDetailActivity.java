@@ -128,6 +128,7 @@ public class POIDetailActivity extends Activity implements
 	
 		//start GPS
 		startGPS();
+		//updateLocation(null);
 		renewDistanceGui();
 	}
 	
@@ -325,14 +326,14 @@ public class POIDetailActivity extends Activity implements
 			ceckInDialog();
 		}
 		else{
-			if(checkinPossible.equals("Je bent nog ingelogd in poi in uw buurt")){
+			if(checkinPossible.equalsIgnoreCase("Je bent nog ingelogd in poi in uw buurt")){
 				checkinNotAllowedDiagram();
-			}
-			if(checkinPossible.equals("POI is te ver")){
+			}else if(checkinPossible.equalsIgnoreCase("POI is te ver")){
 				checkinPOIIsToFareDiagram();
-			}
-			if(checkinPossible.equals("Gebruiker is niet ingelogd")){
+			} else if(checkinPossible.equalsIgnoreCase("Gebruiker is niet ingelogd")){
 				Toast.makeText(this, "Log in om in te checken!", Toast.LENGTH_SHORT).show();
+			} else {
+				Toast.makeText(this, "Inchecken niet mogelijk", Toast.LENGTH_SHORT).show();
 			}
 		}
 	}
@@ -342,6 +343,7 @@ public class POIDetailActivity extends Activity implements
 	}
 	
 	private void checkinNotAllowedDiagram() {
+		Toast.makeText(this, "Je bent nog steeds ingechecked!", Toast.LENGTH_SHORT).show();
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this); //de this slaat op de ouder
 	
 		alertDialogBuilder.setTitle(getString(R.string.still_checked_in_title));
@@ -397,6 +399,8 @@ public class POIDetailActivity extends Activity implements
 	}
 	
 	private void checkinPOIIsToFareDiagram(){
+
+		Toast.makeText(this, poi.getName()+" is te ver om in te loggen", Toast.LENGTH_SHORT).show();
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this); //de this slaat op de ouder
 		
 		alertDialogBuilder.setTitle(getString(R.string.still_checked_in_title));
