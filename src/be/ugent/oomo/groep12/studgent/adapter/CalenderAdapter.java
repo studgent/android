@@ -12,11 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 import be.ugent.oomo.groep12.studgent.R;
+import be.ugent.oomo.groep12.studgent.common.CalendarFilter;
 import be.ugent.oomo.groep12.studgent.common.ICalendarEvent;
 
-public class CalenderAdapter extends ArrayAdapter<ICalendarEvent> {
+public class CalenderAdapter extends ArrayAdapter<ICalendarEvent> implements Filterable {
     static class CalendarItemHolder
     {
         TextView name;
@@ -29,6 +32,15 @@ public class CalenderAdapter extends ArrayAdapter<ICalendarEvent> {
     Context context; 
     int layoutResourceId;    
     List<ICalendarEvent> data = new ArrayList<ICalendarEvent>();
+    private Filter mFilter;
+    
+
+    public Filter getFilter() {
+        if (mFilter == null) {
+            mFilter = new CalendarFilter(this);
+        }
+        return mFilter;
+    }
 
 	public CalenderAdapter(Context context, int layoutResourceId) {
 		super(context, layoutResourceId);

@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -52,6 +53,9 @@ public class POIListActivity extends Activity implements
 				R.anim.animation_leave);
 		setContentView(R.layout.activity_poi_list);
 		setNavigation();
+		
+		// hide keyboard on start activity
+	    this.getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		
 		poi_list_view = (ListView) findViewById(R.id.poi_list);
 		inputSearch = (EditText) findViewById(R.id.searchPOI_EditText);
