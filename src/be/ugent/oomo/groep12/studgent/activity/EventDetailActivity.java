@@ -19,6 +19,7 @@ import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -78,7 +79,7 @@ public class EventDetailActivity extends Activity implements OnInfoWindowClickLi
 						+ selected_event.getLocation().getNumber() );
 		addTextRow("Beschrijving", Html.fromHtml("" +  selected_event.getDescription() ).toString() );
 		addTextRow("Contact", Html.fromHtml("" +  selected_event.getContact() ).toString() );
-		addTextRow("Email", Html.fromHtml("" +  selected_event.getEmail() ).toString() );
+		addTextRow("Email", Html.fromHtml("<a href='" +  selected_event.getEmail() +"'>" +  selected_event.getEmail() + "</a>" ).toString() );
 
 	}
 
@@ -135,6 +136,7 @@ public class EventDetailActivity extends Activity implements OnInfoWindowClickLi
 			tv.setEllipsize(null);
 			tv.setLayoutParams(row_layout);
 			tv.setText(value);
+			tv.setMovementMethod(LinkMovementMethod.getInstance());
 			tr.addView(tv);
 			// add row to table_view
 	        table_view.addView(tr, table_layout);

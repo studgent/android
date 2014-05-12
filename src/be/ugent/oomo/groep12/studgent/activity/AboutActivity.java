@@ -10,6 +10,7 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -69,6 +70,7 @@ public class AboutActivity extends Activity {
 			
 			TextView aboutTV = (TextView) rootView.findViewById(R.id.about_textview);
 			aboutTV.setText(Html.fromHtml( getString(R.string.about_text) ));
+			aboutTV.setMovementMethod(LinkMovementMethod.getInstance());
 			return rootView;
 		}
 	}
