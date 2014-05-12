@@ -9,6 +9,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -31,7 +32,12 @@ public class AugmentedViewActivity extends Activity implements
 	private SensorManager sensorManager;
 	private Sensor magnetometer;
 	private Sensor accelerometer;
-
+	
+	//GPS
+	private LocationManager locationManager;
+	private static long MIN_TIME = 400;
+	private static float MIN_DISTANCE = 1000;
+	
 	// Layout elements
 	private SurfaceView surfaceView;
 	private TextView textView;
@@ -41,8 +47,11 @@ public class AugmentedViewActivity extends Activity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// Set landscape orientation
-		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		// Set landscape orientation if not already
+		if (getResources().getConfiguration().orientation == getResources()
+				.getConfiguration().ORIENTATION_PORTRAIT) {
+			this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		}
 		setContentView(R.layout.activity_augmented);
 
 		// Layout binding
@@ -56,6 +65,12 @@ public class AugmentedViewActivity extends Activity implements
 				.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		magnetometer = sensorManager
 				.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+
+		// GPS
+		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		// LocationManager.NETWORK_PROVIDER, LocationManager.GPS_PROVIDER and
+		// LocationManager.PASSIVE_PROVIDER
+		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DISTANCE, overlayView);
 
 		// Video
 		holder = surfaceView.getHolder();
@@ -224,7 +239,8 @@ public class AugmentedViewActivity extends Activity implements
 
 				int azimuth = Math.round(azimuthInDegrees);
 
-				textView.setText("Az: " + Float.toString(azimuth) + " degrees");
+				// textView.setText("Az: " + Float.toString(azimuth) +
+				// " degrees");
 
 				overlayView.updateOverlay(azimuth);
 			}
