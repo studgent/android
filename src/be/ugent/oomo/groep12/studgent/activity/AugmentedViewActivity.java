@@ -3,6 +3,7 @@ package be.ugent.oomo.groep12.studgent.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.hardware.Camera;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -37,23 +38,22 @@ public class AugmentedViewActivity extends Activity implements
 	
 	// Layout elements
 	private SurfaceView surfaceView;
-	private TextView textView;
 	private OverlayView overlayView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		getResources()
+				.getConfiguration();
 		// Set landscape orientation if not already
-		if (getResources().getConfiguration().orientation == getResources()
-				.getConfiguration().ORIENTATION_PORTRAIT) {
+		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
 			this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		}
 		setContentView(R.layout.activity_augmented);
 
 		// Layout binding
 		surfaceView = (SurfaceView) findViewById(R.id.arview);
-		textView = (TextView) findViewById(R.id.artext);
 		overlayView = (OverlayView) findViewById(R.id.aroverlay);
 
 		// Compass
@@ -235,16 +235,16 @@ public class AugmentedViewActivity extends Activity implements
 						.toDegrees(azimuthInRadians);
 				// Compensate for landscape orientation
 				azimuthInDegrees += 90f;
-
+				
+				// Compensate for negative compass values
 				if (azimuthInDegrees < 0.0f) {
 					azimuthInDegrees += 360.0f;
 				}
-
+				
+				// Convert from float to int
 				int azimuth = Math.round(azimuthInDegrees);
-
-				// textView.setText("Az: " + Float.toString(azimuth) +
-				// " degrees");
-
+				
+				// Call method to update the AR Overlay
 				overlayView.updateOverlay(azimuth);
 			}
 		}

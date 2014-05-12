@@ -113,6 +113,17 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener
 
 	
 	@Override
+	public void onPause(){
+		locationManager.removeUpdates(this);
+	}
+	
+	@Override
+	public void onResume(){
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+				MIN_TIME, MIN_DISTANCE, this);	
+	}
+	
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
