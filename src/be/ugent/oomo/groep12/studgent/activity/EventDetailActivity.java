@@ -77,10 +77,12 @@ public class EventDetailActivity extends Activity implements OnInfoWindowClickLi
 		location.setText( selected_event.getLocation().getStreet() 
 						+ " " 
 						+ selected_event.getLocation().getNumber() );
-		addTextRow("Beschrijving", Html.fromHtml("" +  selected_event.getDescription() ).toString() );
-		addTextRow("Contact", Html.fromHtml("" +  selected_event.getContact() ).toString() );
-		addTextRow("Email", Html.fromHtml("<a href='mailto:" +  selected_event.getEmail() +"'>" +  selected_event.getEmail() + "</a>" ).toString() );
-
+		addTextRow("Beschrijving", selected_event.getDescription() );
+		addTextRow("Contact",  selected_event.getContact() );
+		if ( ! ( selected_event.getEmail() == null || selected_event.getEmail().equals("null") ) ) {
+			addTextRow("Email", "<a href='mailto:" +  selected_event.getEmail() +"'>" +  selected_event.getEmail() + "</a>" );
+		}
+		addTextRow("","");
 	}
 
 
@@ -126,7 +128,7 @@ public class EventDetailActivity extends Activity implements OnInfoWindowClickLi
 	private void addTextRow(String title, String text){
 		boolean isEmpty = (text == null);
 		if ( !isEmpty ) {
-			String value = title + ":\n" + text + '\n';
+			String value = "<b>" + title + "</b><br>" + text + "<br>";
 			// create new row
 	        TableRow tr = new TableRow(this);
 			tr.setLayoutParams(row_layout);
@@ -135,7 +137,7 @@ public class EventDetailActivity extends Activity implements OnInfoWindowClickLi
 			tv.setSingleLine(false);
 			tv.setEllipsize(null);
 			tv.setLayoutParams(row_layout);
-			tv.setText(value);
+			tv.setText(Html.fromHtml(value));
 			tv.setMovementMethod(LinkMovementMethod.getInstance());
 			tr.addView(tv);
 			// add row to table_view
