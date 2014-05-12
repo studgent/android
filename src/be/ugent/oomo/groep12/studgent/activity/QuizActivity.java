@@ -41,6 +41,7 @@ import android.content.ActivityNotFoundException;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Criteria;
 import android.location.GpsStatus.Listener;
 import android.location.Location;
 import android.location.LocationListener;
@@ -348,13 +349,23 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener
 	    @Override
 	    protected void onPostExecute(Collection<QuizQuestion> result) {            
 	        super.onPostExecute(result);
-	           dialog.dismiss();
+	            dialog.dismiss();
 		        //adapter.setItemList(result);
 		        adapter.clear();
 		        for(QuizQuestion question: result){
+		        	
 		        	adapter.add(question);
 		        }
+		        //calculate distance with latest known GPS location
+		        if (locationManager==null){
+					locationManager = (LocationManager)
+						getSystemService(Context.LOCATION_SERVICE);
+				}
+		        Location lastKnownLocation = locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria() , false));
+		        onLocationChanged(locationManager.getLastKnownLocation(Context.LOCATION_SERVICE));
+		       
 		        renewListGui();
+		        
 	        
 	    }
 	}
@@ -405,12 +416,14 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener
 	
 	
 	public void startGPS(){
-		locationManager = (LocationManager)
-		getSystemService(Context.LOCATION_SERVICE);
+		if (locationManager==null){
+			locationManager = (LocationManager)
+				getSystemService(Context.LOCATION_SERVICE);
+		}
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
 		MIN_TIME, MIN_DISTANCE, this);
 		
-		//Network on main thread error:
+		//Network on main thread error! Run in async!
 		//onLocationChanged(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER));
 			
 	}
@@ -419,17 +432,22 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener
 	@Override
 	public void onLocationChanged(Location location) {
 		// TODO Auto-generated method stub
-		try {
-			Collection<QuizQuestion> questions =  QuizQuestionsDataSource.getInstance().getLastItems().values();
-			for( QuizQuestion q : questions ){
-					float distance = location.distanceTo(q.getLocationAsLocation()) / 1000;
-					q.setDistance(distance);
+		
+		if (location != null && location.getLatitude() != 0 && location.getLongitude() != 0 ){
+			try {
+				Collection<QuizQuestion> questions =  QuizQuestionsDataSource.getInstance().getLastItems().values();
+				for( QuizQuestion q : questions ){
+						float distance = location.distanceTo(q.getLocationAsLocation()) / 1000;
+						q.setDistance(distance);
+				}
+				renewListGui();
+			} catch (DataSourceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			renewListGui();
-		} catch (DataSourceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		}else{
+			
+		}		
 	}
 
 
