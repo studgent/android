@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.WindowManager.LayoutParams;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -17,6 +18,7 @@ import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.adapter.TrophieAdapter;
 import be.ugent.oomo.groep12.studgent.common.Trophie;
 import be.ugent.oomo.groep12.studgent.data.TrophieListDataSource;
+import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 
 public class TrophiesListActivity  extends Activity implements TextWatcher {
 	
@@ -51,16 +53,6 @@ public class TrophiesListActivity  extends Activity implements TextWatcher {
 	}
 
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.events, menu);
-		return true;
-	}
-
-
-
-	
 	private class AsyncTrophieListViewLoader extends AsyncTask<TrophieAdapter, Void, ArrayList<Trophie>> {
 	    private final ProgressDialog dialog = new ProgressDialog(TrophiesListActivity.this);
 
@@ -99,6 +91,26 @@ public class TrophiesListActivity  extends Activity implements TextWatcher {
 		}
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+	
+
+	@Override
+	public boolean onPrepareOptionsMenu (Menu menu) {
+
+		return MenuUtil.PrepareMenu(this, menu);
+		
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    return MenuUtil.OptionsItemSelected(this, item);
+	}
+	
 
 	@Override
 	public void beforeTextChanged(CharSequence s, int start, int count,

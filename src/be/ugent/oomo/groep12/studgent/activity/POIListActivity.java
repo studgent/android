@@ -32,6 +32,7 @@ import be.ugent.oomo.groep12.studgent.adapter.POIAdapter;
 import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import be.ugent.oomo.groep12.studgent.data.POIDataSource;
+import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 
 public class POIListActivity extends Activity implements 
 	AdapterView.OnItemClickListener,
@@ -75,6 +76,27 @@ public class POIListActivity extends Activity implements
         poi_list_view.setAdapter(adapter);
         new AsyncPOIListViewLoader().execute(adapter);
         
+	}
+	
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+	
+
+	@Override
+	public boolean onPrepareOptionsMenu (Menu menu) {
+
+		return MenuUtil.PrepareMenu(this, menu);
+		
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    return MenuUtil.OptionsItemSelected(this, item);
 	}
 	
 
@@ -145,26 +167,6 @@ public class POIListActivity extends Activity implements
 	
 	// END switchbar
 
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.events, menu);
-		return true;
-	}
-	
-	public boolean onOptionsItemSelected(MenuItem item) {
-	    switch (item.getItemId()) {
-		    case R.id.poi_open_augmented:
-		    	openAugmentedViewActivity();
-		        return true;
-		    case R.id.poi_open_mapview:
-		    	openMapviewActivity();
-		    	return true;
-		    default:
-		        return super.onOptionsItemSelected(item);
-	    }
-	}
 	
 	public void openAugmentedViewActivity(View view) {
 		openAugmentedViewActivity();

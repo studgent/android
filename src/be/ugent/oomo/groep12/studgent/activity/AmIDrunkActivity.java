@@ -1,11 +1,11 @@
 package be.ugent.oomo.groep12.studgent.activity;
 
 import be.ugent.oomo.groep12.studgent.R;
-
 import be.ugent.oomo.groep12.studgent.R.anim;
 import be.ugent.oomo.groep12.studgent.R.id;
 import be.ugent.oomo.groep12.studgent.R.layout;
 import be.ugent.oomo.groep12.studgent.R.menu;
+import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
@@ -104,26 +104,26 @@ public class AmIDrunkActivity extends Activity implements SensorEventListener {
 	//  ignored
 	}
 
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.am_idrunk, menu);
+		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+	
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
+	public boolean onPrepareOptionsMenu (Menu menu) {
+		return MenuUtil.PrepareMenu(this, menu);
+		
 	}
-
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    return MenuUtil.OptionsItemSelected(this, item);
+	}
+	
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
