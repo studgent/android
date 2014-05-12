@@ -11,7 +11,9 @@ import android.widget.Button;
 import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.utilities.LayoutUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
+import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 import be.ugent.oomo.groep12.studgent.activity.AboutActivity;
+
 import com.crashlytics.android.Crashlytics;
 
 
@@ -73,29 +75,13 @@ public class MainActivity extends Activity {
 	@Override
 	public boolean onPrepareOptionsMenu (Menu menu) {
 
-		// change login text
-		MenuItem login_item = menu.findItem(R.id.login);
-		if ( LoginUtility.isLoggedIn() ) {
-			login_item.setTitle( getString(R.string.login) + "(" + LoginUtility.getEmail() + ")");
-		} else {
-			login_item.setTitle( getString(R.string.login) );
-		}
-		return true;
+		return MenuUtil.PrepareMenu(this, menu);
 		
 	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    switch (item.getItemId()) {
-		    case R.id.login:
-		    	openLoginActivity();
-		        return true;
-		    case R.id.info:
-		    	openAboutActivity();
-		        return true;
-		    default:
-		        return super.onOptionsItemSelected(item);
-	    }
+	    return MenuUtil.OptionsItemSelected(this, item);
 	}
 	
 	
@@ -122,15 +108,6 @@ public class MainActivity extends Activity {
 	public void openFriendListActivity(View view){
 		System.out.println("openFriendListActivity");
 		Intent intent = new Intent(this, FriendListActivity.class);
-		startActivity(intent);
-	}
-
-	public void openLoginActivity(){
-		Intent intent = new Intent(this, LoginActivity.class);
-		startActivity(intent);
-	}
-	public void openAboutActivity(){
-		Intent intent = new Intent(this, AboutActivity.class);
 		startActivity(intent);
 	}
 	
