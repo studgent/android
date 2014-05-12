@@ -38,6 +38,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -273,7 +274,7 @@ public class POIDetailActivity extends Activity implements
 		checkIn();
 	}
 
-	private class AsyncCheckin extends AsyncTask<Integer, Void, Boolean> {
+	private class AsyncCheckin extends AsyncTask<String, Void, Boolean> {
 
 	    @Override
 	    protected void onPostExecute(Boolean result) {            
@@ -281,9 +282,10 @@ public class POIDetailActivity extends Activity implements
 	    }
 
 		@Override
-		protected Boolean doInBackground(Integer... params) {
+		protected Boolean doInBackground(String... params) {
 			try {
-				boolean result = POIDataSource.getInstance().checkin(poi);
+				String message = params[0];
+				boolean result = POIDataSource.getInstance().checkin(poi, message);
 	        	return result;
 	        }
 	        catch(Throwable t) {
@@ -294,38 +296,10 @@ public class POIDetailActivity extends Activity implements
 	}
 	
 	protected void checkIn() {
-		if (LoginUtility.getInstance().isLoggedIn() == false) {
-			Toast.makeText(this, "Log in om in te checken!", Toast.LENGTH_SHORT).show();
-			onBackPressed();
-		}else{
-			if(checkInAllowed()){
-				SharedPreferences.Editor editor = sharedPreferences.edit();
-				editor.putString("lat", String.valueOf(poi.getLocation().latitude));
-				editor.putString("lon", String.valueOf(poi.getLocation().longitude));
-				Calendar c = Calendar.getInstance();
-				Date now = c.getTime();
-				editor.putLong("date", now.getTime());
-				editor.putString("name", poi.getName());
-				editor.commit();
-				
-				new AsyncCheckin().execute();
-				this.finish();
-			}
-			else
-				checkinNotAllowedDiagram();
-		}
+		
 		String checkinPossible = checkInAllowed();
 		if(checkinPossible.equals("")){
-			SharedPreferences.Editor editor = sharedPreferences.edit();
-			editor.putString("lat", String.valueOf(poi.getLocation().latitude));
-			editor.putString("lon", String.valueOf(poi.getLocation().longitude));
-			Calendar c = Calendar.getInstance();
-			Date now = c.getTime();
-			editor.putLong("date", now.getTime());
-			editor.putString("name", poi.getName());
-			editor.commit();
-			
-			new AsyncCheckin().execute();
+			ceckInDialog();
 		}
 		else{
 			if(checkinPossible.equals("je bent nog ingelogd in poi in uw buurt")){
@@ -334,10 +308,17 @@ public class POIDetailActivity extends Activity implements
 			if(checkinPossible.equals("poi is te ver")){
 				checkinPOIIsToFareDiagram();
 			}
+			if(checkinPossible.equals("gebruiker is niet ingelogd")){
+				Toast.makeText(this, "Log in om in te checken!", Toast.LENGTH_SHORT).show();
+			}
 		}
 	}
 
 	private String checkInAllowed() {
+		//check if user is logged in
+		if (LoginUtility.getInstance().isLoggedIn() == false)
+			return "gebruiker is niet ingelogd";
+		
         //checking if poi is in area
 		LatLng currentPosotion = new LatLng(51.032052, 3.701968);//<---------------------aanpassen
         double distance = distFrom(poi.getLocation().latitude, poi.getLocation().longitude, currentPosotion.latitude, currentPosotion.longitude);
@@ -378,6 +359,44 @@ public class POIDetailActivity extends Activity implements
 					dialog.cancel();
 				}
 			  });
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
+		
+	}
+	
+	private void ceckInDialog() {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this); //de this slaat op de ouder
+	
+		alertDialogBuilder.setTitle(getString(R.string.still_checked_in_title));
+		
+		final EditText input = new EditText(this); 
+		input.setText("shout!");
+		alertDialogBuilder.setView(input);
+		alertDialogBuilder.setCancelable(false);
+		alertDialogBuilder.setPositiveButton("CheckIn",new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog,int id) {
+					
+					//alles van inchecken doen
+					SharedPreferences.Editor editor = sharedPreferences.edit();
+					editor.putString("lat", String.valueOf(poi.getLocation().latitude));
+					editor.putString("lon", String.valueOf(poi.getLocation().longitude));
+					Calendar c = Calendar.getInstance();
+					Date now = c.getTime();
+					editor.putLong("date", now.getTime());
+					editor.putString("name", poi.getName());
+					editor.commit();
+					String[] params = new String[1];
+					params[0]=input.getText().toString();
+					new AsyncCheckin().execute(params);
+					dialog.cancel();
+				}
+			  });
+		alertDialogBuilder.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog,int id) {
+				dialog.cancel();
+				
+			}
+		  });
 		AlertDialog alertDialog = alertDialogBuilder.create();
 		alertDialog.show();
 		

@@ -73,17 +73,13 @@ public class CheckInActivity extends Activity implements AdapterView.OnItemClick
 
 		//sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         //sharedPreferences = this.getSharedPreferences()(Context.MODE_PRIVATE);
-        sharedPreferences = this.getSharedPreferences("LastCheckin", Context.MODE_PRIVATE);
         
         if (LoginUtility.getInstance().isLoggedIn() == false) {
 			Toast.makeText(this, "Log in om in te checken!", Toast.LENGTH_SHORT).show();
 			onBackPressed();
 		}else{
-			if(checkInAllowed()){
-	        	new AsyncFriendListViewLoader().execute(adapter);
-	        }
-	        else
-	        	checkinNotAllowedDiagram();
+			new AsyncFriendListViewLoader().execute(adapter);
+	        
 		}
         
         
@@ -130,10 +126,6 @@ public class CheckInActivity extends Activity implements AdapterView.OnItemClick
 	@Override
 	protected void onResume(){
 		super.onResume();
-		if(comesFromCheckInDetailActivity && !checkInAllowed()){
-			comesFromCheckInDetailActivity = false;
-			checkinNotAllowedDiagram();
-		}
         	
 	}
 
@@ -203,55 +195,9 @@ public class CheckInActivity extends Activity implements AdapterView.OnItemClick
 
 	    return (double) (dist * meterConversion);
 	}
-	
-	private void checkinNotAllowedDiagram() {
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this); //de this slaat op de ouder
-	
-		alertDialogBuilder.setTitle(getString(R.string.still_checked_in_title));
-		alertDialogBuilder.setMessage("Je bent nog steeds ingechecked in "+sharedPreferences.getString("name", "fout")+
-				".\n wacht nog effen, of zet een stapje, voordat je terug inchecked.");
-		alertDialogBuilder.setCancelable(false);
-		alertDialogBuilder.setPositiveButton("ok",new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog,int id) {
-					dialog.cancel();
-					closeActivity();
-				}
-			  });
-		AlertDialog alertDialog = alertDialogBuilder.create();
-		alertDialog.show();
 		
-	}
-	
 	private void closeActivity(){
 		this.finish();
 	}
-
-	private boolean checkInAllowed() {
-        //calculating time beween now and time of last checkin
-        Calendar c = Calendar.getInstance();
-        Date now = c.getTime();
-        Date lastCheckin = new Date(sharedPreferences.getLong("date", now.getTime()));
-        long verschil = now.getTime()-lastCheckin.getTime(); //in milliseconds
-        System.out.println("CheckInActivity: name: "+sharedPreferences.getString("name", "error"));
-        System.out.println("CheckInActivity: date: "+sharedPreferences.getLong("date", now.getTime()));
-        System.out.println("CheckInActivity: lat: "+sharedPreferences.getString("lat", "error"));
-        System.out.println("CheckInActivity: lon: "+sharedPreferences.getString("lon", "error"));
-        System.out.println("checkinAllowed: verschil="+verschil);
-        if(verschil!=0 && verschil>getResources().getInteger(R.integer.checkin_time)){
-        	//calculation the distance the user has moved from the last checkin
-        	double lat = Double.parseDouble(sharedPreferences.getString("lat", "-1.0"));
-        	double lon = Double.parseDouble(sharedPreferences.getString("lon", "-1.0"));
-        	//getting current position
-        	LatLng currentPosotion = new LatLng(51.032052, 3.701968);//<---------------------aanpassen
-            double distance = distFrom(lat, lon, currentPosotion.latitude, currentPosotion.longitude);
-            System.out.println("checkinAllowed: distance="+distance);
-            if(distance<=getResources().getInteger(R.integer.max_distance_to_checkin))
-            	return false;
-            else
-            	return true;
-        }
-        else
-        	return true;
-	}
-
+	
 }

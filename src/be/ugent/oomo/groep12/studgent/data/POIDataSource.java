@@ -101,7 +101,7 @@ public class POIDataSource implements IDataSource {
 		return null;
 	}
 
-	public boolean checkin(PointOfInterest poi) {
+	public boolean checkin(PointOfInterest poi, String bericht) {
 
 		int userID = LoginUtility.getInstance().getId();
 		
@@ -109,7 +109,7 @@ public class POIDataSource implements IDataSource {
 		postData.put("token", LoginUtility.getInstance().getToken() );
 		postData.put("longitude", String.valueOf(poi.getLocation().longitude));
 		postData.put("latitude", String.valueOf(poi.getLocation().latitude) );
-		postData.put("message", "" );
+		postData.put("message", bericht );
 		
 		boolean added = false;
 		//update online	
