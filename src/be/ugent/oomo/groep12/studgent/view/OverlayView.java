@@ -91,7 +91,7 @@ public class OverlayView extends FrameLayout implements OnClickListener,
 		// Save new location
 		devLoc = location;
 		updatePois();
-		Log.d("Hmm", devLoc.toString());
+		//Log.d("Hmm", devLoc.toString());
 	}
 
 	private ArrayList<POIView> getPoiList(float range) {
