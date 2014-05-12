@@ -175,4 +175,8 @@ public class QuizQuestionsDataSource implements IDataSource {
 	public QuizQuestion getDetails(int id) {
 		return items.get(id);
 	}
+	
+	public void delete(){
+		items = null;
+	}
 }

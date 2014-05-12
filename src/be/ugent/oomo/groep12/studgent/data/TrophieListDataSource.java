@@ -45,4 +45,8 @@ public class TrophieListDataSource implements IDataSource {
 		return items.get(id);
 	}
 
+	
+	public void delete(){
+		items = null;
+	}
 }

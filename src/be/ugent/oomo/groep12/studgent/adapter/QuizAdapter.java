@@ -112,8 +112,6 @@ public class QuizAdapter extends ArrayAdapter<QuizQuestion> {
         
         return row;
     }
-    
-
 
     public List<QuizQuestion> getItemList() {
         return data;

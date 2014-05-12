@@ -122,7 +122,11 @@ public class CalendarEventDataSource implements IDataSource {
 	public ICalendarEvent getDetails(int id) {
 		return items.get(id);
 	}
+
 	
+	public void delete(){
+		items = null;
+	}
 	
 
 }
