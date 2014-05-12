@@ -22,6 +22,17 @@ public class PointOfInterest implements IPointOfInterest {
 	protected String number;
 	protected LatLng location;
 	protected String url;
+	protected double distance;
+	
+	public void setDistance(Double distance){
+		this.distance=distance;
+	}
+	
+	public double getDistance(){
+		return distance;
+	}	
+	
+	
 
 	public PointOfInterest(int id, String name, String details, String street, String number, LatLng location){
 		this(id, name, details, location);
