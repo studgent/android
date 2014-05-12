@@ -74,4 +74,6 @@ public interface IPointOfInterest extends IData {
 	 * @return Summary of the Point of Interest as String
 	 */
 	public String toString();
+
+	public double getDistance();
 }
