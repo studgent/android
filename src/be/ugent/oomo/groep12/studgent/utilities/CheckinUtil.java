@@ -41,6 +41,9 @@ public class CheckinUtil {
     	previousCheckin.setLatitude(lat);
     	previousCheckin.setLongitude(lon);
     	
+    	if (currentLocation==null){
+    		return "Geen GPS signaal!";
+    	}
         distance = previousCheckin.distanceTo( currentLocation );
         if(distance > context.getResources().getInteger(R.integer.max_distance_to_checkin))
         	return ""; // checkinis allowed

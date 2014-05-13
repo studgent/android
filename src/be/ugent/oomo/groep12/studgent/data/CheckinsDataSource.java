@@ -17,7 +17,7 @@ import be.ugent.oomo.groep12.studgent.utilities.CurlUtil;
 
 public class CheckinsDataSource  implements IDataSource {
 	
-	protected static Map<Integer, Checkin> items;
+	//protected static Map<Integer, Checkin> items;
 	private boolean checkinsOfUser;
 	private int sourceID;
 	
@@ -25,10 +25,7 @@ public class CheckinsDataSource  implements IDataSource {
       // Exists only to defeat instantiation.
 		this.checkinsOfUser = checkinOfUser;
 		this.sourceID = sourceID;
-		if(checkinsOfUser)
-			populateListByUserID();
-		else
-			populateListByPOIID();
+	
 	}
 	
 	
@@ -38,8 +35,9 @@ public class CheckinsDataSource  implements IDataSource {
 	}
 	
 	@SuppressLint("UseSparseArrays")
-	protected void populateListByUserID(){
+	protected Map<Integer, Checkin> populateListByUserID() throws DataSourceException{
 		// populate the list
+		Map<Integer, Checkin> items;
 		items = new HashMap<Integer,Checkin>();
 		
 		String user_resource = "user/" + sourceID;
@@ -59,25 +57,31 @@ public class CheckinsDataSource  implements IDataSource {
 				items.put(id,new Checkin(id,user_name,poi_name,message));
 			}
 			Log.i("items", ""+items.size());
+			return items;
 		} catch (CurlException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new DataSourceException(e);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+
+			throw new DataSourceException(e);
 		}
 		
 	}
 	
 	@SuppressLint("UseSparseArrays")
-	protected void populateListByPOIID(){
+	protected Map<Integer, Checkin> populateListByPOIID() throws DataSourceException{
 		// populate the list
+				Map<Integer, Checkin> items;
+		
 				items = new HashMap<Integer,Checkin>();
 				
 				String poi_resource = "poi/id/" + sourceID;
 				try {
 					//all checkin trophies
-					String apidata =  CurlUtil.get(poi_resource);
+					String apidata =  CurlUtil.get(poi_resource,true);
 					JSONObject  response = new JSONObject(apidata);
 					JSONArray checkins = new JSONArray(response.getString("checkins"));
 					String poi_name = response.getString("name");
@@ -91,22 +95,28 @@ public class CheckinsDataSource  implements IDataSource {
 						items.put(id,new Checkin(id,user_name,poi_name,message));
 					}
 					Log.i("items", ""+items.size());
+					return items;
 				} catch (CurlException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					throw new DataSourceException(e);
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					throw new DataSourceException(e);
 				}
+
+				
 	}
 
-	@Override
+	/*@Override
 	public IData getDetails(int id) {
 		return items.get(id);
-	}
+	}*/
 
 	
 	public void delete(){
+		
 	}
 	
 	public static int getCheckinNumber(int userID){
@@ -135,7 +145,18 @@ public class CheckinsDataSource  implements IDataSource {
 		// TODO Auto-generated method stub
 		
 		//hierin moet er gezorgt worden dat je checkinsOfUser en sourceID gezet wordt
-		return items;
+		if(checkinsOfUser)
+			return populateListByUserID();
+		else
+			return populateListByPOIID();
+	}
+
+
+
+	@Override
+	public IData getDetails(int id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

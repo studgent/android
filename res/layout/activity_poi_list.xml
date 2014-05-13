@@ -15,7 +15,9 @@
 	android:layout_height="wrap_content"
     android:enabled="true"
     android:text=""
-    android:drawableLeft="@drawable/search" />
+    android:drawableLeft="@drawable/search"
+    android:lines="1"
+    android:singleLine="true" />
 
 
         <LinearLayout

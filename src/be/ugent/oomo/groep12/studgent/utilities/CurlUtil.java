@@ -57,7 +57,10 @@ public class CurlUtil {
 				out_buffer.append(new String(buffer));
 			}
 			fis.close();
-			return true; //  file content loaded in stringbuffer 
+			if (out_buffer.length() > 0) //if first run without internet connection, then this bug occures
+				return true; //  file content loaded in stringbuffer 
+			else
+				return false;
 		} catch (FileNotFoundException e) {
 			return false; // no cache file found, return false
 		} catch (IOException e) {

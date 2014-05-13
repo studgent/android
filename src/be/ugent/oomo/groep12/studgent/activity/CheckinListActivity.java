@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -20,6 +21,7 @@ import android.view.WindowManager.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.adapter.CheckinAdapter;
@@ -114,6 +116,15 @@ public class CheckinListActivity extends Activity{
 	        }
 	        checkin_list_view.setAdapter(adapter);
 	        adapter.notifyDataSetChanged();
+	        
+	        if (result.size() > 0){
+	        	//show textview 'no data'
+		        TextView txt = (TextView) findViewById(R.id.checkin_list_nodata);
+		        txt.setVisibility(View.GONE);
+	        }else{
+	        	 TextView txt = (TextView) findViewById(R.id.checkin_list_nodata);
+			     txt.setVisibility(View.VISIBLE);
+	        }
 	    }
 
 	    @Override

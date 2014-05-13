@@ -76,8 +76,8 @@ public class UserProfileActivity extends Activity {
 		txtName.setText(Html.fromHtml(name));
 		txtEmail.setText(Html.fromHtml("<a href=\"mailto:"+email+"\" >"+email+"</a>"));
 		txtEmail.setMovementMethod(LinkMovementMethod.getInstance());
-		txtPhone.setText(Html.fromHtml("tel: "+txtPhone));
-		txtscore.setText(Html.fromHtml(txtscore+" points"));
+		txtPhone.setText(Html.fromHtml(txtPhone.getText()+ ""));
+		txtscore.setText(Html.fromHtml(txtscore.getText() +""));
 	}
 	@Override
 	protected void onResume(){

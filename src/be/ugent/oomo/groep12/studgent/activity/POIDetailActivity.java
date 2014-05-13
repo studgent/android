@@ -17,6 +17,7 @@ import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import be.ugent.oomo.groep12.studgent.common.QuizQuestion;
+import be.ugent.oomo.groep12.studgent.data.CheckinsDataSource;
 import be.ugent.oomo.groep12.studgent.data.POIDataSource;
 import be.ugent.oomo.groep12.studgent.data.QuizQuestionsDataSource;
 import be.ugent.oomo.groep12.studgent.exception.CurlException;
@@ -417,6 +418,7 @@ public class POIDetailActivity extends Activity implements
 					String[] params = new String[1];
 					params[0]=input.getText().toString();
 					new AsyncCheckin().execute(params);
+					
 					dialog.cancel();
 				}
 			  });

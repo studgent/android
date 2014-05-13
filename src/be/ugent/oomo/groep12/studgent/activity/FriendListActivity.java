@@ -165,22 +165,24 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
 	
 
 	private class AsyncFollow extends AsyncTask<Integer, Void, Boolean> {
-
+		int friendID;
+		boolean follow;
+		
 	    @Override
 	    protected void onPostExecute(Boolean result) {            
 	        super.onPostExecute(result);
+	        adapter.setFollowStatus(friendID, follow);
 			changeImageButton(result);
 			adapter.notifyDataSetChanged();
 	    }
 
 		@Override
 		protected Boolean doInBackground(Integer... params) {
-			int friendID = params[0];
-			boolean follow = ( params[1] == 1 );
+			friendID = params[0];
+			follow = ( params[1] == 1 );
 			try {
 				boolean result = FriendListDataSource.getInstance().follow(friendID, follow);
-				adapter.setFollowStatus(friendID, follow);
-	        	return result;
+				return result;
 	        }
 	        catch(Throwable t) {
 	            t.printStackTrace();
