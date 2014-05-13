@@ -27,6 +27,7 @@ import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 import be.ugent.oomo.groep12.studgent.utilities.PlayServicesUtil;
 import be.ugent.oomo.groep12.studgent.utilities.iDistanceUpdatedListener;
+import be.ugent.oomo.groep12.studgent.utilities.iLocationChangedListener;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -58,7 +59,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class POIDetailActivity extends Activity implements
-		OnInfoWindowClickListener, iDistanceUpdatedListener {
+		OnInfoWindowClickListener, iDistanceUpdatedListener, iLocationChangedListener {
 
 	private PointOfInterest poi;
 	protected SharedPreferences sharedPreferences;
@@ -136,6 +137,7 @@ public class POIDetailActivity extends Activity implements
 	
 		//start GPS
 		LocationUtil.getInstance(this).registerDistanceUpdatedListener(this);
+		LocationUtil.getInstance(this).registerLocationUpdatedListener(this);
 		
 		renewDistanceGui();
 	}
@@ -163,10 +165,13 @@ public class POIDetailActivity extends Activity implements
 	
 
 	public void navigateTo(View view) {
+		
 		String uri = "geo:" + poi.getLocation().latitude + ","
 				+ poi.getLocation().longitude + "?q="
-				+ poi.getStreet().replace(" ", "+") + "+" + poi.getNumber();
-
+				+ poi.getStreet().replace(" ", "+");
+		if( ! (poi.getNumber() == null || poi.getNumber().equals("") || poi.getNumber().equalsIgnoreCase("null")) ){
+			uri += "+" + poi.getNumber();
+		}
 		try {
 			startActivity(new Intent(android.content.Intent.ACTION_VIEW,
 					Uri.parse(uri)));
@@ -450,5 +455,12 @@ public class POIDetailActivity extends Activity implements
 			distance.setText( Math.round(poi.getDistance()) + " m");
 		}
 		
+	}
+
+
+	@Override
+	public void locationIsChanged(Location loc) {
+		// TODO Auto-generated method stub
+		currentLocation = loc;
 	}	
 }
