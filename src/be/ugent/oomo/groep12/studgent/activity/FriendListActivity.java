@@ -215,6 +215,7 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
 			view.setContentDescription(getString(R.string.no_friend_description));
 			view.setBackgroundResource(R.drawable.add_friend);
 		}
+		view.invalidate();
 	}
 	
 	

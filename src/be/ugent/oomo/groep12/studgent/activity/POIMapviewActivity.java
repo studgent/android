@@ -185,6 +185,7 @@ public class POIMapviewActivity extends Activity implements
 
 	private void openPOIListActivity() {
 		Intent intent = new Intent(this, POIListActivity.class);
+		intent.putExtra("filter", false);
 		startActivity(intent);
 	}
 

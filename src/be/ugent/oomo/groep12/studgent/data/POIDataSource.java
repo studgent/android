@@ -61,7 +61,7 @@ public class POIDataSource implements IDataSource {
 			}
 			
 		} catch (CurlException e) {
-			Log.e("error retrieving calendar", e.getLocalizedMessage());
+			Log.e("error retrieving pois", e.getLocalizedMessage());
 		} catch (JSONException e){
 			Log.e("error parsing json", e.getLocalizedMessage());
 		} catch (ParseException e){
