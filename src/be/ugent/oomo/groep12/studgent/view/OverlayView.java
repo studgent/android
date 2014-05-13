@@ -6,9 +6,6 @@ import java.util.Map;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,15 +15,16 @@ import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import be.ugent.oomo.groep12.studgent.data.POIDataSource;
 import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
+import be.ugent.oomo.groep12.studgent.utilities.iLocationChangedListener;
 
 import com.google.android.gms.maps.model.LatLng;
 
 public class OverlayView extends FrameLayout implements OnClickListener,
-		LocationListener {
+		iLocationChangedListener {
 
 	private int screenWidth;
 	private static int fov = 70;
-	private static int range = 1000;
+	private static int range = 2000;
 	private static int amount = 15;
 
 	private Location devLoc;
@@ -50,13 +48,8 @@ public class OverlayView extends FrameLayout implements OnClickListener,
 	private void init(Context context) {
 		screenWidth = context.getResources().getDisplayMetrics().widthPixels;
 
-		// Set device location as static, for now
-		//devLoc = LocationUtil.getLocationFromLatLng(new LatLng(51.05389, 3.705));
-		// Get current location from last known network location
-		devLoc = ((LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE)).getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-		
-		// Pois
-		updatePois();
+		// Update PoIs with location data
+		//updatePois();
 	}
 
 	public void updateOverlay(int az) {
@@ -72,8 +65,10 @@ public class OverlayView extends FrameLayout implements OnClickListener,
 			} else {
 				float offset = ((az - bearing) + 180) % 360 - 180;
 				offset = (offset / fov) * screenWidth;
-				v.setTranslationX(-offset + (screenWidth/2 - v.getMinWidth()/2));
-				// Hackish way to force visibility with a SurfaceView beneath this view
+				v.setTranslationX(-offset
+						+ (screenWidth / 2 - v.getMinWidth() / 2));
+				// Hackish way to force visibility with a SurfaceView beneath
+				// this view
 				v.setVisibility(View.VISIBLE);
 				v.requestLayout();
 			}
@@ -87,14 +82,6 @@ public class OverlayView extends FrameLayout implements OnClickListener,
 			intent.putExtra("poi", ((POIView) v).getPoi());
 			getContext().startActivity(intent);
 		}
-	}
-
-	@Override
-	public void onLocationChanged(Location location) {
-		// Save new location
-		devLoc = location;
-		updatePois();
-		//Log.d("Hmm", devLoc.toString());
 	}
 
 	private ArrayList<POIView> getPoiList(float range) {
@@ -123,7 +110,8 @@ public class OverlayView extends FrameLayout implements OnClickListener,
 		this.removeAllViews();
 		// Redraw with updated poi list
 		pois = getPoiList(range);
-		pois.add(new POIView(getContext(), new PointOfInterest(999999, "Noorden", "", new LatLng(179, 3))));
+		pois.add(new POIView(getContext(), new PointOfInterest(999999,
+				"Noorden", "", new LatLng(179, 3))));
 		for (POIView v : pois) {
 			this.addView(v);
 			// Make view clickable
@@ -133,20 +121,11 @@ public class OverlayView extends FrameLayout implements OnClickListener,
 	}
 
 	@Override
-	public void onProviderDisabled(String provider) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onProviderEnabled(String provider) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) {
-		// TODO Auto-generated method stub
+	public void locationIsChanged(Location loc) {
+		// Save new location
+		devLoc = loc;
+		updatePois();
+		// Log.d("Hmm", devLoc.toString());
 
 	}
 }

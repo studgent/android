@@ -9,12 +9,12 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import be.ugent.oomo.groep12.studgent.R;
+import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
 import be.ugent.oomo.groep12.studgent.view.OverlayView;
 
 public class AugmentedViewActivity extends Activity implements
@@ -29,12 +29,7 @@ public class AugmentedViewActivity extends Activity implements
 	private SensorManager sensorManager;
 	private Sensor magnetometer;
 	private Sensor accelerometer;
-	
-	//GPS
-	private LocationManager locationManager;
-	private static long MIN_TIME = 5000;
-	private static float MIN_DISTANCE = 100;
-	
+
 	// Layout elements
 	private SurfaceView surfaceView;
 	private OverlayView overlayView;
@@ -61,10 +56,8 @@ public class AugmentedViewActivity extends Activity implements
 				.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 
 		// GPS
-		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		// LocationManager.NETWORK_PROVIDER, LocationManager.GPS_PROVIDER and
-		// LocationManager.PASSIVE_PROVIDER
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, MIN_DISTANCE, overlayView);
+		LocationUtil.getInstance(this).registerLocationUpdatedListener(
+				overlayView);
 
 		// Video
 		holder = surfaceView.getHolder();
@@ -84,9 +77,9 @@ public class AugmentedViewActivity extends Activity implements
 				SensorManager.SENSOR_DELAY_GAME);
 		sensorManager.registerListener(this, magnetometer,
 				SensorManager.SENSOR_DELAY_GAME);
-		
+
 		// GPS
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, MIN_DISTANCE, overlayView);
+		LocationUtil.getInstance(this).onResume();
 	}
 
 	@Override
@@ -101,9 +94,9 @@ public class AugmentedViewActivity extends Activity implements
 
 		// Compass
 		sensorManager.unregisterListener(this);
-		
+
 		// GPS
-		locationManager.removeUpdates(overlayView);
+		LocationUtil.getInstance(this).onPause();
 
 		super.onPause();
 	}
@@ -232,15 +225,15 @@ public class AugmentedViewActivity extends Activity implements
 						.toDegrees(azimuthInRadians);
 				// Compensate for landscape orientation
 				azimuthInDegrees += 90f;
-				
+
 				// Compensate for negative compass values
 				if (azimuthInDegrees < 0.0f) {
 					azimuthInDegrees += 360.0f;
 				}
-				
+
 				// Convert from float to int
 				int azimuth = Math.round(azimuthInDegrees);
-				
+
 				// Call method to update the AR Overlay
 				overlayView.updateOverlay(azimuth);
 			}
