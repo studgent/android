@@ -147,7 +147,7 @@ public class EventDetailActivity extends Activity implements OnInfoWindowClickLi
 	
 	
 	private class AsyncMapLoader extends AsyncTask<IPointOfInterest, Void, LatLng> {
-	    private final ProgressDialog dialog = new ProgressDialog(EventDetailActivity.this);
+
 
 	    @Override
 	    protected void onPostExecute(LatLng result) {            
@@ -160,7 +160,6 @@ public class EventDetailActivity extends Activity implements OnInfoWindowClickLi
 	        	// no valid cošrdinates in the PoI
 	        	String message = "Kon geen cošrdinaten vinden, map wordt niet getoond.";
 	        	Toast.makeText(EventDetailActivity.this, message, Toast.LENGTH_LONG).show();
-	        	dialog.dismiss();
 	        	return;
 	        }
 	        
@@ -179,7 +178,6 @@ public class EventDetailActivity extends Activity implements OnInfoWindowClickLi
 	
 	        MapFragment map_fragment = (MapFragment) ((Activity)map_view.getContext()).getFragmentManager().findFragmentById(R.id.map);
 	        GoogleMap map = map_fragment.getMap();
-	        dialog.dismiss();
 	        
 	        //map.setMyLocationEnabled(true);
 	        
@@ -207,13 +205,6 @@ public class EventDetailActivity extends Activity implements OnInfoWindowClickLi
 	        								.icon( BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN) )
 	        							 );
 	        marker.showInfoWindow();
-	    }
-
-	    @Override
-	    protected void onPreExecute() {        
-	        super.onPreExecute();
-	        dialog.setMessage(getString(R.string.load_map));
-	        dialog.show();            
 	    }
 
 	    @Override

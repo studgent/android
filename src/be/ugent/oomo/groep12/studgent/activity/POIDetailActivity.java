@@ -198,8 +198,6 @@ public class POIDetailActivity extends Activity implements
 
 	private class AsyncMapLoader extends
 			AsyncTask<IPointOfInterest, Void, String> {
-		private final ProgressDialog dialog = new ProgressDialog(
-				POIDetailActivity.this);
 
 		@Override
 		protected void onPostExecute(String result) {
@@ -214,7 +212,6 @@ public class POIDetailActivity extends Activity implements
 				String message = "Kon geen cošrdinaten vinden, map wordt niet getoond.";
 				Toast.makeText(POIDetailActivity.this, message,
 						Toast.LENGTH_LONG).show();
-				dialog.dismiss();
 				return;
 			}
 
@@ -246,7 +243,6 @@ public class POIDetailActivity extends Activity implements
 						.getContext()).getFragmentManager().findFragmentById(
 						R.id.map);
 				GoogleMap map = map_fragment.getMap();
-				dialog.dismiss();
 	
 				// map.setMyLocationEnabled(true);
 	
@@ -273,13 +269,6 @@ public class POIDetailActivity extends Activity implements
 			} catch (InflateException e){
 				Log.e("Inflate error (emulator?)", "emulator");
 			}
-		}
-
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-			dialog.setMessage(getString(R.string.load_map));
-			dialog.show();
 		}
 
 		@Override
