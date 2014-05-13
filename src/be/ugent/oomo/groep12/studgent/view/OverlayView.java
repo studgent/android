@@ -26,7 +26,8 @@ public class OverlayView extends FrameLayout implements OnClickListener,
 
 	private int screenWidth;
 	private static int fov = 70;
-	private static int range = 500;
+	private static int range = 1000;
+	private static int amount = 15;
 
 	private Location devLoc;
 	private ArrayList<POIView> pois;
@@ -107,6 +108,12 @@ public class OverlayView extends FrameLayout implements OnClickListener,
 					.getValue().getLocation())) <= range) {
 				list.add(new POIView(getContext(), poi.getValue()));
 			}
+		}
+		// Sort for distance
+		// Collections.sort(list);
+		// Limit the amount of POIs we will show
+		if (list.size() > amount) {
+			list = new ArrayList<POIView>(list.subList(0, amount));
 		}
 		return list;
 	}
