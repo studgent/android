@@ -26,6 +26,7 @@ import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 import be.ugent.oomo.groep12.studgent.utilities.PlayServicesUtil;
+import be.ugent.oomo.groep12.studgent.utilities.iDistanceUpdatedListener;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -57,7 +58,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class POIDetailActivity extends Activity implements
-		OnInfoWindowClickListener, LocationListener {
+		OnInfoWindowClickListener, iDistanceUpdatedListener {
 
 	private PointOfInterest poi;
 	protected SharedPreferences sharedPreferences;
@@ -134,8 +135,8 @@ public class POIDetailActivity extends Activity implements
 		sharedPreferences = this.getSharedPreferences("LastCheckin", Context.MODE_PRIVATE);
 	
 		//start GPS
-		startGPS();
-		//updateLocation(null);
+		LocationUtil.getInstance(this).registerDistanceUpdatedListener(this);
+		
 		renewDistanceGui();
 	}
 	
@@ -425,23 +426,34 @@ public class POIDetailActivity extends Activity implements
 
 	
 	//------------GPS---------------
-	LocationManager locationManager;
-	private static final long MIN_TIME = 400;
-	private static final float MIN_DISTANCE = 1000;
-	@Override
-	public void onPause(){
-		locationManager.removeUpdates(this);
-		super.onPause();
-	}
+		@Override
+		public void distanceIsUpdated() {
+			// TODO Auto-generated method stub
+			renewDistanceGui();
+		}
+		@Override
+		public void onPause(){
+			LocationUtil.getInstance(this).onPause();
+			super.onPause();
+		}
+		
+		@Override
+		public void onResume(){
+			LocationUtil.getInstance(this).onResume();
+			super.onResume();
+		}
+		
 	
-	@Override
-	public void onResume(){
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-				MIN_TIME, MIN_DISTANCE, this);	
-		super.onResume();
-	}
 	
 	public void renewDistanceGui(){
+		//update local copy with value in datasource
+		for( IPointOfInterest  p : POIDataSource.getInstance().getLastItems().values() ){
+			PointOfInterest p2 = (PointOfInterest) p;
+			if (p2.getId() == poi.getId()){
+				poi = p2;
+			}
+		}
+		
 		TextView distance = (TextView) findViewById(R.id.poi_detail_distance);
 		if (poi.getDistance() > 1000){
 			distance.setText( Math.round(poi.getDistance()/1000) + " km");
@@ -449,57 +461,5 @@ public class POIDetailActivity extends Activity implements
 			distance.setText( Math.round(poi.getDistance()) + " m");
 		}
 		
-	}
-
-	public void startGPS(){
-		if (locationManager==null){
-			locationManager = (LocationManager)
-				getSystemService(Context.LOCATION_SERVICE);
-		}
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-		MIN_TIME, MIN_DISTANCE, this);			
 	}	
-	public void updateLocation(Location location){
-		if (location == null){
-			  locationManager = (LocationManager)
-						getSystemService(Context.LOCATION_SERVICE);
-			   location = locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria() , false));       
-		}
-		
-		if (location != null && location.getLatitude() != 0 && location.getLongitude() != 0 ){
-			Collection<IPointOfInterest> pois =  POIDataSource.getInstance().getLastItems().values();
-			for( IPointOfInterest  p : pois ){
-					PointOfInterest p2 = (PointOfInterest) p;
-					float distance = location.distanceTo(p2.getLocationAsLocation());
-					p2.setDistance(distance);
-					
-					if (p2.getId() == poi.getId()){
-						poi.setDistance(distance);
-					}
-			}
-			currentLocation = location;
-			renewDistanceGui();
-		}					
-	}
-	@Override
-	public void onLocationChanged(Location location) {
-		// TODO Auto-generated method stub
-		updateLocation(location);
-	}
-	@Override
-	public void onProviderDisabled(String provider) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void onProviderEnabled(String provider) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 }

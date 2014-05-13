@@ -45,12 +45,15 @@ import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import be.ugent.oomo.groep12.studgent.data.CalendarEventDataSource;
 import be.ugent.oomo.groep12.studgent.data.POIDataSource;
+import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 import be.ugent.oomo.groep12.studgent.utilities.PlayServicesUtil;
+import be.ugent.oomo.groep12.studgent.utilities.iDistanceUpdatedListener;
+import be.ugent.oomo.groep12.studgent.utilities.iLocationChangedListener;
 
 public class POIMapviewActivity extends Activity implements
 		OnInfoWindowClickListener, ActionBar.OnNavigationListener,
-		LocationListener {
+		iLocationChangedListener {
 
 	/**
 	 * The serialization (saved instance state) Bundle key representing the
@@ -61,9 +64,7 @@ public class POIMapviewActivity extends Activity implements
 	protected Map<String, IPointOfInterest> marker_data;
 	protected MapFragment mapFragment;
 	protected GoogleMap map;
-	private LocationManager locationManager;
-	private static final long MIN_TIME = 400;
-	private static final float MIN_DISTANCE = 1000;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -82,19 +83,16 @@ public class POIMapviewActivity extends Activity implements
 		if(map != null) {
 			map.setMyLocationEnabled(true);
 		}
-		locationManager = (LocationManager)
-		getSystemService(Context.LOCATION_SERVICE);
-		//LocationManager.NETWORK_PROVIDER, LocationManager.GPS_PROVIDER and
-		//LocationManager.PASSIVE_PROVIDER
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-		MIN_TIME, MIN_DISTANCE, this);
-
+		
+	
 		String noPlayServices = "Google Play Services not found, map will not be shown.";
 		if (PlayServicesUtil.hasPlayServices(this, noPlayServices)) {
 			loadPOIs();
 		} else {
 			setNavigation();
 		}
+		LocationUtil.getInstance(this).registerLocationUpdatedListener(this);
+
 	}
 
 	// START switchbar
@@ -248,39 +246,32 @@ public class POIMapviewActivity extends Activity implements
 	}
 
 	// implementation LocationListener
-	@Override
-	public void onLocationChanged(Location location) {
-		LatLng latLng = new LatLng(location.getLatitude(),
-				location.getLongitude());
-		CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng,
-				10);
-		map.animateCamera(cameraUpdate);
-		locationManager.removeUpdates(this);
-	}
+	
+	
 	
 	@Override
 	public void onPause() {
-		
-		locationManager.removeUpdates(this);
+		LocationUtil.getInstance(this).onPause();
 		super.onPause();
 	}
 	
 	@Override
 	public void onResume(){
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, MIN_DISTANCE, this);
+		LocationUtil.getInstance(this).onResume();
 		super.onResume();
 	}
 
-	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) {
-	}
+	
 
 	@Override
-	public void onProviderEnabled(String provider) {
+	public void locationIsChanged(Location location) {
+		LatLng latLng = new LatLng(location.getLatitude(),
+				location.getLongitude());
+		CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng,
+				10);
+		map.animateCamera(cameraUpdate);
+		
 	}
 
-	@Override
-	public void onProviderDisabled(String provider) {
-	}
-
+	
 }

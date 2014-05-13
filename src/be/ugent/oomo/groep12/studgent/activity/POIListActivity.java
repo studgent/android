@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Map;
 
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -48,11 +49,13 @@ import be.ugent.oomo.groep12.studgent.common.QuizQuestion;
 import be.ugent.oomo.groep12.studgent.data.POIDataSource;
 import be.ugent.oomo.groep12.studgent.data.QuizQuestionsDataSource;
 import be.ugent.oomo.groep12.studgent.exception.DataSourceException;
+import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
+import be.ugent.oomo.groep12.studgent.utilities.iDistanceUpdatedListener;
 
 public class POIListActivity extends Activity implements
 		AdapterView.OnItemClickListener, ActionBar.OnNavigationListener,
-		TextWatcher, LocationListener {
+		TextWatcher, iDistanceUpdatedListener {
 
 	/**
 	 * The serialization (saved instance state) Bundle key representing the
@@ -92,15 +95,18 @@ public class POIListActivity extends Activity implements
 		 * null); event_list_view.addHeaderView(header);
 		 */
 
-		// start GPS
-		startGPS();
-
+		
+		
 		// create adapter with empty list and attach custom item view
 
 		adapter = new POIAdapter(this, R.layout.poi_list_item,
 				new ArrayList<PointOfInterest>());
 		poi_list_view.setAdapter(adapter);
 		new AsyncPOIListViewLoader().execute(adapter);
+		
+		// start GPS
+		LocationUtil.getInstance(this).registerDistanceUpdatedListener(this);
+				
 
 	}
 
@@ -228,8 +234,6 @@ public class POIListActivity extends Activity implements
 		protected void onPostExecute(ArrayList<IPointOfInterest> result) {
 			super.onPostExecute(result);
 
-			updateLocation(null);
-
 			dialog.dismiss();
 			// adapter.setItemList(result);
 			adapter.clear();
@@ -287,77 +291,26 @@ public class POIListActivity extends Activity implements
 	}
 
 	// -------------GPS---------------------------
-	LocationManager locationManager;
-	private static final long MIN_TIME = 400;
-	private static final float MIN_DISTANCE = 1000;
 
 	@Override
 	public void onPause() {
-		locationManager.removeUpdates(this);
+		LocationUtil.getInstance(this).onPause();
 		super.onPause();
 	}
 
 	@Override
 	public void onResume() {
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-				MIN_TIME, MIN_DISTANCE, this);
+
+		LocationUtil.getInstance(this).onResume();
 		super.onResume();
 	}
 
-	public void startGPS() {
-		if (locationManager == null) {
-			locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		}
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-				MIN_TIME, MIN_DISTANCE, this);
-	}
-
-	public void updateLocation(Location location) {
-		if (location == null) {
-			locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-			location = locationManager.getLastKnownLocation(locationManager
-					.getBestProvider(new Criteria(), false));
-		}
-
-		if (location != null && location.getLatitude() != 0
-				&& location.getLongitude() != 0) {
-			Collection<IPointOfInterest> pois = POIDataSource.getInstance()
-					.getLastItems().values();
-			for (IPointOfInterest p : pois) {
-				PointOfInterest p2 = (PointOfInterest) p;
-				float distance = location
-						.distanceTo(p2.getLocationAsLocation());
-				p2.setDistance(distance);
-			}
-			renewListGui();
-		}
-	}
-
 	@Override
-	public void onLocationChanged(Location location) {
+	public void distanceIsUpdated() {
 		// TODO Auto-generated method stub
-		updateLocation(location);
-
+		renewListGui();
 	}
-
-	@Override
-	public void onProviderDisabled(String provider) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onProviderEnabled(String provider) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) {
-		// TODO Auto-generated method stub
-
-	}
-
+	
 	// update LIST
 	private void renewListGui() {
 		adapter.sort(new Comparator<PointOfInterest>() {
@@ -375,6 +328,8 @@ public class POIListActivity extends Activity implements
 		});
 		adapter.notifyDataSetChanged();
 	}
+
+	
 
 	
 

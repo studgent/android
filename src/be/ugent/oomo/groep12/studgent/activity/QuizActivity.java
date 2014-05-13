@@ -15,6 +15,7 @@ import be.ugent.oomo.groep12.studgent.exception.DataSourceException;
 import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
+import be.ugent.oomo.groep12.studgent.utilities.iDistanceUpdatedListener;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
@@ -47,19 +48,14 @@ import android.widget.Toast;
 
 
 public class QuizActivity extends Activity implements 
-AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener
-, LocationListener
+AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener, iDistanceUpdatedListener
+
 {
 	
 	ListView quiz_list;
 	QuizAdapter adapter;
 	IQuizQuestion currentQuestion;
 	String currentAddress;
-	
-	//GPS
-	LocationManager locationManager;
-	private static final long MIN_TIME = 400;
-	private static final float MIN_DISTANCE = 1000;
 	
 
 	
@@ -81,19 +77,7 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener
 	}
 
 	
-	@Override
-	public void onPause(){
-		locationManager.removeUpdates(this);
-		super.onPause();
-	}
-	
-	@Override
-	public void onResume(){
-		if (locationManager != null)
-			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-				MIN_TIME, MIN_DISTANCE, this);
-		super.onResume();
-	}
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -114,14 +98,16 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener
 		
 		adapter.clear();
 		
-		startGPS();
-		
 		if (LoginUtility.getInstance().isLoggedIn()==false){
 			Toast.makeText(this, "Log in om de quiz te kunnen spelen!", Toast.LENGTH_SHORT).show();
 			onBackPressed();
 		}else{
 			new AsyncQuizQuestionListViewLoader().execute(adapter);
 		}
+		
+		//start GPS
+		LocationUtil.getInstance(this).registerDistanceUpdatedListener(this);
+				
 		
 	}
 	
@@ -349,15 +335,7 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener
 		        	
 		        	adapter.add(question);
 		        }
-		        //calculate distance with latest known GPS location
-		        locationManager = (LocationManager)
-						getSystemService(Context.LOCATION_SERVICE);
-				Location lastKnownLocation = locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria() , false));
-		        updateLocation(lastKnownLocation);
-		        
 		        renewListGui();
-		        
-	        
 	    }
 	}
 
@@ -404,65 +382,28 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener
 			return null;
 		}
 	}
+
+
+	//-----GPS
+	@Override
+	public void distanceIsUpdated() {
+		// TODO Auto-generated method stub
+		renewListGui();
+	}
+	@Override
+	public void onPause(){
+		LocationUtil.getInstance(this).onPause();
+		super.onPause();
+	}
 	
+	@Override
+	public void onResume(){
+		LocationUtil.getInstance(this).onResume();
+		super.onResume();
+	}
 	
-	public void startGPS(){
-		if (locationManager==null){
-			locationManager = (LocationManager)
-				getSystemService(Context.LOCATION_SERVICE);
-		}
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-		MIN_TIME, MIN_DISTANCE, this);
-		
-		//Network on main thread error! Run in async!
-		//onLocationChanged(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER));
-			
-	}
 
 
-	
-	public void updateLocation(Location location){
-		
-		if (location != null && location.getLatitude() != 0 && location.getLongitude() != 0 ){
-			try {
-				Collection<QuizQuestion> questions =  QuizQuestionsDataSource.getInstance().getLastItems().values();
-				for( QuizQuestion q : questions ){
-						float distance = location.distanceTo(q.getLocationAsLocation()) / 1000;
-						q.setDistance(distance);
-				}
-				renewListGui();
-			} catch (DataSourceException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}			
-		}			
-	}
-	@Override
-	public void onLocationChanged(Location location) {
-		// TODO Auto-generated method stub
-		updateLocation(location);
-	}
-
-
-	@Override
-	public void onProviderDisabled(String provider) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void onProviderEnabled(String provider) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 
 
