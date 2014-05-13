@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.Toast;
 import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
 import be.ugent.oomo.groep12.studgent.view.OverlayView;
@@ -43,6 +44,11 @@ public class AugmentedViewActivity extends Activity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		if (!LocationUtil.isGPSEnabled(this)){
+			Toast.makeText(this, "GPS is uitgeschakeld! Sommige functies zijn onbruikbaar.", Toast.LENGTH_SHORT).show();
+			this.finish();
+		}
 
 		// Set landscape orientation if not already
 		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
