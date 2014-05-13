@@ -197,7 +197,6 @@ public class LocationUtil implements LocationListener  {
 				MIN_TIME, MIN_DISTANCE, this);
 	}
 	
-
 	
 	/**
 	 * This function is called by the LocationManager when new GPS data is available.

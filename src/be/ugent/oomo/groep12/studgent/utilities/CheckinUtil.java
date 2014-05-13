@@ -15,6 +15,14 @@ public class CheckinUtil {
 		// TODO Auto-generated constructor stub
 	}
 	
+	/**
+	 * Checks if the user is allowed to check in on the POI.
+	 * @param context : the activity 
+	 * @param poi	: The Point Of Interest where the current user wants to check-in
+	 * @param sharedPreferences: Local memory where the last check-in is saved
+	 * @param currentLocation: The current location of the user
+	 * @return a empty string if the check-in is allowed. Otherwise a textual respresentation of the error will be given
+	 */
 	public static String checkInAllowed(Context context, IPointOfInterest poi, SharedPreferences sharedPreferences, Location currentLocation) {
 		//check if user is logged in
 		if (LoginUtility.getInstance().isLoggedIn() == false)
