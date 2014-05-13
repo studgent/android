@@ -76,10 +76,13 @@ public class POIListActivity extends Activity implements
 		this.overridePendingTransition(R.anim.animation_enter,
 				R.anim.animation_leave);
 		setContentView(R.layout.activity_poi_list);
-		setNavigation();
 		filterByDistance = false;
 		filterByDistance = getIntent().getExtras().getBoolean("filter");
+
 		System.out.println("filteren?----------" + filterByDistance);
+		if(!filterByDistance){
+			setNavigation();
+		}
 		// hide keyboard on start activity
 		this.getWindow().setSoftInputMode(
 				LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
