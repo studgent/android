@@ -107,23 +107,24 @@ public class CheckinListActivity extends Activity{
 	    @Override
 	    protected void onPostExecute(ArrayList<Checkin> result) {            
 	        super.onPostExecute(result);
-	        
 	        dialog.dismiss();
-	        //adapter.setItemList(result);
 	        adapter.clear();
-	        for(Checkin checkin: result){
-	        	adapter.add(checkin);
-	        }
-	        checkin_list_view.setAdapter(adapter);
-	        adapter.notifyDataSetChanged();
-	        
-	        if (result.size() > 0){
-	        	//show textview 'no data'
-		        TextView txt = (TextView) findViewById(R.id.checkin_list_nodata);
-		        txt.setVisibility(View.GONE);
-	        }else{
-	        	 TextView txt = (TextView) findViewById(R.id.checkin_list_nodata);
-			     txt.setVisibility(View.VISIBLE);
+	        if (result != null){
+		       
+		        for(Checkin checkin: result){
+		        	adapter.add(checkin);
+		        }
+		        checkin_list_view.setAdapter(adapter);
+		        adapter.notifyDataSetChanged();
+		        
+		        if (result.size() > 0){
+		        	//show textview 'no data'
+			        TextView txt = (TextView) findViewById(R.id.checkin_list_nodata);
+			        txt.setVisibility(View.GONE);
+		        }else{
+		        	 TextView txt = (TextView) findViewById(R.id.checkin_list_nodata);
+				     txt.setVisibility(View.VISIBLE);
+		        }
 	        }
 	    }
 

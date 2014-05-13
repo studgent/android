@@ -482,10 +482,15 @@ public class POIDetailActivity extends Activity implements
 		}
 		
 		TextView distance = (TextView) findViewById(R.id.poi_detail_distance);
-		if (poi.getDistance() > 1000){
-			distance.setText( Math.round(poi.getDistance()/1000) + " km");
+		if (poi.getDistance() > 0){
+			distance.setVisibility(View.VISIBLE);
+			if (poi.getDistance() > 1000){
+				distance.setText( Math.round(poi.getDistance()/1000) + " km");
+			}else{
+				distance.setText( Math.round(poi.getDistance()) + " m");
+			}
 		}else{
-			distance.setText( Math.round(poi.getDistance()) + " m");
+			distance.setVisibility(View.GONE);
 		}
 		
 	}

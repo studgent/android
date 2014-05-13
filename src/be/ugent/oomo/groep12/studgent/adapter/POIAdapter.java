@@ -97,6 +97,17 @@ public class POIAdapter extends ArrayAdapter<PointOfInterest> implements Filtera
         	distance=distance/1000.0;
         	unit = "km";
         }
+        
+        if (distance>0){
+        	//show
+        	holder.distance.setVisibility(View.VISIBLE);
+        	 holder.unit.setVisibility(View.VISIBLE);
+        }else{
+        	//hide
+        	holder.distance.setVisibility(View.GONE);
+        	 holder.unit.setVisibility(View.VISIBLE);
+        }
+        
         //de category_image moet nog gedaan worden
         Spanned name =Html.fromHtml((String) "" +  POI_item.getName());
         holder.name.setText(name);
