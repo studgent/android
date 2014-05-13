@@ -15,7 +15,7 @@ import be.ugent.oomo.groep12.studgent.exception.DataSourceException;
 import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
-import be.ugent.oomo.groep12.studgent.utilities.iDistanceUpdatedListener;
+import be.ugent.oomo.groep12.studgent.utilities.IDistanceUpdatedListener;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
@@ -48,7 +48,7 @@ import android.widget.Toast;
 
 
 public class QuizActivity extends Activity implements 
-AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener, iDistanceUpdatedListener
+AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener, IDistanceUpdatedListener
 
 {
 	
