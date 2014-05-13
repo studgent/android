@@ -244,7 +244,6 @@ public class POIListActivity extends Activity implements
 			}
 			poi_list_view.setAdapter(adapter);
 			renewListGui();
-			LayoutUtil.updateListViewHeight(poi_list_view);
 		}
 
 		@Override

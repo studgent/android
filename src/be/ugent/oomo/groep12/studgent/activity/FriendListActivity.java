@@ -140,7 +140,6 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
 	        }
 	        friend_list_view.setAdapter(adapter);
 	        adapter.notifyDataSetChanged();
-			LayoutUtil.updateListViewHeight(friend_list_view);
 	    }
 
 	    @Override
