@@ -19,6 +19,7 @@ import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.adapter.TrophieAdapter;
 import be.ugent.oomo.groep12.studgent.common.Trophie;
 import be.ugent.oomo.groep12.studgent.data.TrophieListDataSource;
+import be.ugent.oomo.groep12.studgent.utilities.LayoutUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 
@@ -77,6 +78,7 @@ public class TrophiesListActivity  extends Activity {
 	        }
 	        trophie_list_view.setAdapter(adapter);
 	        adapter.notifyDataSetChanged();
+			LayoutUtil.updateListViewHeight(trophie_list_view);
 	    }
 
 	    @Override

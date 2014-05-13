@@ -48,6 +48,7 @@ import be.ugent.oomo.groep12.studgent.common.QuizQuestion;
 import be.ugent.oomo.groep12.studgent.data.POIDataSource;
 import be.ugent.oomo.groep12.studgent.data.QuizQuestionsDataSource;
 import be.ugent.oomo.groep12.studgent.exception.DataSourceException;
+import be.ugent.oomo.groep12.studgent.utilities.LayoutUtil;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 
 public class POIListActivity extends Activity implements
@@ -243,6 +244,7 @@ public class POIListActivity extends Activity implements
 			}
 			poi_list_view.setAdapter(adapter);
 			renewListGui();
+			LayoutUtil.updateListViewHeight(poi_list_view);
 		}
 
 		@Override

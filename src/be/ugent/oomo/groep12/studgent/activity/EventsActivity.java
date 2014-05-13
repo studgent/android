@@ -36,6 +36,7 @@ import be.ugent.oomo.groep12.studgent.common.CalendarEvent;
 import be.ugent.oomo.groep12.studgent.common.IData;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import be.ugent.oomo.groep12.studgent.data.CalendarEventDataSource;
+import be.ugent.oomo.groep12.studgent.utilities.LayoutUtil;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 
 public class EventsActivity extends Activity implements AdapterView.OnItemClickListener, TextWatcher {
@@ -118,6 +119,7 @@ public class EventsActivity extends Activity implements AdapterView.OnItemClickL
 	        }
 	        event_list_view.setAdapter(adapter);
 	        adapter.notifyDataSetChanged();
+	        LayoutUtil.updateListViewHeight(event_list_view);
 	    }
 
 	    @Override

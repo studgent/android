@@ -42,6 +42,7 @@ import be.ugent.oomo.groep12.studgent.common.IData;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import be.ugent.oomo.groep12.studgent.data.CalendarEventDataSource;
 import be.ugent.oomo.groep12.studgent.data.FriendListDataSource;
+import be.ugent.oomo.groep12.studgent.utilities.LayoutUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 
@@ -139,6 +140,7 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
 	        }
 	        friend_list_view.setAdapter(adapter);
 	        adapter.notifyDataSetChanged();
+			LayoutUtil.updateListViewHeight(friend_list_view);
 	    }
 
 	    @Override
