@@ -56,8 +56,7 @@ public class AugmentedViewActivity extends Activity implements
 				.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 
 		// GPS
-		LocationUtil.getInstance(this).registerLocationUpdatedListener(
-				overlayView);
+		LocationUtil.getInstance(this).registerLocationUpdatedListener(overlayView);
 
 		// Video
 		holder = surfaceView.getHolder();

@@ -15,13 +15,14 @@ import be.ugent.oomo.groep12.studgent.activity.POIDetailActivity;
 import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import be.ugent.oomo.groep12.studgent.data.POIDataSource;
+import be.ugent.oomo.groep12.studgent.utilities.ILocationChangedListener;
 import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
-import be.ugent.oomo.groep12.studgent.utilities.iLocationChangedListener;
+import be.ugent.oomo.groep12.studgent.utilities.ILocationChangedListener;
 
 import com.google.android.gms.maps.model.LatLng;
 
 public class OverlayView extends FrameLayout implements OnClickListener,
-		iLocationChangedListener {
+		ILocationChangedListener {
 
 	private int screenWidth;
 	private static int fov = 70;
