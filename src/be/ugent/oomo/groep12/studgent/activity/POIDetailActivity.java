@@ -165,10 +165,13 @@ public class POIDetailActivity extends Activity implements
 	
 
 	public void navigateTo(View view) {
+		
 		String uri = "geo:" + poi.getLocation().latitude + ","
 				+ poi.getLocation().longitude + "?q="
-				+ poi.getStreet().replace(" ", "+") + "+" + poi.getNumber();
-
+				+ poi.getStreet().replace(" ", "+");
+		if( ! (poi.getNumber() == null || poi.getNumber().equals("") || poi.getNumber().equalsIgnoreCase("null")) ){
+			uri += "+" + poi.getNumber();
+		}
 		try {
 			startActivity(new Intent(android.content.Intent.ACTION_VIEW,
 					Uri.parse(uri)));
