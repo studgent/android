@@ -16,6 +16,7 @@ import be.ugent.oomo.groep12.studgent.utilities.LayoutUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 import be.ugent.oomo.groep12.studgent.activity.AboutActivity;
+import be.ugent.oomo.groep12.studgent.common.Friend;
 import be.ugent.oomo.groep12.studgent.data.CheckinsDataSource;
 import be.ugent.oomo.groep12.studgent.data.TrophieListDataSource;
 
@@ -28,7 +29,7 @@ public class UserProfileActivity extends Activity {
 
 	protected Button button_trofies;
 	protected Button button_checkin;
-	private int userID;
+	protected Friend user;
 	protected String btnCheckinText;
 
 	@Override
@@ -54,13 +55,7 @@ public class UserProfileActivity extends Activity {
 		LayoutUtil.buttonEffect(button_trofies);
 		LayoutUtil.buttonEffect(button_checkin);
 
-		userID = getIntent().getExtras().getInt("userID");
-		
-		//set profile values
-		String name = getIntent().getExtras().getString("name");
-		String email = getIntent().getExtras().getString("email");
-		String phone = getIntent().getExtras().getString("phone");
-		String score = getIntent().getExtras().getString("score");
+		user = (Friend) getIntent().getParcelableExtra("user");
 		
 		TextView txtName = (TextView)findViewById(R.id.user_profile_name); 
 		TextView txtEmail = (TextView)findViewById(R.id.user_profile_email); 
@@ -71,32 +66,32 @@ public class UserProfileActivity extends Activity {
 		
 		//hier nog de text van btntrophie veranderen (zodat het aantal trofies er ook in staat)
 		btnCheckinText = String.valueOf(btnCheckin.getText());
-		btnCheckin.setText(btnCheckinText+"  ("+CheckinsDataSource.getCheckinNumber(userID)+")");
+		btnCheckin.setText(btnCheckinText+"  ("+CheckinsDataSource.getCheckinNumber(user.getId())+")");
 		
-		txtName.setText(Html.fromHtml(name));
-		txtEmail.setText(Html.fromHtml("<a href=\"mailto:"+email+"\" >"+email+"</a>"));
+		txtName.setText(Html.fromHtml(user.getName()));
+		txtEmail.setText(Html.fromHtml("<a href=\"mailto:"+ user.getEmail() +"\" >"+user.getEmail()+"</a>"));
 		txtEmail.setMovementMethod(LinkMovementMethod.getInstance());
-		txtPhone.setText(Html.fromHtml(txtPhone.getText()+ ""));
-		txtscore.setText(Html.fromHtml(txtscore.getText() +""));
+		txtPhone.setText(Html.fromHtml(user.getPhone() + ""));
+		txtscore.setText(Html.fromHtml(user.getScore() +" punten"));
 	}
 	@Override
 	protected void onResume(){
 		super.onResume();
-		btnCheckinText = String.valueOf(btnCheckinText+"  ("+CheckinsDataSource.getCheckinNumber(userID)+")");
+		btnCheckinText = String.valueOf(btnCheckinText+" ("+CheckinsDataSource.getCheckinNumber(user.getId())+")");
 		
 	}
 	
 	
 	public void openTrofieListActivity(View view){
 		Intent intent = new Intent(this, TrophiesListActivity.class);
-		intent.putExtra("userID", userID);
+		intent.putExtra("userID", user.getId());
 		startActivity(intent);
 	}
 	
 	public void openCheckinListActivity(View view) {
 		Intent intent = new Intent(this, CheckinListActivity.class);
 		intent.putExtra("checkinOfUser", true);
-		intent.putExtra("sourceID", userID);
+		intent.putExtra("sourceID", user.getId());
 		startActivity(intent);
 	}
 }

@@ -102,7 +102,6 @@ public class FriendListDataSource implements IDataSource {
 			   phone = JSONUtil.optString(item, "phone");
 		
 		friend = new Friend(id, following, firstname, lastname, email, description, phone, score);
-		Log.i("Creating user", friend.toString());
 		return friend;
 	}
 	public Map<Integer, Friend> getLastItems() throws DataSourceException {

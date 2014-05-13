@@ -47,7 +47,6 @@ public class CheckinListActivity extends Activity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		System.out.println("kom ik hier1");
 		this.overridePendingTransition(R.anim.animation_enter,
 				R.anim.animation_leave);
 		setContentView(R.layout.activity_checkin_list);
@@ -67,11 +66,8 @@ public class CheckinListActivity extends Activity{
         
         checkin_list_view.setAdapter(adapter);
 
-		System.out.println("kom ik hier2");
-
         new AsyncCheckinListViewLoader().execute(adapter);
 
-		System.out.println("kom ik hier3");
         
 	}
 
@@ -131,7 +127,7 @@ public class CheckinListActivity extends Activity{
 	    @Override
 	    protected void onPreExecute() {        
 	        super.onPreExecute();
-	        dialog.setMessage("Gebruikers ophalen...");
+	        dialog.setMessage("Checkins ophalen...");
 	        dialog.show();            
 	    }
 

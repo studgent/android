@@ -113,15 +113,7 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
 	public void onItemClick(AdapterView<?> parent, View item, int position, long rowID) {
 		System.out.println("geklikt op vriend");
 		Intent intent = new Intent(this, UserProfileActivity.class);
-		String name = adapter.getItem(position).getName();
-		String email = adapter.getItem(position).getEmail();
-		String phone = adapter.getItem(position).getPhone();
-		int score = adapter.getItem(position).getScore();
-		intent.putExtra("name", name);
-		intent.putExtra("email", name);
-		intent.putExtra("phone", name);
-		intent.putExtra("score", score);
-		intent.putExtra("userID", adapter.getItem(position).getId());
+		intent.putExtra("user", adapter.getItem(position));
 		startActivity(intent);
 	}
 
