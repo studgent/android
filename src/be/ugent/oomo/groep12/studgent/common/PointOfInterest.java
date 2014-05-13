@@ -24,6 +24,7 @@ public class PointOfInterest implements IPointOfInterest {
 	protected LatLng location;
 	protected String url;
 	protected double distance;
+	protected int checkins;
 	
 	public void setDistance(float distance2){
 		this.distance=distance2;
@@ -123,6 +124,7 @@ public class PointOfInterest implements IPointOfInterest {
 		this.location = new LatLng(in.readDouble(),in.readDouble());
 		this.url = in.readString();
 		this.distance = in.readDouble();
+		this.checkins = in.readInt();
 	}
 	
 
@@ -142,6 +144,7 @@ public class PointOfInterest implements IPointOfInterest {
 		dest.writeDouble(this.location.longitude);
 		dest.writeString(this.url);
 		dest.writeDouble(this.distance);
+		dest.writeInt(this.checkins);
 	}
 	
 
@@ -174,6 +177,14 @@ public class PointOfInterest implements IPointOfInterest {
 		loc.setLatitude(location.latitude);
 		loc.setLongitude(location.longitude);
 		return loc;		
+	}
+
+	public void setCheckins(int checkins) {
+		this.checkins = checkins;
+	}
+	
+	public int getCheckins(){
+		return this.checkins;
 	}
 	
 	

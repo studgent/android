@@ -102,6 +102,12 @@ public class POIAdapter extends ArrayAdapter<PointOfInterest> implements Filtera
         holder.name.setText(name);
         if ( POI_item != null && !( POI_item.getStreet() == null || (POI_item.getStreet().equals("")) ) ) {
         	holder.streetAndNumber.setText(Html.fromHtml("" +  POI_item.getStreet()+" "+POI_item.getNumber()) );
+        } else if (POI_item != null) {
+        	if (POI_item.getCheckins() == 0) {
+            	holder.streetAndNumber.setText("Nog geen checkins.");
+        	} else {
+            	holder.streetAndNumber.setText("Al " + POI_item.getCheckins() + " checkins.");
+        	}
         } else {
         	holder.streetAndNumber.setText("");
         }
