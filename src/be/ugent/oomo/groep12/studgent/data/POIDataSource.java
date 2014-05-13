@@ -78,6 +78,8 @@ public class POIDataSource implements IDataSource {
 			   details = JSONUtil.optString(item,"details"),
 			   uri = JSONUtil.optString(item,"uri"),
 			   cafeplan_uri = JSONUtil.optString(item,"cafeplan_uri");
+		JSONArray checkin_items = item.getJSONArray("checkins");
+		int checkins = checkin_items.length();
 			  
 		Double latitude = item.optDouble("latitude", 0.0),
 			   longitude = item.optDouble("longitude", 0.0);
@@ -88,6 +90,7 @@ public class POIDataSource implements IDataSource {
 		
 		
 		poi  = new PointOfInterest(id, name, details, street , streetNumber , location );
+		poi.setCheckins(checkins);
 		if (uri != null){
 			poi.setUrl(uri);	
 		}else{
