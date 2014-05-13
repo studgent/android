@@ -1,6 +1,7 @@
 package be.ugent.oomo.groep12.studgent.activity;
 
 import be.ugent.oomo.groep12.studgent.R;
+import be.ugent.oomo.groep12.studgent.utilities.LayoutUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
@@ -10,9 +11,16 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 public class ChallengeActivity extends Activity {
+	
+
+	protected Button button_checkin;
+	protected Button button_amidrunk;
+	protected Button button_quiz;
+	protected Button button_trophies;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +28,24 @@ public class ChallengeActivity extends Activity {
 		this.overridePendingTransition(R.anim.animation_enter,
 				R.anim.animation_leave);
 		setContentView(R.layout.activity_challenge);
+		setButtons();
 	}
+	
+
+	protected void setButtons(){
+		// get the buttons and set them to protected members
+		button_checkin = (Button) findViewById(R.id.button_checkin);
+		button_amidrunk = (Button) findViewById(R.id.button_amidrunk);
+		button_quiz = (Button) findViewById(R.id.button_quiz);
+		button_trophies = (Button) findViewById(R.id.button_trophies);
+
+		// enable on touch effect
+		LayoutUtil.buttonEffect(button_checkin);
+		LayoutUtil.buttonEffect(button_amidrunk);
+		LayoutUtil.buttonEffect(button_trophies);
+		LayoutUtil.buttonEffect(button_trophies);
+	}
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

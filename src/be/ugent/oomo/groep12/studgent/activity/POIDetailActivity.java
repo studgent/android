@@ -22,6 +22,7 @@ import be.ugent.oomo.groep12.studgent.data.QuizQuestionsDataSource;
 import be.ugent.oomo.groep12.studgent.exception.CurlException;
 import be.ugent.oomo.groep12.studgent.exception.DataSourceException;
 import be.ugent.oomo.groep12.studgent.utilities.CheckinUtil;
+import be.ugent.oomo.groep12.studgent.utilities.LayoutUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
@@ -51,6 +52,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
@@ -69,6 +71,9 @@ public class POIDetailActivity extends Activity implements
 	protected Location currentLocation;
 	protected boolean parentIsCheckInActivity;
 	
+	protected Button showNavigation;
+	protected Button check_in_Button;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +83,7 @@ public class POIDetailActivity extends Activity implements
 		parentIsCheckInActivity = getIntent().getExtras().getBoolean("parentIsCheckInActivity");
 		setContentView(R.layout.activity_poi_detail);
 
+		setButtons();
 		// get the table from view
 		table_view = (TableLayout) findViewById(R.id.poi_detail_table);
 		// set some default data for table and row layout
@@ -96,7 +102,6 @@ public class POIDetailActivity extends Activity implements
 			TableRow tableRow =  (TableRow) findViewById(R.id.tableRowNavigation);
 			tableRow.setVisibility(View.INVISIBLE);
 		}
-
 		// txtTitle.setVisibility(View.INVISIBLE);
 		txtDetail.setVisibility(View.INVISIBLE);
 		txtLocation.setVisibility(View.INVISIBLE);
@@ -141,6 +146,17 @@ public class POIDetailActivity extends Activity implements
 		
 		renewDistanceGui();
 	}
+	
+
+	protected void setButtons(){
+		// get the buttons and set them to protected members
+		showNavigation = (Button) findViewById(R.id.showNavigation);
+		check_in_Button = (Button) findViewById(R.id.check_in_Button);
+		// enable on touch effect
+		LayoutUtil.buttonEffect(showNavigation);
+		LayoutUtil.buttonEffect(check_in_Button);
+	}
+
 	
 
 	@Override
