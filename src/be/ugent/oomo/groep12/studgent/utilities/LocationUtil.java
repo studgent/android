@@ -179,7 +179,8 @@ public class LocationUtil implements LocationListener  {
 				listenerDistance.distanceIsUpdated();
 			}
 			if (listenerLocation != null){
-				listenerLocation.locationIsChanged(location);
+				if (location != null && location.getLatitude() != 0 && location.getLongitude() != 0 )
+					listenerLocation.locationIsChanged(location);
 			}
 		}
 		
