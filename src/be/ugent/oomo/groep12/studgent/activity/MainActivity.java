@@ -50,7 +50,7 @@ public class MainActivity extends Activity {
 		}
 		
 		if (!LocationUtil.isGPSEnabled(this)){
-			Toast.makeText(this, "GPS is uitgeschakeld! Sommige functies zijn onbruikbaar.", 10);
+			Toast.makeText(this, "GPS is uitgeschakeld! Sommige functies zijn onbruikbaar.", Toast.LENGTH_SHORT).show();
 		}
 	}
 	
