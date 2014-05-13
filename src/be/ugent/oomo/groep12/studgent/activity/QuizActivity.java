@@ -196,14 +196,18 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener, iDista
 				btnNavigateto.setVisibility(view.VISIBLE);
 			}
 			
+			Button submitButton = (Button)findViewById(R.id.quiz_submitText);
 			if (currentQuestion.getPossibleAnswers()==null || currentQuestion.getPossibleAnswers().size()==0){
 				//no multiple answer question, show inputbox
 				oneAnswerPanel.setVisibility(view.VISIBLE);
 				multipleAnswerPanel.setVisibility(View.GONE);
 				EditText answerInputBox = (EditText) findViewById(R.id.QuizAnswerInputBox);
 				answerInputBox.setOnEditorActionListener(this);
+				submitButton.setVisibility(View.VISIBLE);
 			}else{
 				//Multiple answers
+				submitButton.setVisibility(View.GONE);
+				
 				oneAnswerPanel.setVisibility(View.GONE);
 				multipleAnswerPanel.setVisibility(view.VISIBLE);
 				multipleAnswerPanel.removeAllViews();
@@ -240,6 +244,11 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener, iDista
 		String answer = target.getText().toString();
 		sendAnswer(answer);
 	}	
+	
+	public void submitButton(View view){
+		EditText v = (EditText) findViewById(R.id.QuizAnswerInputBox);
+		sendAnswer(v.getText().toString());
+	}
 	
 	//handle enter submit when no multiple choice
 	@Override

@@ -51,15 +51,36 @@
                 >
             </EditText>
         </RelativeLayout>
- 		<Button
+        
+        <LinearLayout 
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+                
+            >
+             <Button
+                android:id="@+id/quiz_submitText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="Antwoorden"
+                android:onClick="submitButton" />  
+            
+            
+            <Button
                 android:id="@+id/navigateToQuestion"
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:text="Navigeer naar de locatie"
-                android:onClick="navigateTo" />        
+         		android:layout_gravity="right"
+         		android:gravity="right"
+         		
+                android:drawableLeft="@drawable/studgent_logo"
+                android:onClick="navigateTo" />    
+        </LinearLayout>
+        
+ 	    
     </LinearLayout>
 
 	<ListView
