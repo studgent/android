@@ -17,7 +17,6 @@ import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import be.ugent.oomo.groep12.studgent.data.POIDataSource;
 import be.ugent.oomo.groep12.studgent.utilities.ILocationChangedListener;
 import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
-import be.ugent.oomo.groep12.studgent.utilities.ILocationChangedListener;
 
 import com.google.android.gms.maps.model.LatLng;
 
