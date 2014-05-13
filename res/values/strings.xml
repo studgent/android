@@ -2,6 +2,8 @@
 <resources>
 
     <string name="app_name">StudGent</string>
+    <string name="checked_in_title">Inchecken?</string>
+    
     <string name="title_checkin_list_activity">Checkins</string>
     <string name="title_user_profile">Gebruikers profiel</string>
     <string name="trophie_button">Bekijk Trofeeën</string>

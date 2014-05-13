@@ -329,6 +329,7 @@ public class POIDetailActivity extends Activity implements
 	    @Override
 	    protected void onPostExecute(Boolean result) {            
 	        super.onPostExecute(result);
+	        
 	    }
 
 		@Override
@@ -390,7 +391,7 @@ public class POIDetailActivity extends Activity implements
 	private void ceckInDialog() {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this); //de this slaat op de ouder
 	
-		alertDialogBuilder.setTitle(getString(R.string.still_checked_in_title));
+		alertDialogBuilder.setTitle(getString(R.string.checked_in_title));
 		
 		final EditText input = new EditText(this); 
 		input.setText("shout!");

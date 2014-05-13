@@ -170,6 +170,7 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
 	    protected void onPostExecute(Boolean result) {            
 	        super.onPostExecute(result);
 			changeImageButton(result);
+			adapter.notifyDataSetChanged();
 	    }
 
 		@Override
