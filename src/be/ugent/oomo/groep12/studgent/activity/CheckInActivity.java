@@ -12,6 +12,7 @@ import be.ugent.oomo.groep12.studgent.adapter.POIAdapter;
 import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import be.ugent.oomo.groep12.studgent.data.POIDataSource;
+import be.ugent.oomo.groep12.studgent.utilities.LayoutUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 import android.app.ActionBar;

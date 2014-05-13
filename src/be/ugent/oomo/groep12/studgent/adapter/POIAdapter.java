@@ -7,6 +7,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.location.LocationManager;
 import android.text.Html;
+import android.text.Spannable;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,7 +98,8 @@ public class POIAdapter extends ArrayAdapter<PointOfInterest> implements Filtera
         	unit = "km";
         }
         //de category_image moet nog gedaan worden
-        holder.name.setText(POI_item.getName());
+        Spanned name =Html.fromHtml((String) "" +  POI_item.getName());
+        holder.name.setText(name);
         if ( POI_item != null && !( POI_item.getStreet() == null || (POI_item.getStreet().equals("")) ) ) {
         	holder.streetAndNumber.setText(Html.fromHtml("" +  POI_item.getStreet()+" "+POI_item.getNumber()) );
         } else {

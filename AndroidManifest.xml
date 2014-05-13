@@ -54,17 +54,20 @@
         <activity
             android:name="be.ugent.oomo.groep12.studgent.activity.EventsActivity"
             android:icon="@drawable/calendar_logo"
-            android:label="@string/title_activity_events" >
+            android:label="@string/title_activity_events"
+            android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity
             android:name="be.ugent.oomo.groep12.studgent.activity.EventDetailActivity"
             android:icon="@drawable/calendar_logo"
-            android:label="@string/title_activity_event_detail" >
+            android:label="@string/title_activity_event_detail"
+            android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity
             android:name="be.ugent.oomo.groep12.studgent.activity.POIMapviewActivity"
             android:icon="@drawable/studgent_logo"
-            android:label="@string/title_activity_poi_mapview" >
+            android:label="@string/title_activity_poi_mapview"
+            android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity
             android:name="be.ugent.oomo.groep12.studgent.activity.AugmentedViewActivity"
@@ -75,47 +78,56 @@
         <activity
             android:name="be.ugent.oomo.groep12.studgent.activity.FriendListActivity"
             android:icon="@drawable/studgent_logo"
-            android:label="@string/title_friendlist_events" >
+            android:label="@string/title_friendlist_events"
+            android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity
             android:name="be.ugent.oomo.groep12.studgent.activity.POIListActivity"
             android:icon="@drawable/studgent_logo"
-            android:label="@string/title_poi_list_events" >
+            android:label="@string/title_poi_list_events"
+            android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity
             android:name="be.ugent.oomo.groep12.studgent.activity.POIDetailActivity"
             android:icon="@drawable/studgent_logo"
-            android:label="@string/title_activity_poi_detail" >
+            android:label="@string/title_activity_poi_detail"
+            android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity
             android:name="be.ugent.oomo.groep12.studgent.activity.LoginActivity"
             android:icon="@drawable/studgent_logo"
-            android:label="@string/title_activity_login" >
+            android:label="@string/title_activity_login"
+            android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity
             android:name="be.ugent.oomo.groep12.studgent.activity.ChallengeActivity"
             android:icon="@drawable/studgent_logo"
-            android:label="@string/title_activity_challenge" >
+            android:label="@string/title_activity_challenge"
+            android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity
             android:name="be.ugent.oomo.groep12.studgent.activity.QuizActivity"
             android:icon="@drawable/studgent_logo"
-            android:label="@string/quiz" >
+            android:label="@string/quiz"
+            android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity
             android:name="be.ugent.oomo.groep12.studgent.activity.TrophiesListActivity"
             android:icon="@drawable/studgent_logo"
-            android:label="@string/title_activity_trophies" >
+            android:label="@string/title_activity_trophies"
+            android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity
             android:name="be.ugent.oomo.groep12.studgent.activity.AmIDrunkActivity"
             android:icon="@drawable/studgent_logo"
-            android:label="@string/title_activity_am_idrunk" >
+            android:label="@string/title_activity_am_idrunk"
+            android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity
             android:name="be.ugent.oomo.groep12.studgent.activity.CheckInActivity"
             android:icon="@drawable/studgent_logo"
-            android:label="@string/title_activity_check_in" >
+            android:label="@string/title_activity_check_in"
+            android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity
             android:name="be.ugent.oomo.groep12.studgent.activity.CheckInDetailsActivity"
@@ -125,12 +137,14 @@
         <activity
             android:name="be.ugent.oomo.groep12.studgent.activity.AboutActivity"
             android:icon="@drawable/studgent_logo"
-            android:label="@string/title_activity_about" >
+            android:label="@string/title_activity_about"
+            android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity
             android:name="be.ugent.oomo.groep12.studgent.activity.UserProfileActivity"
             android:icon="@drawable/studgent_logo"
-            android:label="@string/title_user_profile" >
+            android:label="@string/title_user_profile"
+            android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
     </application>
 

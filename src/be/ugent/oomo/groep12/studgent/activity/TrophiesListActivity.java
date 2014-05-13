@@ -19,6 +19,7 @@ import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.adapter.TrophieAdapter;
 import be.ugent.oomo.groep12.studgent.common.Trophie;
 import be.ugent.oomo.groep12.studgent.data.TrophieListDataSource;
+import be.ugent.oomo.groep12.studgent.utilities.LayoutUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 
@@ -53,7 +54,7 @@ public class TrophiesListActivity  extends Activity {
         trophie_list_view.setAdapter(adapter);
         
         if (LoginUtility.getInstance().isLoggedIn() == false) {
-			Toast.makeText(this, "Log in om je trofeën te bekijken!", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "Log in om je trofeï¿½n te bekijken!", Toast.LENGTH_SHORT).show();
 			onBackPressed();
 		}else{
 			new AsyncTrophieListViewLoader().execute(adapter);

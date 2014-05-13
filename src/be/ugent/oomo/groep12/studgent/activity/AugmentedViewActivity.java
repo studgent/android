@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.widget.TextView;
 import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.view.OverlayView;
 
@@ -44,8 +43,6 @@ public class AugmentedViewActivity extends Activity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		getResources()
-				.getConfiguration();
 		// Set landscape orientation if not already
 		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
 			this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);

@@ -13,19 +13,13 @@
     android:layout_width="match_parent"
 	android:layout_height="wrap_content"
     android:enabled="true"
-    android:text=""/>
+    android:text=""
+    android:drawableLeft="@drawable/search" />
     
-	<ScrollView
-	    android:id="@+id/friends_view"
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-	    android:layout_below="@+id/searchFriends_EditText"
-	    android:layout_centerHorizontal="true"
-	    android:fillViewport="true" >
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@+id/searchFriends_EditText"
             android:orientation="vertical" >
 
             <ListView
@@ -35,6 +29,4 @@
             </ListView>
 
         </LinearLayout>
-    </ScrollView>
-    
 </RelativeLayout>

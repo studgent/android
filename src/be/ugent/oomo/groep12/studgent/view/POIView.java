@@ -7,7 +7,7 @@ import android.graphics.Paint;
 import android.view.View;
 import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
 
-public class POIView extends View {
+public class POIView extends View implements Comparable<POIView>{
 
 	private IPointOfInterest poi;
 	private Paint cpaint;
@@ -93,6 +93,12 @@ public class POIView extends View {
 	
 	public int getMinWidth() {
 		return minWidth;
+	}
+
+	@Override
+	public int compareTo(POIView another) {
+		// TODO Auto-generated method stub
+		return ((Double)poi.getDistance()).compareTo(another.getPoi().getDistance());
 	}
 
 }
