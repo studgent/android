@@ -96,7 +96,7 @@ public class POIAdapter extends ArrayAdapter<PointOfInterest> implements Filtera
         	unit = "km";
         }
         //de category_image moet nog gedaan worden
-        holder.name.setText(POI_item.getName());
+        holder.name.setText(Html.fromHtml("" +  POI_item.getName() ));
         if ( POI_item != null && !( POI_item.getStreet() == null || (POI_item.getStreet().equals("")) ) ) {
         	holder.streetAndNumber.setText(Html.fromHtml("" +  POI_item.getStreet()+" "+POI_item.getNumber()) );
         } else {
