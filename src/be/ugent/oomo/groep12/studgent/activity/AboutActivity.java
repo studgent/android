@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.os.Build;
 
@@ -71,6 +72,9 @@ public class AboutActivity extends Activity {
 			TextView aboutTV = (TextView) rootView.findViewById(R.id.about_textview);
 			aboutTV.setText(Html.fromHtml( getString(R.string.about_text) ));
 			aboutTV.setMovementMethod(LinkMovementMethod.getInstance());
+
+			ImageView image = (ImageView) rootView.findViewById(R.id.suImage);
+			image.setVisibility(android.view.View.VISIBLE);
 			return rootView;
 		}
 	}
