@@ -128,7 +128,9 @@ public class LocationUtil implements LocationListener  {
 	
 	public void registerLocationUpdatedListener(iLocationChangedListener listener){
 		this.listenerLocation = listener;
-		listener.locationIsChanged(	locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria() , false)));
+		Location loc = locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria() , false));
+		if (loc != null && loc.getLatitude() != 0 && loc.getLongitude() != 0 )
+			listener.locationIsChanged( loc	);
 	}
 	
 	
