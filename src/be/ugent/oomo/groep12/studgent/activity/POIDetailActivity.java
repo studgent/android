@@ -315,6 +315,14 @@ public class POIDetailActivity extends Activity implements
 	public void check_In(View view) {
 		checkIn();
 	}
+	
+	public void show_checkin(View view){
+		Intent intent = new Intent(this, CheckinListActivity.class);
+		intent.putExtra("checkinOfUser", false);
+		intent.putExtra("sourceID", poi.getId());
+
+		startActivity(intent);
+	}
 
 	private class AsyncCheckin extends AsyncTask<String, Void, Boolean> {
 
@@ -355,6 +363,7 @@ public class POIDetailActivity extends Activity implements
 			}
 		}
 	}
+	
 
 	private String checkInAllowed() {
 		return CheckinUtil.checkInAllowed(this, poi, sharedPreferences, currentLocation);

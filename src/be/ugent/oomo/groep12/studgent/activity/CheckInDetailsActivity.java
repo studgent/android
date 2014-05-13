@@ -23,6 +23,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -160,21 +161,29 @@ public class CheckInDetailsActivity extends Activity implements
 	
 	protected void checkIn() {
 		
-		String checkinPossible = checkInAllowed();
-		if(checkinPossible.equals("")){
-			ceckInDialog();
+		if (!LocationUtil.isGPSEnabled(this)){
+			Toast.makeText(this, "Zonder GPS kunt u niet inchecken", Toast.LENGTH_SHORT).show();
 		}
 		else{
-			if(checkinPossible.equals("je bent nog ingelogd in poi in uw buurt")){
-				checkinNotAllowedDiagram();
+			Toast.makeText(this, Html.fromHtml("Log in om je trofee&euml;n te bekijken!"), Toast.LENGTH_SHORT).show();
+			String checkinPossible = checkInAllowed();
+			if(checkinPossible.equals("")){
+				ceckInDialog();
 			}
-			if(checkinPossible.equals("poi is te ver")){
-				checkinPOIIsToFareDiagram();
+			else{
+				if(checkinPossible.equals("je bent nog ingelogd in poi in uw buurt")){
+					checkinNotAllowedDiagram();
+				}
+				if(checkinPossible.equals("poi is te ver")){
+					checkinPOIIsToFareDiagram();
+				}
+				if(checkinPossible.equals("gebruiker is niet ingelogd")){
+					Toast.makeText(this, "Log in om in te checken!", Toast.LENGTH_SHORT).show();
+				}
 			}
-			if(checkinPossible.equals("gebruiker is niet ingelogd")){
-				Toast.makeText(this, "Log in om in te checken!", Toast.LENGTH_SHORT).show();
-			}
+			
 		}
+		
 	}
 
 	@Override

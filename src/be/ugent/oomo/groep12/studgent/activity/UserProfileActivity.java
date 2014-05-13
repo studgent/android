@@ -29,6 +29,7 @@ public class UserProfileActivity extends Activity {
 	protected Button button_trofies;
 	protected Button button_checkin;
 	private int userID;
+	protected String btnCheckinText;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +70,8 @@ public class UserProfileActivity extends Activity {
 		Button btnCheckin = (Button)findViewById(R.id.button_checkin); 
 		
 		//hier nog de text van btntrophie veranderen (zodat het aantal trofies er ook in staat)
-		String btnCheckinText = String.valueOf(btnCheckin.getText())+"  ("+CheckinsDataSource.getCheckinNumber(userID)+")";
-		btnCheckin.setText(btnCheckinText);
+		btnCheckinText = String.valueOf(btnCheckin.getText());
+		btnCheckin.setText(btnCheckinText+"  ("+CheckinsDataSource.getCheckinNumber(userID)+")");
 		
 		txtName.setText(Html.fromHtml(name));
 		txtEmail.setText(Html.fromHtml("<a href=\"mailto:"+email+"\" >"+email+"</a>"));
@@ -78,6 +79,13 @@ public class UserProfileActivity extends Activity {
 		txtPhone.setText(Html.fromHtml("tel: "+txtPhone));
 		txtscore.setText(Html.fromHtml(txtscore+" points"));
 	}
+	@Override
+	protected void onResume(){
+		super.onResume();
+		btnCheckinText = String.valueOf(btnCheckinText+"  ("+CheckinsDataSource.getCheckinNumber(userID)+")");
+		
+	}
+	
 	
 	public void openTrofieListActivity(View view){
 		Intent intent = new Intent(this, TrophiesListActivity.class);
@@ -86,12 +94,9 @@ public class UserProfileActivity extends Activity {
 	}
 	
 	public void openCheckinListActivity(View view) {
-		System.out.println("userID-----------------------+"+userID);
 		Intent intent = new Intent(this, CheckinListActivity.class);
 		intent.putExtra("checkinOfUser", true);
 		intent.putExtra("sourceID", userID);
-
-		System.out.println("kom ik hier0");
 		startActivity(intent);
 	}
 }

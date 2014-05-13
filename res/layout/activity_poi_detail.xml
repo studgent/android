@@ -111,7 +111,20 @@
                     android:text="Inchecken" />
 
             </TableRow>
+				<TableRow
+                android:id="@+id/tableRow2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
 
+                <Button
+                    android:id="@+id/show_checkin_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3px"
+                    android:onClick="show_checkin"
+                    android:text="Toon Checkin's" />
+
+            </TableRow>
         </TableLayout>
         
     </ScrollView>

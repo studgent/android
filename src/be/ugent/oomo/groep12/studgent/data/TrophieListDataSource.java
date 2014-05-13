@@ -63,7 +63,9 @@ public class TrophieListDataSource implements IDataSource {
 				JSONObject checkin = checkins.getJSONObject(i);
 				int poi_id = checkin.getInt("poi_id");
 				Integer freq = frequentyTable.get(poi_id);
+				
 				frequentyTable.put(poi_id, (freq == null) ? 1 : freq + 1);
+				
 			}
 			System.out.println("frequentietable: ----------\n"+frequentyTable.toString());
 			Iterator it = frequentyTable.entrySet().iterator();
@@ -72,7 +74,7 @@ public class TrophieListDataSource implements IDataSource {
 		        int poi_id = Integer.parseInt(pairs.getKey().toString());
 		        int freq = Integer.parseInt(pairs.getValue().toString());
 		        int rank = 2;
-		        while(rank>0 && freq<pointsValues[rank]){
+		        while(rank>=0 && freq<=pointsValues[rank]){
 		        	rank--;
 		        }
 		        if( rank!=-1){
