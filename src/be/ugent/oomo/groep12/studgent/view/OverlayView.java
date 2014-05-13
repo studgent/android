@@ -1,6 +1,7 @@
 package be.ugent.oomo.groep12.studgent.view;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 
 import android.content.Context;
@@ -46,13 +47,21 @@ public class OverlayView extends FrameLayout implements OnClickListener,
 		init(context);
 	}
 
+	/*
+	 * This method sets some variables at View creation
+	 * 
+	 * @param context The current application context
+	 */
 	private void init(Context context) {
 		screenWidth = context.getResources().getDisplayMetrics().widthPixels;
-
-		// Update PoIs with location data
-		//updatePois();
 	}
 
+	/*
+	 * This method updates all the POIViews currently on the overlay with a new bearing
+	 * and makes sure the Views are drawn on the correct location relative to true North.
+	 * 
+	 * @param az The value describing the current device azimuth (heading).
+	 */
 	public void updateOverlay(int az) {
 		for (POIView v : pois) {
 			float bearing = devLoc.bearingTo(LocationUtil
@@ -76,6 +85,12 @@ public class OverlayView extends FrameLayout implements OnClickListener,
 		}
 	}
 
+	/*
+	 * Implementation of onClickListener to handle the click events of the POIViews.
+	 * 
+	 * (non-Javadoc)
+	 * @see android.view.View.OnClickListener#onClick(android.view.View)
+	 */
 	@Override
 	public void onClick(View v) {
 		if (((POIView) v).getPoi() != null) {
@@ -85,6 +100,13 @@ public class OverlayView extends FrameLayout implements OnClickListener,
 		}
 	}
 
+	/*
+	 * This functions fetches the POIs and creates the POIView objects to be
+	 * drawn. It then sorts the POIs and limits the amount that will be drawn.
+	 * 
+	 * @param range The maximum range a POI can be to be drawn on screen.
+	 * @return An ArrayList of POIViews in range, limited to a specific amount
+	 */
 	private ArrayList<POIView> getPoiList(float range) {
 		ArrayList<POIView> list = new ArrayList<POIView>();
 		// Fetch POI data
@@ -98,14 +120,17 @@ public class OverlayView extends FrameLayout implements OnClickListener,
 			}
 		}
 		// Sort for distance
-		// Collections.sort(list);
+		Collections.sort(list);
 		// Limit the amount of POIs we will show
 		if (list.size() > amount) {
 			list = new ArrayList<POIView>(list.subList(0, amount));
 		}
 		return list;
 	}
-
+	
+	/*
+	 * This method is used to update the POIs that are drawn when the device location changes
+	 */
 	private void updatePois() {
 		// Clear current pois
 		this.removeAllViews();
@@ -121,6 +146,10 @@ public class OverlayView extends FrameLayout implements OnClickListener,
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see be.ugent.oomo.groep12.studgent.utilities.iLocationChangedListener#locationIsChanged(android.location.Location)
+	 */
 	@Override
 	public void locationIsChanged(Location loc) {
 		// Save new location
