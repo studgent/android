@@ -14,6 +14,7 @@ import be.ugent.oomo.groep12.studgent.data.POIDataSource;
 import be.ugent.oomo.groep12.studgent.data.QuizQuestionsDataSource;
 import be.ugent.oomo.groep12.studgent.exception.CurlException;
 import be.ugent.oomo.groep12.studgent.exception.DataSourceException;
+import android.R.bool;
 import android.content.Context;
 import android.location.Criteria;
 import android.location.Location;
@@ -105,7 +106,14 @@ public class LocationUtil implements LocationListener  {
 	}
 	
 	
-	//----------GPS functions
+	public static boolean isGPSEnabled(Context context){
+		LocationManager service = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+		boolean enabled = service
+		  .isProviderEnabled(LocationManager.GPS_PROVIDER);
+		return enabled;
+	}
+	
+	//---------------------------GPS functions----------------------------------------------------
 	//Parameters and global field for the GPS utility
 	private static LocationManager locationManager;
 	private static final long MIN_TIME = 400;
