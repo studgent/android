@@ -119,7 +119,7 @@ public class EventsActivity extends Activity implements AdapterView.OnItemClickL
 	        }
 	        event_list_view.setAdapter(adapter);
 	        adapter.notifyDataSetChanged();
-	        LayoutUtil.updateListViewHeight(event_list_view);
+	        //LayoutUtil.updateListViewHeight(event_list_view);
 	    }
 
 	    @Override
