@@ -146,6 +146,12 @@
             android:label="@string/title_user_profile"
             android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
+        <activity
+            android:name="be.ugent.oomo.groep12.studgent.activity.CheckinListActivity"
+            android:icon="@drawable/studgent_logo"
+            android:label="@string/title_checkin_list_activity"
+            android:configChanges="keyboardHidden|orientation|screenSize">
+        </activity>
     </application>
 
 </manifest>
