@@ -8,8 +8,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.utilities.LayoutUtil;
+import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 import be.ugent.oomo.groep12.studgent.activity.AboutActivity;
@@ -45,6 +47,10 @@ public class MainActivity extends Activity {
 			 id != 0 && 
 			 token != null && !token.equals("") ) {
 			LoginUtility.AutoLogin(email, id, token);
+		}
+		
+		if (!LocationUtil.isGPSEnabled(this)){
+			Toast.makeText(this, "GPS is uitgeschakeld! Sommige functies zijn onbruikbaar.", Toast.LENGTH_SHORT).show();
 		}
 	}
 	

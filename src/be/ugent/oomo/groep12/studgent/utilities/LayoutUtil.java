@@ -21,6 +21,11 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 
 public class LayoutUtil {
+	
+	/**
+	 * Adds a stylish effect to a button
+	 * @param button : the button
+	 */
 	public static void buttonEffect(View button){
 	    button.setOnTouchListener(new OnTouchListener() {
 

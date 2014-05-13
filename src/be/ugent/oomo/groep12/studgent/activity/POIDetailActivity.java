@@ -22,12 +22,13 @@ import be.ugent.oomo.groep12.studgent.data.QuizQuestionsDataSource;
 import be.ugent.oomo.groep12.studgent.exception.CurlException;
 import be.ugent.oomo.groep12.studgent.exception.DataSourceException;
 import be.ugent.oomo.groep12.studgent.utilities.CheckinUtil;
+import be.ugent.oomo.groep12.studgent.utilities.LayoutUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 import be.ugent.oomo.groep12.studgent.utilities.PlayServicesUtil;
-import be.ugent.oomo.groep12.studgent.utilities.iDistanceUpdatedListener;
-import be.ugent.oomo.groep12.studgent.utilities.iLocationChangedListener;
+import be.ugent.oomo.groep12.studgent.utilities.IDistanceUpdatedListener;
+import be.ugent.oomo.groep12.studgent.utilities.ILocationChangedListener;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -51,6 +52,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
@@ -59,7 +61,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class POIDetailActivity extends Activity implements
-		OnInfoWindowClickListener, iDistanceUpdatedListener, iLocationChangedListener {
+		OnInfoWindowClickListener, IDistanceUpdatedListener, ILocationChangedListener {
 
 	private PointOfInterest poi;
 	protected SharedPreferences sharedPreferences;
@@ -68,6 +70,9 @@ public class POIDetailActivity extends Activity implements
 	protected LayoutParams table_layout;
 	protected Location currentLocation;
 	protected boolean parentIsCheckInActivity;
+	
+	protected Button showNavigation;
+	protected Button check_in_Button;
 	
 
 	@Override
@@ -78,6 +83,7 @@ public class POIDetailActivity extends Activity implements
 		parentIsCheckInActivity = getIntent().getExtras().getBoolean("parentIsCheckInActivity");
 		setContentView(R.layout.activity_poi_detail);
 
+		setButtons();
 		// get the table from view
 		table_view = (TableLayout) findViewById(R.id.poi_detail_table);
 		// set some default data for table and row layout
@@ -96,7 +102,6 @@ public class POIDetailActivity extends Activity implements
 			TableRow tableRow =  (TableRow) findViewById(R.id.tableRowNavigation);
 			tableRow.setVisibility(View.INVISIBLE);
 		}
-
 		// txtTitle.setVisibility(View.INVISIBLE);
 		txtDetail.setVisibility(View.INVISIBLE);
 		txtLocation.setVisibility(View.INVISIBLE);
@@ -143,6 +148,17 @@ public class POIDetailActivity extends Activity implements
 	}
 	
 
+	protected void setButtons(){
+		// get the buttons and set them to protected members
+		showNavigation = (Button) findViewById(R.id.showNavigation);
+		check_in_Button = (Button) findViewById(R.id.check_in_Button);
+		// enable on touch effect
+		LayoutUtil.buttonEffect(showNavigation);
+		LayoutUtil.buttonEffect(check_in_Button);
+	}
+
+	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -165,10 +181,13 @@ public class POIDetailActivity extends Activity implements
 	
 
 	public void navigateTo(View view) {
+		
 		String uri = "geo:" + poi.getLocation().latitude + ","
 				+ poi.getLocation().longitude + "?q="
-				+ poi.getStreet().replace(" ", "+") + "+" + poi.getNumber();
-
+				+ poi.getStreet().replace(" ", "+");
+		if( ! (poi.getNumber() == null || poi.getNumber().equals("") || poi.getNumber().equalsIgnoreCase("null")) ){
+			uri += "+" + poi.getNumber();
+		}
 		try {
 			startActivity(new Intent(android.content.Intent.ACTION_VIEW,
 					Uri.parse(uri)));

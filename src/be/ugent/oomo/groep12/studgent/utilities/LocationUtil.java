@@ -14,6 +14,7 @@ import be.ugent.oomo.groep12.studgent.data.POIDataSource;
 import be.ugent.oomo.groep12.studgent.data.QuizQuestionsDataSource;
 import be.ugent.oomo.groep12.studgent.exception.CurlException;
 import be.ugent.oomo.groep12.studgent.exception.DataSourceException;
+import android.R.bool;
 import android.content.Context;
 import android.location.Criteria;
 import android.location.Location;
@@ -24,6 +25,12 @@ import android.os.Bundle;
 import android.util.Log;
 
 public class LocationUtil implements LocationListener  {
+	/**
+	 * Function to resolve a streetadres to his lat/lon coordinates
+	 * @param youraddress : String: the address
+	 * @return	: LatLng : Location of the address
+	 * @throws CurlException : 	Resolve server not found
+	 */
 	public static LatLng getLatLongFromAddress(String youraddress) throws CurlException {
 	    String uri = "http://maps.google.com/maps/api/geocode/json?address=" +
 	                  youraddress.replace(' ', '+') + "&sensor=false";
@@ -49,6 +56,13 @@ public class LocationUtil implements LocationListener  {
 	    }
 	    throw new CurlException("No location found");
 	}
+	
+	/**
+	 * Find the corresponding address from a LatLng location
+	 * @param location: LatLng: the location
+	 * @return : String: The address that responds to the location
+	 * @throws CurlException	Server not found 
+	 */
 	public static String getAddressFromLatLng(LatLng location) throws CurlException {
 	    String uri = "http://maps.google.com/maps/api/geocode/json?latlng=" +
 	                  location.latitude + ',' + location.longitude + "&sensor=false";
@@ -67,6 +81,12 @@ public class LocationUtil implements LocationListener  {
 	    }
 	    throw new CurlException("No address found");
 	}
+	
+	/**
+	 * Converts a LatLng to a location
+	 * @param l: LatLng object
+	 * @return : corresponding location object
+	 */
 	public static Location getLocationFromLatLng(LatLng l) {
 		Location loc = new Location("StudGent");
 		loc.setLatitude(l.latitude);
@@ -74,21 +94,39 @@ public class LocationUtil implements LocationListener  {
 		loc.setTime(new Date().getTime());
 		return loc;
 	}
+	
+	/**
+	 * Converts a Locatio  to a latLng
+	 * @param l: Location object
+	 * @return : corresponding LatLng object
+	 */
 	public static LatLng getLatLngFromLocation(Location l) {
 		LatLng newLatLng = new LatLng(l.getLatitude(), l.getLongitude());
 		return newLatLng;
 	}
 	
 	
-	//GPS functions
+	public static boolean isGPSEnabled(Context context){
+		LocationManager service = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+		boolean enabled = service
+		  .isProviderEnabled(LocationManager.GPS_PROVIDER);
+		return enabled;
+	}
+	
+	//---------------------------GPS functions----------------------------------------------------
+	//Parameters and global field for the GPS utility
 	private static LocationManager locationManager;
 	private static final long MIN_TIME = 400;
 	private static final float MIN_DISTANCE = 1000;
 	private static Context context;
 	private static LocationUtil instance;
-	private static iDistanceUpdatedListener listenerDistance;
-	private static iLocationChangedListener listenerLocation;
+	private static IDistanceUpdatedListener listenerDistance;
+	private static ILocationChangedListener listenerLocation;
 	
+	/**
+	 * Singleton design patern constructor. 
+	 * Enables the locationManager to send updates to this class
+	 */
 	protected LocationUtil() {
 		if (locationManager == null) {
 			locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
@@ -98,7 +136,11 @@ public class LocationUtil implements LocationListener  {
 				MIN_TIME, MIN_DISTANCE, this);
 	} 
 	
-	
+	/**
+	 * Singleton getInstance, returns the singleton object of this type
+	 * @param con: the context of the running activity. (is always equal to this)
+	 * @return	: 	The LocationUtil object
+	 */
 	public static LocationUtil getInstance(Context con){
 		context = con;
 		if (instance==null){
@@ -107,7 +149,12 @@ public class LocationUtil implements LocationListener  {
 		return instance;
 	}
 	
-	public void registerDistanceUpdatedListener(iDistanceUpdatedListener listener){
+	/**
+	 * Register the callback for the DistanceUpdate event
+	 * This function will also execute a callback with the last known GPS data
+	 * @param listener	: The object which will be called when a distanceUpdate event occure
+	 */
+	public void registerDistanceUpdatedListener(IDistanceUpdatedListener listener){
 		 this.listenerDistance = listener;
 		 new AsyncTask<Void, Void, Void>(){
 		        @Override
@@ -131,34 +178,48 @@ public class LocationUtil implements LocationListener  {
 			
 	}
 	
-	public void registerLocationUpdatedListener(iLocationChangedListener listener){
+	/**
+	 * Register the callback for the LocationUpdated event
+	 * This function will also execute a callback with the last known GPS data
+	 * @param listener	: The object which will be called when a LocationUpdated event occure
+	 */
+	public void registerLocationUpdatedListener(ILocationChangedListener listener){
 		this.listenerLocation = listener;
 		Location loc = locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria() , false));
 		if (loc != null && loc.getLatitude() != 0 && loc.getLongitude() != 0 )
 			listener.locationIsChanged( loc	);
 	}
 	
-	
-	
+	/**
+	 * This function must be called when the activity goes to the pause state
+	 */
 	public void  onPause(){
 		locationManager.removeUpdates(this);
 	}
 	
+	/**
+	 * This function reactivates the GPS after an activity resume
+	 */
 	public void onResume(){
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
 				MIN_TIME, MIN_DISTANCE, this);
 	}
 	
+	
+	/**
+	 * This function is called by the LocationManager when new GPS data is available.
+	 * It will update the distances to every POI and QuizQuestion from the datasource 
+	 * and it wil also call the responding callbacks when a listener is given
+	 * @param location: Location: The new location
+	 * return : void
+	 */
 	@Override
 	public void onLocationChanged(Location location) {
-		// TODO Auto-generated method stub
 		if (location == null) {
 			locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 			location = locationManager.getLastKnownLocation(locationManager
 					.getBestProvider(new Criteria(), false));
 		}
-		
-		
 
 		if (location != null && location.getLatitude() != 0
 				&& location.getLongitude() != 0) {
@@ -188,7 +249,6 @@ public class LocationUtil implements LocationListener  {
 					listenerLocation.locationIsChanged(location);
 			}
 		}
-		
 	}
 
 	@Override

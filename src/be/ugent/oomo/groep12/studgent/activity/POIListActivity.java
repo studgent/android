@@ -52,11 +52,11 @@ import be.ugent.oomo.groep12.studgent.exception.DataSourceException;
 import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LayoutUtil;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
-import be.ugent.oomo.groep12.studgent.utilities.iDistanceUpdatedListener;
+import be.ugent.oomo.groep12.studgent.utilities.IDistanceUpdatedListener;
 
 public class POIListActivity extends Activity implements
 		AdapterView.OnItemClickListener, ActionBar.OnNavigationListener,
-		TextWatcher, iDistanceUpdatedListener {
+		TextWatcher, IDistanceUpdatedListener {
 
 	/**
 	 * The serialization (saved instance state) Bundle key representing the

@@ -12,6 +12,12 @@ public final class PlayServicesUtil {
 
 	static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 1001;
 
+	/**
+	 * Checks if the play service is available
+	 * @param activityContext: the current activity
+	 * @param messageOnFail: The message that will be showed when the google playservice isn't available
+	 * @return boolean if the service is available
+	 */
 	public static boolean hasPlayServices(Activity activityContext, String messageOnFail) {
 		int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(activityContext);
 		if (status != ConnectionResult.SUCCESS) {

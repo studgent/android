@@ -7,6 +7,8 @@ import android.graphics.Paint;
 import android.view.View;
 import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
 
+
+
 public class POIView extends View implements Comparable<POIView>{
 
 	private IPointOfInterest poi;
@@ -28,7 +30,12 @@ public class POIView extends View implements Comparable<POIView>{
 
 		this.poi = poi;
 	}
-
+	
+	/*
+	 * Initializes all the needed variables used for proper drawing of the View
+	 * 
+	 * @param context The current application context
+	 */
 	private void init(Context context) {
 		// Paint object for POI marker
 		cpaint = new Paint();
@@ -42,13 +49,23 @@ public class POIView extends View implements Comparable<POIView>{
 		tpaint.setAntiAlias(true);
 		tpaint.setColor(Color.GRAY);
 		tpaint.setTextSize(18.0f);
-
+		
+		// Get the device's screen height
 		screenHeight = context.getResources().getDisplayMetrics().heightPixels;
 		
 		// Make invisible until we're on screen
 		this.setVisibility(View.INVISIBLE);
 	}
 
+	/*
+	 * The onDraw method gets called when this View gets drawn by its parent View.
+	 * Here the POI marker and text gets drawn.
+	 * 
+	 * @param canvas The Canvas object on which this View will be drawn.
+	 * 
+	 * (non-Javadoc)
+	 * @see android.view.View#onDraw(android.graphics.Canvas)
+	 */
 	@Override
 	public void onDraw(Canvas canvas) {
 		int circleWidth = (int) (circleRadius*2 + cpaint.getStrokeWidth()*2);
@@ -68,6 +85,16 @@ public class POIView extends View implements Comparable<POIView>{
 		}
 	}
 	
+	/*
+	 * The onMeasure method reports the width and height of this View to the parent
+	 * for layout drawing
+	 * 
+	 * @param widthMeasureSpec The requested width for this View, encoded as MeasureSpec
+	 * @param heightMeasureSpec The requested height for this View, encoded as MeasureSpec
+	 * 
+	 * (non-Javadoc)
+	 * @see android.view.View#onMeasure(int, int)
+	 */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
     	minWidth = 0;
@@ -95,6 +122,12 @@ public class POIView extends View implements Comparable<POIView>{
 		return minWidth;
 	}
 
+	/*
+	 * Custom compareTo method to make POIViews sortable
+	 * 
+	 * (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
 	@Override
 	public int compareTo(POIView another) {
 		// TODO Auto-generated method stub

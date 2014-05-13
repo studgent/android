@@ -9,12 +9,12 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import be.ugent.oomo.groep12.studgent.R;
+import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
 import be.ugent.oomo.groep12.studgent.view.OverlayView;
 
 public class AugmentedViewActivity extends Activity implements
@@ -29,16 +29,17 @@ public class AugmentedViewActivity extends Activity implements
 	private SensorManager sensorManager;
 	private Sensor magnetometer;
 	private Sensor accelerometer;
-	
-	//GPS
-	private LocationManager locationManager;
-	private static long MIN_TIME = 5000;
-	private static float MIN_DISTANCE = 100;
-	
+
 	// Layout elements
 	private SurfaceView surfaceView;
 	private OverlayView overlayView;
 
+	/*
+	 * Sets up the sensors, camera and gps for use in Augmented Reality
+	 * 
+	 * (non-Javadoc)
+	 * @see android.app.Activity#onCreate(android.os.Bundle)
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -61,16 +62,19 @@ public class AugmentedViewActivity extends Activity implements
 				.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 
 		// GPS
-		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		// LocationManager.NETWORK_PROVIDER, LocationManager.GPS_PROVIDER and
-		// LocationManager.PASSIVE_PROVIDER
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, MIN_DISTANCE, overlayView);
+		LocationUtil.getInstance(this).registerLocationUpdatedListener(overlayView);
 
 		// Video
 		holder = surfaceView.getHolder();
 		holder.addCallback(this);
 	}
 
+	/*
+	 * Resumes sensors, camera and gps
+	 * 
+	 * (non-Javadoc)
+	 * @see android.app.Activity#onResume()
+	 */
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -84,11 +88,17 @@ public class AugmentedViewActivity extends Activity implements
 				SensorManager.SENSOR_DELAY_GAME);
 		sensorManager.registerListener(this, magnetometer,
 				SensorManager.SENSOR_DELAY_GAME);
-		
-		// GPS
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, MIN_DISTANCE, overlayView);
-	}
 
+		// GPS
+		LocationUtil.getInstance(this).onResume();
+	}
+	
+	/*
+	 * Pauses camera, sensors and gps
+	 * 
+	 * (non-Javadoc)
+	 * @see android.app.Activity#onPause()
+	 */
 	@Override
 	public void onPause() {
 		// Stop camera preview and release camera
@@ -101,13 +111,16 @@ public class AugmentedViewActivity extends Activity implements
 
 		// Compass
 		sensorManager.unregisterListener(this);
-		
+
 		// GPS
-		locationManager.removeUpdates(overlayView);
+		LocationUtil.getInstance(this).onPause();
 
 		super.onPause();
 	}
 
+	/*
+	 * Makes sure the camera is matching the right screen width and height
+	 */
 	private Camera.Size getBestPreviewSize(int width, int height,
 			Camera.Parameters parameters) {
 		Camera.Size result = null;
@@ -130,6 +143,9 @@ public class AugmentedViewActivity extends Activity implements
 		return (result);
 	}
 
+	/*
+	 * Initializes the camera live preview
+	 */
 	private void initPreview(int width, int height) {
 		if (camera != null && holder.getSurface() != null) {
 			try {
@@ -152,6 +168,9 @@ public class AugmentedViewActivity extends Activity implements
 		}
 	}
 
+	/*
+	 * Starts the live camera preview
+	 */
 	private void startPreview() {
 		if (cameraConfigured && camera != null) {
 			camera.startPreview();
@@ -159,6 +178,12 @@ public class AugmentedViewActivity extends Activity implements
 		}
 	}
 
+	/*
+	 * Sets up and starts the camera when the SurfaceView is ready
+	 * 
+	 * (non-Javadoc)
+	 * @see android.view.SurfaceHolder.Callback#surfaceChanged(android.view.SurfaceHolder, int, int, int)
+	 */
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
@@ -187,6 +212,13 @@ public class AugmentedViewActivity extends Activity implements
 	float[] mGravity;
 	float[] mGeomagnetic;
 
+	/*
+	 * Processes (low-pass filter) the sensor data and calculates the compass heading.
+	 * The new compass azimuth gets passed to the OverlayView to update the POIs drawn.
+	 * 
+	 * (non-Javadoc)
+	 * @see android.hardware.SensorEventListener#onSensorChanged(android.hardware.SensorEvent)
+	 */
 	@Override
 	public void onSensorChanged(SensorEvent event) {
 
@@ -232,15 +264,15 @@ public class AugmentedViewActivity extends Activity implements
 						.toDegrees(azimuthInRadians);
 				// Compensate for landscape orientation
 				azimuthInDegrees += 90f;
-				
+
 				// Compensate for negative compass values
 				if (azimuthInDegrees < 0.0f) {
 					azimuthInDegrees += 360.0f;
 				}
-				
+
 				// Convert from float to int
 				int azimuth = Math.round(azimuthInDegrees);
-				
+
 				// Call method to update the AR Overlay
 				overlayView.updateOverlay(azimuth);
 			}

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 
-
 import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.adapter.QuizAdapter;
 import be.ugent.oomo.groep12.studgent.common.IQuizQuestion;
@@ -15,7 +14,7 @@ import be.ugent.oomo.groep12.studgent.exception.DataSourceException;
 import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
-import be.ugent.oomo.groep12.studgent.utilities.iDistanceUpdatedListener;
+import be.ugent.oomo.groep12.studgent.utilities.IDistanceUpdatedListener;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
@@ -39,6 +38,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -48,7 +48,7 @@ import android.widget.Toast;
 
 
 public class QuizActivity extends Activity implements 
-AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener, iDistanceUpdatedListener
+AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener, IDistanceUpdatedListener
 
 {
 	
@@ -186,8 +186,8 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener, iDista
 			txtQuestion.setText(currentQuestion.getQuestion());
 			
 			//get panels
-			RelativeLayout oneAnswerPanel = (RelativeLayout) findViewById(R.id.layoutAnswer);
-			GridLayout multipleAnswerPanel = (GridLayout) findViewById(R.id.layoutAnswers);
+			LinearLayout oneAnswerPanel = (LinearLayout) findViewById(R.id.layoutAnswer);
+			LinearLayout multipleAnswerPanel = (LinearLayout) findViewById(R.id.layoutAnswers);
 					
 			Button btnNavigateto = (Button) findViewById(R.id.navigateToQuestion);
 			if (currentQuestion.getLocation() == null){
@@ -196,32 +196,37 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener, iDista
 				btnNavigateto.setVisibility(view.VISIBLE);
 			}
 			
+			Button submitButton = (Button)findViewById(R.id.quiz_submitText);
 			if (currentQuestion.getPossibleAnswers()==null || currentQuestion.getPossibleAnswers().size()==0){
 				//no multiple answer question, show inputbox
 				oneAnswerPanel.setVisibility(view.VISIBLE);
 				multipleAnswerPanel.setVisibility(View.GONE);
 				EditText answerInputBox = (EditText) findViewById(R.id.QuizAnswerInputBox);
 				answerInputBox.setOnEditorActionListener(this);
+				submitButton.setVisibility(View.VISIBLE);
 			}else{
 				//Multiple answers
+				submitButton.setVisibility(View.GONE);
+				
 				oneAnswerPanel.setVisibility(View.GONE);
 				multipleAnswerPanel.setVisibility(view.VISIBLE);
 				multipleAnswerPanel.removeAllViews();
 				
-				//LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 				int idButton =0;
+				LayoutParams btnlayout = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
+				btnlayout.setMargins(10, 10, 10, 10);
 				for (String possibleAnswer : currentQuestion.getPossibleAnswers() ){
 					Button btn = new Button(this);
 					btn.setText(possibleAnswer);
 					btn.setOnClickListener(this);
+					btn.setLayoutParams(btnlayout);
 				
-					int columnIndex = 1;
+					int columnIndex = 0;
 					int rowIndex=idButton;
-							
-					GridLayout.LayoutParams gridLayoutParam = new GridLayout.LayoutParams(GridLayout.spec(rowIndex, 1) , GridLayout.spec(columnIndex, 1));
-				   
-				    gridLayoutParam.setMargins(20,10,20,10);
-				    multipleAnswerPanel.addView(btn, gridLayoutParam);
+
+					//GridLayout.LayoutParams gridLayoutParam = new GridLayout.LayoutParams(GridLayout.spec(rowIndex, 1) , GridLayout.spec(columnIndex, 1));
+				    //gridLayoutParam.setMargins(20,10,20,10);
+				    multipleAnswerPanel.addView(btn, btnlayout);
 		            
 		            idButton++;
 				}
@@ -240,6 +245,11 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener, iDista
 		String answer = target.getText().toString();
 		sendAnswer(answer);
 	}	
+	
+	public void submitButton(View view){
+		EditText v = (EditText) findViewById(R.id.QuizAnswerInputBox);
+		sendAnswer(v.getText().toString());
+	}
 	
 	//handle enter submit when no multiple choice
 	@Override
