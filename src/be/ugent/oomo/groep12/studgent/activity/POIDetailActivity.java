@@ -347,22 +347,27 @@ public class POIDetailActivity extends Activity implements
 	}
 	
 	protected void checkIn() {
-		
-		String checkinPossible = checkInAllowed();
-		if(checkinPossible.equals("")){
-			ceckInDialog();
+		if (!LocationUtil.isGPSEnabled(this)){
+			Toast.makeText(this, "Zonder GPS is inchecken niet mogelijk.", Toast.LENGTH_SHORT).show();
 		}
 		else{
-			if(checkinPossible.equalsIgnoreCase("Je bent nog ingelogd in poi in uw buurt")){
-				checkinNotAllowedDiagram();
-			}else if(checkinPossible.equalsIgnoreCase("POI is te ver")){
-				checkinPOIIsToFareDiagram();
-			} else if(checkinPossible.equalsIgnoreCase("Gebruiker is niet ingelogd")){
-				Toast.makeText(this, "Log in om in te checken!", Toast.LENGTH_SHORT).show();
-			} else {
-				Toast.makeText(this, "Inchecken niet mogelijk", Toast.LENGTH_SHORT).show();
+			String checkinPossible = checkInAllowed();
+			if(checkinPossible.equals("")){
+				ceckInDialog();
+			}
+			else{
+				if(checkinPossible.equalsIgnoreCase("Je bent nog ingelogd in poi in uw buurt")){
+					checkinNotAllowedDiagram();
+				}else if(checkinPossible.equalsIgnoreCase("POI is te ver")){
+					checkinPOIIsToFareDiagram();
+				} else if(checkinPossible.equalsIgnoreCase("Gebruiker is niet ingelogd")){
+					Toast.makeText(this, "Log in om in te checken!", Toast.LENGTH_SHORT).show();
+				} else {
+					Toast.makeText(this, "Inchecken niet mogelijk", Toast.LENGTH_SHORT).show();
+				}
 			}
 		}
+		
 	}
 	
 
