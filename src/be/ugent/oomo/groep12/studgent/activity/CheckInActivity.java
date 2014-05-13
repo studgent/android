@@ -159,7 +159,6 @@ public class CheckInActivity extends Activity implements AdapterView.OnItemClick
 	        }
 	        poi_list_view.setAdapter(adapter);
 	        adapter.notifyDataSetChanged();
-			LayoutUtil.updateListViewHeight(poi_list_view);
 	    }
 
 	    @Override
