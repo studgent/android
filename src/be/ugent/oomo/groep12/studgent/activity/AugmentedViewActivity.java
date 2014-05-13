@@ -34,6 +34,12 @@ public class AugmentedViewActivity extends Activity implements
 	private SurfaceView surfaceView;
 	private OverlayView overlayView;
 
+	/*
+	 * Sets up the sensors, camera and gps for use in Augmented Reality
+	 * 
+	 * (non-Javadoc)
+	 * @see android.app.Activity#onCreate(android.os.Bundle)
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -63,6 +69,12 @@ public class AugmentedViewActivity extends Activity implements
 		holder.addCallback(this);
 	}
 
+	/*
+	 * Resumes sensors, camera and gps
+	 * 
+	 * (non-Javadoc)
+	 * @see android.app.Activity#onResume()
+	 */
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -80,7 +92,13 @@ public class AugmentedViewActivity extends Activity implements
 		// GPS
 		LocationUtil.getInstance(this).onResume();
 	}
-
+	
+	/*
+	 * Pauses camera, sensors and gps
+	 * 
+	 * (non-Javadoc)
+	 * @see android.app.Activity#onPause()
+	 */
 	@Override
 	public void onPause() {
 		// Stop camera preview and release camera
@@ -100,6 +118,9 @@ public class AugmentedViewActivity extends Activity implements
 		super.onPause();
 	}
 
+	/*
+	 * Makes sure the camera is matching the right screen width and height
+	 */
 	private Camera.Size getBestPreviewSize(int width, int height,
 			Camera.Parameters parameters) {
 		Camera.Size result = null;
@@ -122,6 +143,9 @@ public class AugmentedViewActivity extends Activity implements
 		return (result);
 	}
 
+	/*
+	 * Initializes the camera live preview
+	 */
 	private void initPreview(int width, int height) {
 		if (camera != null && holder.getSurface() != null) {
 			try {
@@ -144,6 +168,9 @@ public class AugmentedViewActivity extends Activity implements
 		}
 	}
 
+	/*
+	 * Starts the live camera preview
+	 */
 	private void startPreview() {
 		if (cameraConfigured && camera != null) {
 			camera.startPreview();
@@ -151,6 +178,12 @@ public class AugmentedViewActivity extends Activity implements
 		}
 	}
 
+	/*
+	 * Sets up and starts the camera when the SurfaceView is ready
+	 * 
+	 * (non-Javadoc)
+	 * @see android.view.SurfaceHolder.Callback#surfaceChanged(android.view.SurfaceHolder, int, int, int)
+	 */
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
@@ -179,6 +212,13 @@ public class AugmentedViewActivity extends Activity implements
 	float[] mGravity;
 	float[] mGeomagnetic;
 
+	/*
+	 * Processes (low-pass filter) the sensor data and calculates the compass heading.
+	 * The new compass azimuth gets passed to the OverlayView to update the POIs drawn.
+	 * 
+	 * (non-Javadoc)
+	 * @see android.hardware.SensorEventListener#onSensorChanged(android.hardware.SensorEvent)
+	 */
 	@Override
 	public void onSensorChanged(SensorEvent event) {
 
