@@ -16,6 +16,7 @@ import be.ugent.oomo.groep12.studgent.utilities.LayoutUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 import be.ugent.oomo.groep12.studgent.activity.AboutActivity;
+import be.ugent.oomo.groep12.studgent.data.CheckinsDataSource;
 import be.ugent.oomo.groep12.studgent.data.TrophieListDataSource;
 
 import com.crashlytics.android.Crashlytics;
@@ -68,8 +69,8 @@ public class UserProfileActivity extends Activity {
 		Button btnCheckin = (Button)findViewById(R.id.button_checkin); 
 		
 		//hier nog de text van btntrophie veranderen (zodat het aantal trofies er ook in staat)
-		String btnbtncheckin = btnCheckin.getText()+"  ("+TrophieListDataSource.getCheckinNumber(userID)+")";
-		btnCheckin.setText(btnbtncheckin);
+		String btnCheckinText = String.valueOf(btnCheckin.getText())+"  ("+CheckinsDataSource.getCheckinNumber(userID)+")";
+		btnCheckin.setText(btnCheckinText);
 		
 		txtName.setText(Html.fromHtml(name));
 		txtEmail.setText(Html.fromHtml("<a href=\"mailto:"+email+"\" >"+email+"</a>"));
@@ -85,7 +86,12 @@ public class UserProfileActivity extends Activity {
 	}
 	
 	public void openCheckinListActivity(View view) {
-		Intent intent = new Intent(this, POIMapviewActivity.class);
+		System.out.println("userID-----------------------+"+userID);
+		Intent intent = new Intent(this, CheckinListActivity.class);
+		intent.putExtra("checkinOfUser", true);
+		intent.putExtra("sourceID", userID);
+
+		System.out.println("kom ik hier0");
 		startActivity(intent);
 	}
 }

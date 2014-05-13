@@ -6,6 +6,7 @@ import android.widget.AdapterView;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -135,7 +136,7 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
 	        dialog.dismiss();
 	        //adapter.setItemList(result);
 	        adapter.clear();
-	        for(Friend friend: result){
+	        for(Friend friend: sortFriends(result)){
 	        	adapter.add(friend);
 	        }
 	        friend_list_view.setAdapter(adapter);
@@ -192,6 +193,26 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
 	public void beforeTextChanged(CharSequence s, int start, int count,
 			int after) {
 		
+	}
+	
+	private ArrayList<Friend> sortFriends(ArrayList<Friend> source){
+		ArrayList<Friend> result = new ArrayList<Friend>();
+		Map<Boolean,ArrayList<Friend> > vrienden = new HashMap<Boolean,ArrayList<Friend> >();
+        vrienden.put(new Boolean("true"), new ArrayList<Friend>());
+        vrienden.put(new Boolean("false"), new ArrayList<Friend>());
+        for(Friend friend: source){
+        	vrienden.get(friend.isFollowing()).add(friend);
+        }
+        ArrayList<Friend> volgers = vrienden.get(true);
+        ArrayList<Friend> nietVolgers = vrienden.get(false);
+        for(Friend friend: volgers){
+        	result.add(friend);
+        }
+        for(Friend friend: nietVolgers){
+        	result.add(friend);
+        }
+        
+        return result;
 	}
 
 

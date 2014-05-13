@@ -142,22 +142,4 @@ public class TrophieListDataSource implements IDataSource {
 		return quiznumber;
 	}
 	
-	public static int getCheckinNumber(int userID){
-		int checkinnumber = 0;
-		try{
-			String user_resource = "user/" + userID;
-			String apidata =  CurlUtil.get(user_resource);
-			JSONObject  response = new JSONObject(apidata);
-			JSONArray checkins = new JSONArray(response.getString("checkins"));
-			checkinnumber = checkins.length();
-		}catch (CurlException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return checkinnumber;
-	}
-	
 }
