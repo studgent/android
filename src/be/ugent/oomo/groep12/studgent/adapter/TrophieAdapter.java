@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,7 +72,7 @@ public class TrophieAdapter extends ArrayAdapter<Trophie> implements Filterable{
         Trophie trophie_item = data.get(position);
         //System.out.println("Friend friend_item: "+data.get(position).getName());
         
-        holder.name.setText(trophie_item.getName());
+        holder.name.setText(Html.fromHtml("" +  trophie_item.getName() ));
         holder.value.setText( "" + trophie_item.getPoints());
         //holder.image.setImageBitmap(trophie_item.getImage()); //nog geen foto
         
