@@ -121,9 +121,14 @@ public class LocationUtil implements LocationListener  {
 		        	POIDataSource.getInstance().getLastItems().values();
 					return null;
 		        }
+		        
+		        @Override
+		        protected void onPostExecute(Void param) {
+		        	onLocationChanged(locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria() , false)));
+			    }
+		        
 		    }.execute();
-		 onLocationChanged(locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria() , false)));
-        	
+			
 	}
 	
 	public void registerLocationUpdatedListener(iLocationChangedListener listener){
