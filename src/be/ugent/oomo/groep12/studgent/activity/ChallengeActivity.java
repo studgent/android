@@ -59,7 +59,7 @@ public class ChallengeActivity extends Activity {
 			intent.putExtra("filter", true);
 			startActivity(intent);
 		}else{
-			Toast.makeText(this, "GPS is niet beschikbaar!", 20);
+			Toast.makeText(this, "GPS is niet beschikbaar!", Toast.LENGTH_SHORT).show();
 		}
 	}
 	
