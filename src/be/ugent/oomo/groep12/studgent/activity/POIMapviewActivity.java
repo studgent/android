@@ -48,12 +48,12 @@ import be.ugent.oomo.groep12.studgent.data.POIDataSource;
 import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 import be.ugent.oomo.groep12.studgent.utilities.PlayServicesUtil;
-import be.ugent.oomo.groep12.studgent.utilities.iDistanceUpdatedListener;
-import be.ugent.oomo.groep12.studgent.utilities.iLocationChangedListener;
+import be.ugent.oomo.groep12.studgent.utilities.IDistanceUpdatedListener;
+import be.ugent.oomo.groep12.studgent.utilities.ILocationChangedListener;
 
 public class POIMapviewActivity extends Activity implements
 		OnInfoWindowClickListener, ActionBar.OnNavigationListener,
-		iLocationChangedListener {
+		ILocationChangedListener {
 
 	/**
 	 * The serialization (saved instance state) Bundle key representing the
@@ -268,7 +268,7 @@ public class POIMapviewActivity extends Activity implements
 		LatLng latLng = new LatLng(location.getLatitude(),
 				location.getLongitude());
 		CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng,
-				10);
+				14);
 		map.animateCamera(cameraUpdate);
 		
 	}

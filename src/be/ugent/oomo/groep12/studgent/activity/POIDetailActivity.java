@@ -26,8 +26,8 @@ import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 import be.ugent.oomo.groep12.studgent.utilities.PlayServicesUtil;
-import be.ugent.oomo.groep12.studgent.utilities.iDistanceUpdatedListener;
-import be.ugent.oomo.groep12.studgent.utilities.iLocationChangedListener;
+import be.ugent.oomo.groep12.studgent.utilities.IDistanceUpdatedListener;
+import be.ugent.oomo.groep12.studgent.utilities.ILocationChangedListener;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -59,7 +59,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class POIDetailActivity extends Activity implements
-		OnInfoWindowClickListener, iDistanceUpdatedListener, iLocationChangedListener {
+		OnInfoWindowClickListener, IDistanceUpdatedListener, ILocationChangedListener {
 
 	private PointOfInterest poi;
 	protected SharedPreferences sharedPreferences;

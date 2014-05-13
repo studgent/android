@@ -26,12 +26,18 @@ public final class LoginUtility {
 	
     private static final LoginUtility INSTANCE = new LoginUtility();
 
+    /**
+     * A singleton class constructor
+     */
     private LoginUtility() {
         if (INSTANCE != null) {
             throw new IllegalStateException("Already instantiated");
         }
     }
 
+    /*
+     * returns the singleton instance
+     */
     public static LoginUtility getInstance() {
         return INSTANCE;
     }
@@ -63,7 +69,9 @@ public final class LoginUtility {
 		getInstance().logged_in = true;
     }
     
-    
+    /**
+     * Log the current user out. 
+     */
     public static void LogOut() {
     	// Set in  preferences
 		SharedPreferences settings = App.getContext().getSharedPreferences(PREFS_NAME, 0);
@@ -81,6 +89,12 @@ public final class LoginUtility {
 		TrophieListDataSource.getInstance().delete();
     }
     
+    /**
+     * Try to login with a email and password
+     * @param email : the email address of the user
+     * @param password: the corresponding password
+     * @returns true if the authentication was succesfully, otherwise false will be returned
+     */
     public static boolean LogIn(String email, String password) {
 
 		try {
