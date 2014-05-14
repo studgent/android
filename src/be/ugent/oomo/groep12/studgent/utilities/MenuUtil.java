@@ -24,7 +24,7 @@ public class MenuUtil {
 		// change login text
 		MenuItem login_item = menu.findItem(R.id.login);
 		if ( LoginUtility.isLoggedIn() ) {
-			login_item.setTitle( context.getString(R.string.login) + " (" + LoginUtility.getEmail() + ")");
+			login_item.setTitle( LoginUtility.getEmail() );
 		} else {
 			login_item.setTitle( context.getString(R.string.login) );
 		}
