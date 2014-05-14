@@ -5,14 +5,9 @@ import java.util.ArrayList;
 import android.widget.AdapterView;
 
 import java.util.Collections;
-import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import be.ugent.oomo.groep12.studgent.R;
-import be.ugent.oomo.groep12.studgent.R.layout;
-import be.ugent.oomo.groep12.studgent.R.menu;
-import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -20,23 +15,15 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.WindowManager.LayoutParams;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import be.ugent.oomo.groep12.studgent.adapter.CalenderAdapter;
 import be.ugent.oomo.groep12.studgent.common.ICalendarEvent;
-import be.ugent.oomo.groep12.studgent.common.CalendarEvent;
-import be.ugent.oomo.groep12.studgent.common.IData;
-import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import be.ugent.oomo.groep12.studgent.data.CalendarEventDataSource;
-import be.ugent.oomo.groep12.studgent.utilities.LayoutUtil;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 
 public class EventsActivity extends Activity implements AdapterView.OnItemClickListener, TextWatcher {
@@ -106,7 +93,8 @@ public class EventsActivity extends Activity implements AdapterView.OnItemClickL
 	private class AsyncListViewLoader extends AsyncTask<CalenderAdapter, Void, ArrayList<ICalendarEvent>> {
 	    private final ProgressDialog dialog = new ProgressDialog(EventsActivity.this);
 
-	    @Override
+	    @SuppressWarnings("unchecked")
+		@Override
 	    protected void onPostExecute(ArrayList<ICalendarEvent> result) {            
 	        super.onPostExecute(result);
 	        

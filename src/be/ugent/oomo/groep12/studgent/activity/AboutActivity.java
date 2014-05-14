@@ -1,12 +1,8 @@
 package be.ugent.oomo.groep12.studgent.activity;
 
 import be.ugent.oomo.groep12.studgent.R;
-import be.ugent.oomo.groep12.studgent.R.id;
-import be.ugent.oomo.groep12.studgent.R.layout;
-import be.ugent.oomo.groep12.studgent.R.string;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 import android.app.Activity;
-import android.app.ActionBar;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.text.Html;
@@ -19,9 +15,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import android.os.Build;
 
 public class AboutActivity extends Activity {
 

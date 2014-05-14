@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -242,20 +243,35 @@ public class CurlUtil {
 		return get(resource + "/page/" + perpage + '/' + page, ignore_cache);
 	}
 	
+	/**
+	 * POST request to the backend api, to send data to the backend
+	 * @param resource of the backend api
+	 * @param params map with key values to be posted
+	 * @return string with response from backend api
+	 * @throws CurlException
+	 */
 	public static String post(String resource, Map<String, String> params) throws CurlException{
 		return post(resource, params, true); // with post request, automatically ignore cache
 	}
 	
-	
+
+	/**
+	 * POST request to the backend api, to send data to the backend
+	 * @param resource of the backend api
+	 * @param params map with key values to be posted
+	 * @param ignore_cache ignore local cache of the response
+	 * @return string with response from backend api
+	 * @throws CurlException
+	 */
 	public static String post(String resource, Map<String, String> params, boolean ignore_cache) throws CurlException {
 		String target = create_target(resource);
 		HttpPost httppost = new HttpPost(target);
 		
 		// formatting parameters in NameValuePair.
-		Iterator it = params.entrySet().iterator();
+		Iterator<Entry<String, String>> it = params.entrySet().iterator();
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();  
 	    while ( it.hasNext() ) {
-	        Map.Entry pair = (Map.Entry) it.next();
+	        Map.Entry<String, String> pair = it.next();
 	        nameValuePairs.add(
 	        		new BasicNameValuePair( pair.getKey().toString(), 
 	        							    pair.getValue().toString() )
@@ -265,7 +281,7 @@ public class CurlUtil {
 
 	    try {
 	    	
-	    	// add NameValu pairs to the httppost object.
+	    	// add NameValue pairs to the httppost object.
 			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 			
 			// execute the httpclient with the httppost object

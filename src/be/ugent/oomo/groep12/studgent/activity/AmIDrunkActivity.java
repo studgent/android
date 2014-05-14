@@ -1,14 +1,10 @@
 package be.ugent.oomo.groep12.studgent.activity;
 
 import be.ugent.oomo.groep12.studgent.R;
-import be.ugent.oomo.groep12.studgent.R.anim;
-import be.ugent.oomo.groep12.studgent.R.id;
-import be.ugent.oomo.groep12.studgent.R.layout;
-import be.ugent.oomo.groep12.studgent.R.menu;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 import android.app.Activity;
-import android.app.ActionBar;
 import android.app.Fragment;
+import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -21,10 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
-import android.os.Build;
-import android.os.CountDownTimer;
 
 public class AmIDrunkActivity extends Activity implements SensorEventListener {
 	
@@ -84,7 +77,7 @@ public class AmIDrunkActivity extends Activity implements SensorEventListener {
 		}
 		
 		mInitialized = false;
-		mSensorManager = (SensorManager) getSystemService(this.SENSOR_SERVICE);
+		mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 		mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		// TODO: maybe also use magnetometer to sense the movement (for checking if person walked a distance)
 		// check if magnetometer uses any significant battery (as correct distance is not a very big requirement)

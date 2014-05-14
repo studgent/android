@@ -1,29 +1,19 @@
 package be.ugent.oomo.groep12.studgent.data;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import com.google.android.gms.maps.model.LatLng;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
+import android.annotation.SuppressLint;
 import android.util.Log;
 import be.ugent.oomo.groep12.studgent.common.CalendarEvent;
 import be.ugent.oomo.groep12.studgent.common.ICalendarEvent;
-import be.ugent.oomo.groep12.studgent.common.IData;
-import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import be.ugent.oomo.groep12.studgent.exception.CurlException;
-import be.ugent.oomo.groep12.studgent.utilities.App;
 import be.ugent.oomo.groep12.studgent.utilities.CurlUtil;
 import be.ugent.oomo.groep12.studgent.utilities.JSONUtil;
 
@@ -34,6 +24,7 @@ import be.ugent.oomo.groep12.studgent.utilities.JSONUtil;
  *
  */
 
+@SuppressLint("UseSparseArrays")
 public class CalendarEventDataSource implements IDataSource {
 	
 	private static CalendarEventDataSource instance = null;
@@ -84,6 +75,7 @@ public class CalendarEventDataSource implements IDataSource {
 
 	}
 	
+	@SuppressLint("SimpleDateFormat")
 	protected CalendarEvent parseEvent(JSONObject item) throws JSONException, ParseException{
 		CalendarEvent cal_event;
 		int id = item.optInt("id",0);

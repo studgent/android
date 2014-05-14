@@ -9,6 +9,7 @@ import java.util.Date;
  * Interface for the Event.
  *
  */
+@SuppressWarnings("rawtypes")
 public interface ICalendarEvent extends IData, Comparable {
 
 	public String getType();

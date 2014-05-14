@@ -6,6 +6,7 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import android.annotation.SuppressLint;
 import android.util.Log;
 import be.ugent.oomo.groep12.studgent.common.Friend;
 import be.ugent.oomo.groep12.studgent.common.IData;
@@ -15,6 +16,7 @@ import be.ugent.oomo.groep12.studgent.utilities.CurlUtil;
 import be.ugent.oomo.groep12.studgent.utilities.JSONUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 
+@SuppressLint("UseSparseArrays")
 public class FriendListDataSource implements IDataSource {
 	
 	private static FriendListDataSource instance = null;
@@ -34,10 +36,10 @@ public class FriendListDataSource implements IDataSource {
 	
 	public boolean follow(int friendID, boolean follow) throws DataSourceException {
 
-		int userID = LoginUtility.getInstance().getId();
+		int userID = LoginUtility.getId();
 		
 		Map<String, String> postData = new HashMap<String, String>();
-		postData.put("token", LoginUtility.getInstance().getToken() );
+		postData.put("token", LoginUtility.getToken() );
 		boolean added = false;
 		//update online	
 		String followunfollow = follow ? "/follow/" : "/unfollow/";
@@ -66,7 +68,7 @@ public class FriendListDataSource implements IDataSource {
 	}
 	
 	protected void populateList(){
-		int userID = LoginUtility.getInstance().getId();
+		int userID = LoginUtility.getId();
 		// populate the list
 		items = new HashMap<Integer,Friend>();
 
@@ -105,7 +107,7 @@ public class FriendListDataSource implements IDataSource {
 		return friend;
 	}
 	public Map<Integer, Friend> getLastItems() throws DataSourceException {
-		int userID = LoginUtility.getInstance().getId();
+		int userID = LoginUtility.getId();
 		if (userID == 0)
 		{
 			throw new DataSourceException("USER ID NOT SET");

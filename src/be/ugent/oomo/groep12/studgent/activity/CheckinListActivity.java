@@ -1,39 +1,22 @@
 package be.ugent.oomo.groep12.studgent.activity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager.LayoutParams;
-import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.adapter.CheckinAdapter;
-import be.ugent.oomo.groep12.studgent.adapter.FriendAdapter;
 import be.ugent.oomo.groep12.studgent.common.Checkin;
-import be.ugent.oomo.groep12.studgent.common.Friend;
-import be.ugent.oomo.groep12.studgent.common.ICalendarEvent;
-import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
 import be.ugent.oomo.groep12.studgent.data.CheckinsDataSource;
-import be.ugent.oomo.groep12.studgent.data.FriendListDataSource;
-import be.ugent.oomo.groep12.studgent.data.POIDataSource;
-import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 
 public class CheckinListActivity extends Activity{

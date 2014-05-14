@@ -90,7 +90,7 @@ public class ChallengeActivity extends Activity {
 	
 	public void openTrophiesActivity(View view){
 		Intent intent = new Intent(this, TrophiesListActivity.class);
-		intent.putExtra("userID", LoginUtility.getInstance().getId());
+		intent.putExtra("userID", LoginUtility.getId());
 		startActivity(intent);
 	}
 	

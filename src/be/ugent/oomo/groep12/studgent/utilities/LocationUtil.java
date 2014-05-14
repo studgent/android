@@ -14,7 +14,6 @@ import be.ugent.oomo.groep12.studgent.data.POIDataSource;
 import be.ugent.oomo.groep12.studgent.data.QuizQuestionsDataSource;
 import be.ugent.oomo.groep12.studgent.exception.CurlException;
 import be.ugent.oomo.groep12.studgent.exception.DataSourceException;
-import android.R.bool;
 import android.content.Context;
 import android.location.Criteria;
 import android.location.Location;
@@ -23,8 +22,14 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-
+/**
+ * Utility class that provides location-related info
+ * Contains static functions to retrieve addresses from geocode and vice versa
+ * Also implements LocationListener as intermediary to hold the last fetched location
+ * 
+ */
 public class LocationUtil implements LocationListener  {
+	
 	/**
 	 * Function to resolve a streetadres to his lat/lon coordinates
 	 * @param youraddress : String: the address
@@ -96,7 +101,7 @@ public class LocationUtil implements LocationListener  {
 	}
 	
 	/**
-	 * Converts a Locatio  to a latLng
+	 * Converts a Location  to a latLng
 	 * @param l: Location object
 	 * @return : corresponding LatLng object
 	 */
@@ -124,7 +129,7 @@ public class LocationUtil implements LocationListener  {
 	private static ILocationChangedListener listenerLocation;
 	
 	/**
-	 * Singleton design patern constructor. 
+	 * Singleton design pattern constructor. 
 	 * Enables the locationManager to send updates to this class
 	 */
 	protected LocationUtil() {
@@ -155,14 +160,13 @@ public class LocationUtil implements LocationListener  {
 	 * @param listener	: The object which will be called when a distanceUpdate event occure
 	 */
 	public void registerDistanceUpdatedListener(IDistanceUpdatedListener listener){
-		 this.listenerDistance = listener;
+		 LocationUtil.listenerDistance = listener;
 		 new AsyncTask<Void, Void, Void>(){
 		        @Override
 		        protected Void doInBackground(Void... params) {
 		        	try {
 						QuizQuestionsDataSource.getInstance().getLastItems();
 					} catch (DataSourceException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 		        	POIDataSource.getInstance().getLastItems().values();
@@ -184,7 +188,7 @@ public class LocationUtil implements LocationListener  {
 	 * @param listener	: The object which will be called when a LocationUpdated event occure
 	 */
 	public void registerLocationUpdatedListener(ILocationChangedListener listener){
-		this.listenerLocation = listener;
+		LocationUtil.listenerLocation = listener;
 		Location loc = locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria() , false));
 		if (loc != null && loc.getLatitude() != 0 && loc.getLongitude() != 0 )
 			listener.locationIsChanged( loc	);
@@ -239,7 +243,6 @@ public class LocationUtil implements LocationListener  {
 							q.setDistance(distance);
 					}
 				} catch (DataSourceException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}			
 				listenerDistance.distanceIsUpdated();

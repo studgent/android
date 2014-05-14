@@ -5,9 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
-import android.location.LocationManager;
 import android.text.Html;
-import android.text.Spannable;
 import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +19,6 @@ import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.common.POIFilter;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 
-import com.google.android.gms.maps.model.LatLng;
 
 public class POIAdapter extends ArrayAdapter<PointOfInterest> implements Filterable{
     static class POIItemHolder{
@@ -66,7 +63,8 @@ public class POIAdapter extends ArrayAdapter<PointOfInterest> implements Filtera
 	
 	
 
-    @Override
+    @SuppressWarnings("unused")
+	@Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
         POIItemHolder holder = null;
@@ -138,6 +136,7 @@ public class POIAdapter extends ArrayAdapter<PointOfInterest> implements Filtera
 	}
 
 	
+	@SuppressWarnings("unused")
 	private double distFrom(double lat1, double lng1, double lat2, double lng2) {
 	    double earthRadius = 3958.75;
 	    double dLat = Math.toRadians(lat2-lat1);

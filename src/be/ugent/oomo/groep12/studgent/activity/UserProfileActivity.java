@@ -2,25 +2,17 @@ package be.ugent.oomo.groep12.studgent.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.utilities.LayoutUtil;
-import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
-import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
-import be.ugent.oomo.groep12.studgent.activity.AboutActivity;
 import be.ugent.oomo.groep12.studgent.common.Friend;
 import be.ugent.oomo.groep12.studgent.data.CheckinsDataSource;
-import be.ugent.oomo.groep12.studgent.data.TrophieListDataSource;
 
-import com.crashlytics.android.Crashlytics;
 
 
 public class UserProfileActivity extends Activity {
@@ -61,12 +53,10 @@ public class UserProfileActivity extends Activity {
 		TextView txtEmail = (TextView)findViewById(R.id.user_profile_email); 
 		TextView txtPhone = (TextView)findViewById(R.id.user_profile_phone); 
 		TextView txtscore = (TextView)findViewById(R.id.user_profile_score); 
-		Button btnTrofie = (Button)findViewById(R.id.button_trofie); 
-		Button btnCheckin = (Button)findViewById(R.id.button_checkin); 
 		
 		//hier nog de text van btntrophie veranderen (zodat het aantal trofies er ook in staat)
-		btnCheckinText = String.valueOf(btnCheckin.getText());
-		btnCheckin.setText(btnCheckinText+"  ("+CheckinsDataSource.getCheckinNumber(user.getId())+")");
+		btnCheckinText = String.valueOf(button_checkin.getText());
+		button_checkin.setText(btnCheckinText+"  ("+CheckinsDataSource.getCheckinNumber(user.getId())+")");
 		
 		txtName.setText(Html.fromHtml(user.getName()));
 		txtEmail.setText(Html.fromHtml("<a href=\"mailto:"+ user.getEmail() +"\" >"+user.getEmail()+"</a>"));

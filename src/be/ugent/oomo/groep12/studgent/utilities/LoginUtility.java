@@ -3,14 +3,10 @@ package be.ugent.oomo.groep12.studgent.utilities;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.widget.Toast;
-import be.ugent.oomo.groep12.studgent.activity.EventDetailActivity;
 import be.ugent.oomo.groep12.studgent.data.FriendListDataSource;
 import be.ugent.oomo.groep12.studgent.data.QuizQuestionsDataSource;
 import be.ugent.oomo.groep12.studgent.data.TrophieListDataSource;

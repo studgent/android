@@ -107,7 +107,7 @@ public class CalendarEvent implements ICalendarEvent {
 
 	@Override
 	public void setLocation(IPointOfInterest location) {
-		this.poi = poi;
+		this.poi = location;
 	}
 
 	@Override
@@ -262,6 +262,7 @@ public class CalendarEvent implements ICalendarEvent {
 		dest.writeParcelable(this.poi, 0);
 	}
 
+	@SuppressWarnings("rawtypes")
 	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
 	    public CalendarEvent createFromParcel(Parcel in) {
 	        return new CalendarEvent(in);

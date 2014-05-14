@@ -7,9 +7,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.Html;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager.LayoutParams;
@@ -53,7 +51,7 @@ public class TrophiesListActivity  extends Activity {
         
         trophie_list_view.setAdapter(adapter);
         
-        if (LoginUtility.getInstance().isLoggedIn() == false) {
+        if (LoginUtility.isLoggedIn() == false) {
         	Toast.makeText(this, Html.fromHtml("Log in om je trofee&euml;n te bekijken!"), Toast.LENGTH_SHORT).show();
 			onBackPressed();
 		}else{

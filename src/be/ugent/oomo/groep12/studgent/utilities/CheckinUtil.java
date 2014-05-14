@@ -12,7 +12,6 @@ import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
 public class CheckinUtil {
 
 	public CheckinUtil() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	/**
@@ -24,8 +23,9 @@ public class CheckinUtil {
 	 * @return a empty string if the check-in is allowed. Otherwise a textual respresentation of the error will be given
 	 */
 	public static String checkInAllowed(Context context, IPointOfInterest poi, SharedPreferences sharedPreferences, Location currentLocation) {
+		LoginUtility.getInstance();
 		//check if user is logged in
-		if (LoginUtility.getInstance().isLoggedIn() == false)
+		if (LoginUtility.isLoggedIn() == false)
 			return "gebruiker is niet ingelogd";
 		
         //checking if poi is in area

@@ -7,18 +7,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import com.google.android.gms.maps.model.LatLng;
-
-import android.app.DownloadManager.Query;
 import android.annotation.SuppressLint;
-import android.app.DownloadManager.Query;
 import android.util.Log;
 import be.ugent.oomo.groep12.studgent.common.QuizQuestion;
 import be.ugent.oomo.groep12.studgent.exception.CurlException;
@@ -48,7 +42,7 @@ public class QuizQuestionsDataSource implements IDataSource {
 	public boolean checkAnswer(QuizQuestion question, String givenanswer ) throws DataSourceException {
 		
 		Map<String, String> postData = new HashMap<String, String>();
-		postData.put("token", LoginUtility.getInstance().getToken() );
+		postData.put("token", LoginUtility.getToken() );
 		postData.put("answer", givenanswer );
 		boolean correct = false;
 		//update online	
@@ -84,7 +78,7 @@ public class QuizQuestionsDataSource implements IDataSource {
 	
 	@Override
 	public Map<Integer, QuizQuestion> getLastItems() throws DataSourceException {
-		userID = LoginUtility.getInstance().getId();
+		userID = LoginUtility.getId();
 		if (userID == 0)
 		{
 			throw new DataSourceException("USER ID NOT SET");
@@ -97,6 +91,7 @@ public class QuizQuestionsDataSource implements IDataSource {
 
 	
 
+	@SuppressLint("UseSparseArrays")
 	private void populateList(){
 		items = new HashMap<Integer,QuizQuestion>();
 		
@@ -120,12 +115,12 @@ public class QuizQuestionsDataSource implements IDataSource {
 	}
 	
 
+	@SuppressLint("SimpleDateFormat")
 	private QuizQuestion parseQuestion(JSONObject item) throws JSONException, ParseException {
 		QuizQuestion quizquestion;
 		int id = item.optInt("id",0);
 		int points = item.optInt("points");
-		String type = JSONUtil.optString(item, "type"),
-			   question = JSONUtil.optString(item, "question"),
+		String question = JSONUtil.optString(item, "question"),
 			   answer = JSONUtil.optString(item, "answer");
 		boolean answered = item.optBoolean("answered");
 		

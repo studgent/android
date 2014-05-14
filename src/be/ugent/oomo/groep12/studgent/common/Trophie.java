@@ -1,6 +1,5 @@
 package be.ugent.oomo.groep12.studgent.common;
 
-import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -55,6 +54,7 @@ public class Trophie implements IData {
 		dest.writeInt(this.points);
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
 	    public Trophie createFromParcel(Parcel in) {
 	        return new Trophie(in);

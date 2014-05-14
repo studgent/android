@@ -18,7 +18,6 @@ import android.widget.TextView;
 import be.ugent.oomo.groep12.studgent.R;
 import be.ugent.oomo.groep12.studgent.common.Friend;
 import be.ugent.oomo.groep12.studgent.common.FriendFilter;
-import be.ugent.oomo.groep12.studgent.common.POIFilter;
 
 public class FriendAdapter extends ArrayAdapter<Friend> implements Filterable {
     static class FriendItemHolder
@@ -112,7 +111,6 @@ public class FriendAdapter extends ArrayAdapter<Friend> implements Filterable {
 	
 	public void setFollowStatus(int userID, boolean follow){
 		int i=0;
-		Friend f;
 		while(i<data.size() && data.get(i).getId()!=userID){
 			i++;
 		}

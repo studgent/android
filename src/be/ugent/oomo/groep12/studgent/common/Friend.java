@@ -1,7 +1,5 @@
 package be.ugent.oomo.groep12.studgent.common;
 
-import java.util.Date;
-
 import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -119,6 +117,7 @@ public class Friend implements IData {
 		return this.getName();
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
 	    public Friend createFromParcel(Parcel in) {
 	        return new Friend(in);

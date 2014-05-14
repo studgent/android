@@ -14,7 +14,6 @@ import be.ugent.oomo.groep12.studgent.utilities.LayoutUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
-import be.ugent.oomo.groep12.studgent.activity.AboutActivity;
 
 import com.crashlytics.android.Crashlytics;
 

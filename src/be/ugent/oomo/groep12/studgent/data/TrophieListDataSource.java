@@ -3,6 +3,7 @@ package be.ugent.oomo.groep12.studgent.data;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -10,13 +11,10 @@ import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.util.Log;
-import be.ugent.oomo.groep12.studgent.common.Friend;
-import be.ugent.oomo.groep12.studgent.common.Gender;
 import be.ugent.oomo.groep12.studgent.common.IData;
 import be.ugent.oomo.groep12.studgent.common.Trophie;
 import be.ugent.oomo.groep12.studgent.exception.CurlException;
 import be.ugent.oomo.groep12.studgent.utilities.CurlUtil;
-import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 
 public class TrophieListDataSource implements IDataSource {
 	
@@ -68,9 +66,9 @@ public class TrophieListDataSource implements IDataSource {
 				
 			}
 			System.out.println("frequentietable: ----------\n"+frequentyTable.toString());
-			Iterator it = frequentyTable.entrySet().iterator();
+			Iterator<Entry<Integer, Integer>> it = frequentyTable.entrySet().iterator();
 		    while (it.hasNext()) {
-		        Map.Entry pairs = (Map.Entry)it.next();
+		        Map.Entry<Integer, Integer> pairs =  it.next();
 		        int poi_id = Integer.parseInt(pairs.getKey().toString());
 		        int freq = Integer.parseInt(pairs.getValue().toString());
 		        int rank = 2;

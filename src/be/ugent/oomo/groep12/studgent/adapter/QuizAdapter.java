@@ -3,28 +3,19 @@ package be.ugent.oomo.groep12.studgent.adapter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
-import android.text.Layout;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.GridLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import be.ugent.oomo.groep12.studgent.R;
-import be.ugent.oomo.groep12.studgent.common.Friend;
 import be.ugent.oomo.groep12.studgent.common.IQuizQuestion;
 import be.ugent.oomo.groep12.studgent.common.QuizQuestion;
 
@@ -57,7 +48,8 @@ public class QuizAdapter extends ArrayAdapter<QuizQuestion> {
 	}
 	
 
-    @Override
+    @SuppressLint("SimpleDateFormat")
+	@Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
         QuizAdapterItemHolder holder = null;

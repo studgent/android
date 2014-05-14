@@ -3,12 +3,10 @@ package be.ugent.oomo.groep12.studgent.adapter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.text.Html;
-import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +54,8 @@ public class CalenderAdapter extends ArrayAdapter<ICalendarEvent> implements Fil
 	}
 	
 
-    @Override
+    @SuppressLint("SimpleDateFormat")
+	@Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
         CalendarItemHolder holder = null;

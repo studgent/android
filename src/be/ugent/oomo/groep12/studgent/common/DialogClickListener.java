@@ -4,7 +4,9 @@ import android.view.View;
 
 public class DialogClickListener {
 
+	@SuppressWarnings("unused")
 	private View view;
+	@SuppressWarnings("unused")
 	private boolean vriendToevoegen;
 	
 	public DialogClickListener(View v, boolean vriendToevoegen){

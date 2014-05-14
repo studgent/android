@@ -1,8 +1,6 @@
 package be.ugent.oomo.groep12.studgent.activity;
 
 import be.ugent.oomo.groep12.studgent.R;
-import be.ugent.oomo.groep12.studgent.R.layout;
-import be.ugent.oomo.groep12.studgent.R.menu;
 import be.ugent.oomo.groep12.studgent.common.CalendarEvent;
 import be.ugent.oomo.groep12.studgent.common.ICalendarEvent;
 import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
@@ -15,7 +13,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.text.Html;
@@ -50,8 +47,6 @@ public class EventDetailActivity extends Activity implements OnInfoWindowClickLi
 		this.overridePendingTransition(R.anim.animation_enter,
                 R.anim.animation_leave);
 		setContentView(R.layout.activity_event_detail);
-		Bundle b = getIntent().getExtras();
-        Integer id = (Integer) b.get("id");
         
         // getting parcelable is faster than using datasource.
         selected_event = (CalendarEvent) getIntent().getParcelableExtra("calendarItem");
@@ -70,7 +65,6 @@ public class EventDetailActivity extends Activity implements OnInfoWindowClickLi
         }
 	}
 	
-	@SuppressWarnings("deprecation")
 	private void loadEvent(/*ICalendarEvent event*/){
 		setTitle(selected_event.getName());
 		TextView location = (TextView) findViewById(R.id.calendar_detail_location);

@@ -1,18 +1,10 @@
 package be.ugent.oomo.groep12.studgent.activity;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
-import com.crashlytics.android.Crashlytics;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,12 +13,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import be.ugent.oomo.groep12.studgent.R;
-import be.ugent.oomo.groep12.studgent.adapter.CalenderAdapter;
-import be.ugent.oomo.groep12.studgent.common.ICalendarEvent;
-import be.ugent.oomo.groep12.studgent.data.CalendarEventDataSource;
-import be.ugent.oomo.groep12.studgent.exception.CurlException;
-import be.ugent.oomo.groep12.studgent.utilities.CurlUtil;
-import be.ugent.oomo.groep12.studgent.utilities.LayoutUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 
@@ -116,9 +102,9 @@ public class LoginActivity extends Activity {
 	    protected void onPostExecute(String result) {            
 	        super.onPostExecute(result);
 	        dialog.dismiss();
-        	Toast.makeText(LoginActivity.this, LoginUtility.getInstance().getMessage(), Toast.LENGTH_LONG).show();
+        	Toast.makeText(LoginActivity.this, LoginUtility.getMessage(), Toast.LENGTH_LONG).show();
 
-	        if (LoginUtility.getInstance().isLoggedIn()){
+	        if (LoginUtility.isLoggedIn()){
 	        	LoginActivity.this.finish();
 	        }
 	    }
@@ -134,7 +120,7 @@ public class LoginActivity extends Activity {
 	        try {
 	        	String email = credentials[0];
 	        	String password = credentials[1];
-	        	boolean success = LoginUtility.getInstance().LogIn(email, password);
+	        	LoginUtility.LogIn(email, password);
 	        	String token = "";
 		        return token;
 	        }

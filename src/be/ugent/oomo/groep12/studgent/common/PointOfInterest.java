@@ -1,7 +1,5 @@
 package be.ugent.oomo.groep12.studgent.common;
 
-import java.util.Date;
-
 import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -148,6 +146,7 @@ public class PointOfInterest implements IPointOfInterest {
 	}
 	
 
+	@SuppressWarnings("rawtypes")
 	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
 	    public PointOfInterest createFromParcel(Parcel in) {
 	        return new PointOfInterest(in);

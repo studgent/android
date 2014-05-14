@@ -18,12 +18,7 @@ import be.ugent.oomo.groep12.studgent.utilities.IDistanceUpdatedListener;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -36,11 +31,9 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
@@ -98,7 +91,7 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener, IDista
 		
 		adapter.clear();
 		
-		if (LoginUtility.getInstance().isLoggedIn()==false){
+		if (LoginUtility.isLoggedIn()==false){
 			Toast.makeText(this, "Log in om de quiz te kunnen spelen!", Toast.LENGTH_SHORT).show();
 			onBackPressed();
 		}else{
@@ -191,15 +184,15 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener, IDista
 					
 			Button btnNavigateto = (Button) findViewById(R.id.navigateToQuestion);
 			if (currentQuestion.getLocation() == null){
-				btnNavigateto.setVisibility(view.GONE);	
+				btnNavigateto.setVisibility(View.GONE);	
 			}else{
-				btnNavigateto.setVisibility(view.VISIBLE);
+				btnNavigateto.setVisibility(View.VISIBLE);
 			}
 			
 			Button submitButton = (Button)findViewById(R.id.quiz_submitText);
 			if (currentQuestion.getPossibleAnswers()==null || currentQuestion.getPossibleAnswers().size()==0){
 				//no multiple answer question, show inputbox
-				oneAnswerPanel.setVisibility(view.VISIBLE);
+				oneAnswerPanel.setVisibility(View.VISIBLE);
 				multipleAnswerPanel.setVisibility(View.GONE);
 				EditText answerInputBox = (EditText) findViewById(R.id.QuizAnswerInputBox);
 				answerInputBox.setOnEditorActionListener(this);
@@ -209,10 +202,10 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener, IDista
 				submitButton.setVisibility(View.GONE);
 				
 				oneAnswerPanel.setVisibility(View.GONE);
-				multipleAnswerPanel.setVisibility(view.VISIBLE);
+				multipleAnswerPanel.setVisibility(View.VISIBLE);
 				multipleAnswerPanel.removeAllViews();
 				
-				int idButton =0;
+				//int idButton =0;
 				LayoutParams btnlayout = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
 				btnlayout.setMargins(10, 10, 10, 10);
 				for (String possibleAnswer : currentQuestion.getPossibleAnswers() ){
@@ -221,14 +214,14 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener, IDista
 					btn.setOnClickListener(this);
 					btn.setLayoutParams(btnlayout);
 				
-					int columnIndex = 0;
-					int rowIndex=idButton;
+					//int columnIndex = 0;
+					//int rowIndex=idButton;
 
 					//GridLayout.LayoutParams gridLayoutParam = new GridLayout.LayoutParams(GridLayout.spec(rowIndex, 1) , GridLayout.spec(columnIndex, 1));
 				    //gridLayoutParam.setMargins(20,10,20,10);
 				    multipleAnswerPanel.addView(btn, btnlayout);
 		            
-		            idButton++;
+		            //idButton++;
 				}
 	
 			}	
@@ -266,7 +259,6 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener, IDista
 		//quiz_list.setFocusable(true);
 		//quiz_list.requestFocus();
 		
-		Boolean correct;
 		
 		new AsyncQuizQuestionCheck().execute(answer);
 		
@@ -376,7 +368,6 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener, IDista
 		
 		@Override
 		protected String doInBackground(QuizQuestion... params) {
-			QuizQuestion quiz = params[0];
 			String location = null;
 			try {
 				location = LocationUtil.getAddressFromLatLng(currentQuestion

@@ -26,7 +26,7 @@ public class Checkin implements IData {
 
 	@Override
 	public void setName(String name) {
-		this.message=message;
+		this.user_name=name;
 		
 	}
 	@Override
@@ -71,6 +71,7 @@ public class Checkin implements IData {
 		dest.writeString(this.message);
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
 	    public Checkin createFromParcel(Parcel in) {
 	        return new Checkin(in);

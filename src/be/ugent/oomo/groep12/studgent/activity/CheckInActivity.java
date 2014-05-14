@@ -1,8 +1,6 @@
 package be.ugent.oomo.groep12.studgent.activity;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Map;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -12,28 +10,18 @@ import be.ugent.oomo.groep12.studgent.adapter.POIAdapter;
 import be.ugent.oomo.groep12.studgent.common.IPointOfInterest;
 import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
 import be.ugent.oomo.groep12.studgent.data.POIDataSource;
-import be.ugent.oomo.groep12.studgent.utilities.LayoutUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
-import android.app.ActionBar;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.text.format.Time;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -75,7 +63,7 @@ public class CheckInActivity extends Activity implements AdapterView.OnItemClick
 		//sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         //sharedPreferences = this.getSharedPreferences()(Context.MODE_PRIVATE);
         
-        if (LoginUtility.getInstance().isLoggedIn() == false) {
+        if (LoginUtility.isLoggedIn() == false) {
 			Toast.makeText(this, "Log in om in te checken!", Toast.LENGTH_SHORT).show();
 			onBackPressed();
 		}else{
@@ -197,6 +185,7 @@ public class CheckInActivity extends Activity implements AdapterView.OnItemClick
 	    return (double) (dist * meterConversion);
 	}
 		
+	@SuppressWarnings("unused")
 	private void closeActivity(){
 		this.finish();
 	}

@@ -1,16 +1,11 @@
 package be.ugent.oomo.groep12.studgent.common;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Random;
 
 import com.google.android.gms.maps.model.LatLng;
 
-import be.ugent.oomo.groep12.studgent.utilities.LocationUtil;
-
-import android.R.bool;
 import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -250,6 +245,7 @@ public class QuizQuestion implements IData, IQuizQuestion {
 		dest.writeDouble(this.location.longitude);
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
 	    public QuizQuestion createFromParcel(Parcel in) {
 	        return new QuizQuestion(in);

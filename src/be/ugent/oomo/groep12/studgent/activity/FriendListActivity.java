@@ -4,16 +4,10 @@ import java.util.ArrayList;
 
 import android.widget.AdapterView;
 
-import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import be.ugent.oomo.groep12.studgent.R;
-import be.ugent.oomo.groep12.studgent.R.layout;
-import be.ugent.oomo.groep12.studgent.R.menu;
-import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -23,27 +17,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.WindowManager.LayoutParams;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-import be.ugent.oomo.groep12.studgent.adapter.CalenderAdapter;
 import be.ugent.oomo.groep12.studgent.adapter.FriendAdapter;
 import be.ugent.oomo.groep12.studgent.common.Friend;
 import be.ugent.oomo.groep12.studgent.common.ICalendarEvent;
-import be.ugent.oomo.groep12.studgent.common.CalendarEvent;
-import be.ugent.oomo.groep12.studgent.common.IData;
-import be.ugent.oomo.groep12.studgent.common.PointOfInterest;
-import be.ugent.oomo.groep12.studgent.data.CalendarEventDataSource;
 import be.ugent.oomo.groep12.studgent.data.FriendListDataSource;
-import be.ugent.oomo.groep12.studgent.utilities.LayoutUtil;
 import be.ugent.oomo.groep12.studgent.utilities.LoginUtility;
 import be.ugent.oomo.groep12.studgent.utilities.MenuUtil;
 
@@ -76,7 +60,7 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
         
         friend_list_view.setAdapter(adapter);
 
-		if (LoginUtility.getInstance().isLoggedIn() == false) {
+		if (LoginUtility.isLoggedIn() == false) {
 			Toast.makeText(this, "Log in om vrienden volgen!", Toast.LENGTH_SHORT).show();
 			onBackPressed();
 		}else{
@@ -193,8 +177,8 @@ public class FriendListActivity extends Activity implements AdapterView.OnItemCl
 	private ArrayList<Friend> sortFriends(ArrayList<Friend> source){
 		ArrayList<Friend> result = new ArrayList<Friend>();
 		Map<Boolean,ArrayList<Friend> > vrienden = new HashMap<Boolean,ArrayList<Friend> >();
-        vrienden.put(new Boolean("true"), new ArrayList<Friend>());
-        vrienden.put(new Boolean("false"), new ArrayList<Friend>());
+        vrienden.put(true, new ArrayList<Friend>());
+        vrienden.put(false, new ArrayList<Friend>());
         for(Friend friend: source){
         	vrienden.get(friend.isFollowing()).add(friend);
         }
