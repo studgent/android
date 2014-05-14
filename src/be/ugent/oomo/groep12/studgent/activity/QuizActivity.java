@@ -45,8 +45,6 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
-
-
 public class QuizActivity extends Activity implements 
 AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener, IDistanceUpdatedListener
 
@@ -58,8 +56,10 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener, IDista
 	String currentAddress;
 	
 
-	
-	
+	/**
+	 * Button event: navigate to
+	 * @param view 
+	 */
 	public void navigateTo(View view) {
 		String uri = "geo:" + currentQuestion.getLocation().latitude + ","
 				+ currentQuestion.getLocation().longitude;
@@ -107,11 +107,11 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener, IDista
 		
 		//start GPS
 		LocationUtil.getInstance(this).registerDistanceUpdatedListener(this);
-				
-		
 	}
 	
-	
+	/**
+	 * Refresh the listview and sort the values
+	 */
 	private void renewListGui(){
 		    adapter.sort(new Comparator<QuizQuestion>() {
 			@Override
@@ -170,7 +170,9 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener, IDista
 	}
 	
 
-	
+	/**
+	 * Event when a question is selected
+	 */
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		currentQuestion = adapter.getItem(position);
@@ -202,6 +204,7 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener, IDista
 				oneAnswerPanel.setVisibility(view.VISIBLE);
 				multipleAnswerPanel.setVisibility(View.GONE);
 				EditText answerInputBox = (EditText) findViewById(R.id.QuizAnswerInputBox);
+				answerInputBox.setText("");
 				answerInputBox.setOnEditorActionListener(this);
 				submitButton.setVisibility(View.VISIBLE);
 			}else{
@@ -246,6 +249,10 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener, IDista
 		sendAnswer(answer);
 	}	
 	
+	/**
+	 * The submit button
+	 * @param view
+	 */
 	public void submitButton(View view){
 		EditText v = (EditText) findViewById(R.id.QuizAnswerInputBox);
 		sendAnswer(v.getText().toString());
@@ -263,16 +270,13 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener, IDista
 		//hide answer panel
 		LinearLayout detailview = (LinearLayout) findViewById(R.id.detailViewQuestion);
 		detailview.setVisibility(View.GONE);
-		//quiz_list.setFocusable(true);
-		//quiz_list.requestFocus();
 		
-		Boolean correct;
-		
+		//check async
 		new AsyncQuizQuestionCheck().execute(answer);
-		
 	}
 
 
+	
 	private class AsyncQuizQuestionCheck extends AsyncTask<String, Void, Boolean> {
 	    private final ProgressDialog dialog = new ProgressDialog(QuizActivity.this);
 
@@ -312,7 +316,9 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener, IDista
 	}
 
 	
-	
+	/**
+	 * Load questions and show them in a list
+	 */
 	private class AsyncQuizQuestionListViewLoader extends AsyncTask<QuizAdapter, Void, Collection<QuizQuestion>> {
 	    private final ProgressDialog dialog = new ProgressDialog(QuizActivity.this);
 
@@ -349,7 +355,9 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener, IDista
 	    }
 	}
 
-	
+	/**
+	 * Async load street from coordinates
+	 */
 	private class AsyncGEOLoader extends
 	AsyncTask<QuizQuestion, Void, String> {
 		
@@ -394,7 +402,7 @@ AdapterView.OnItemClickListener, OnClickListener, OnEditorActionListener, IDista
 	}
 
 
-	//-----GPS
+	//-----GPS-------------
 	@Override
 	public void distanceIsUpdated() {
 		// TODO Auto-generated method stub
