@@ -105,7 +105,7 @@ public class POIAdapter extends ArrayAdapter<PointOfInterest> implements Filtera
         }else{
         	//hide
         	holder.distance.setVisibility(View.GONE);
-        	 holder.unit.setVisibility(View.VISIBLE);
+        	 holder.unit.setVisibility(View.GONE);
         }
         
         //de category_image moet nog gedaan worden

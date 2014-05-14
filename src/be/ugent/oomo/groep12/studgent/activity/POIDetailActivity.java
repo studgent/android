@@ -185,7 +185,7 @@ public class POIDetailActivity extends Activity implements
 		
 		String uri = "geo:" + poi.getLocation().latitude + ","
 				+ poi.getLocation().longitude + "?q="
-				+ poi.getStreet().replace(" ", "+");
+				+ (poi.getStreet()+"").replace(" ", "+");
 		if( ! (poi.getNumber() == null || poi.getNumber().equals("") || poi.getNumber().equalsIgnoreCase("null")) ){
 			uri += "+" + poi.getNumber();
 		}
