@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.5" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" language="java" name="be.ugent.oomo.groep12.studgent.activity.EventsActivity" project="MainActivity" 
+    file="/MainActivity/src/be/ugent/oomo/groep12/studgent/activity/EventsActivity.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="182" x="345" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="be.ugent.oomo.groep12.studgent.activity.EventsActivity.AsyncListViewLoader" 
+    project="MainActivity" file="/MainActivity/src/be/ugent/oomo/groep12/studgent/activity/EventsActivity.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="182" x="142" y="130"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="be.ugent.oomo.groep12.studgent.adapter.CalenderAdapter" project="MainActivity" 
+    file="/MainActivity/src/be/ugent/oomo/groep12/studgent/adapter/CalenderAdapter.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="181" x="164" y="223"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="be.ugent.oomo.groep12.studgent.adapter.CalenderAdapter.CalendarItemHolder" 
+    project="MainActivity" file="/MainActivity/src/be/ugent/oomo/groep12/studgent/adapter/CalenderAdapter.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="181" x="42" y="326"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="be.ugent.oomo.groep12.studgent.common.CalendarEvent" project="MainActivity" 
+    file="/MainActivity/src/be/ugent/oomo/groep12/studgent/common/CalendarEvent.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="186" x="406" y="223"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <interface id="6" language="java" name="be.ugent.oomo.groep12.studgent.common.ICalendarEvent" project="MainActivity" 
+    file="/MainActivity/src/be/ugent/oomo/groep12/studgent/common/ICalendarEvent.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="186" x="406" y="326"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </interface>  
+  <interface id="7" language="java" name="android.widget.Filterable" project="MainActivity" 
+    file="C:/Users/Floris/Documents/adt-bundle-windows-x86-20131030/sdk/platforms/android-19/android.jar" binary="true" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="103" x="263" y="326"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </interface>  
+  <class id="8" language="java" name="be.ugent.oomo.groep12.studgent.data.CalendarEventDataSource" 
+    project="MainActivity" file="/MainActivity/src/be/ugent/oomo/groep12/studgent/data/CalendarEventDataSource.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="173" x="632" y="223"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <realization id="9">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="7"/>  
+  </realization>  
+  <realization id="10">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="6"/>  
+  </realization>  
+  <dependency id="11">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="3"/>  
+  </dependency>  
+  <association id="12">    
+    <bendpoint x="354" y="130"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="13" name="adapter"/>      
+      <multiplicity id="14" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="15">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="16" name="items"/>      
+      <multiplicity id="17" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="18">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="2"/>  
+  </nesting>  
+  <association id="19">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="20" name="instance"/>      
+      <multiplicity id="21" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="22">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="4"/>  
+  </nesting>  
+  <association id="23">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="24" name="data"/>      
+      <multiplicity id="25" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="26">    
+    <bendpoint x="375" y="130"/>    
+    <bendpoint x="375" y="223"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="27" name="event_data"/>      
+      <multiplicity id="28" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    accessors="true" visibility="true">    
+    <attributes public="false" package="false" protected="false" private="false" static="false"/>    
+    <operations public="false" package="false" protected="false" private="false" static="false"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
